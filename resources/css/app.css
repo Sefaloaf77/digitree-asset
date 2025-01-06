@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .dt-paging .pagination .bg-gray-100 {
+    @apply bg-green-digitree;
+  }
+
+  .dark\:bg-gray-700\/25 {
+    @apply bg-green-digitree;
+  }
+
+  .bg-gray-800 {
+    background-color: white !important;
+  }
+
+  .bg-black-gradient {
+    /* @apply bg-gradient-to-b from-[#00000000] via-[#0000008a] to-[#000000]; */
+    background-image: linear-gradient(to bottom, #00000000, #0000008a, #000000);
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 4rem;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    margin-right: 10px !important;
+    padding: 8px 24px !important;
+  }
+
+  input:checked~.dot {
+    transform: translateX(100%);
+    background-color: #ffffff;
+  }
+}
