@@ -24,7 +24,7 @@
                             </svg>
                         </button>
                     </div>
-                    <form action="{{ route('dashboard.pohon.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.asset.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         {{-- @method('POST') --}}
                         <div class="p-5 space-y-4">
@@ -99,7 +99,7 @@
                                                     <td>Nama Umum<span class="text-red-700"> *</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <input type="text" placeholder="Masukkan nama umum pohon"
+                                                        <input type="text" placeholder="Masukkan nama umum asset"
                                                             name="name_pohon" id="nama_pohonT" required
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
                                                     </td>
@@ -182,7 +182,7 @@
                                                     <td>Sejarah<span class="text-red-700"> *</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <textarea name="history" placeholder="Masukkan penjelasan sejarah dan keterangan pohon" id="historyT" required
+                                                        <textarea name="history" placeholder="Masukkan penjelasan sejarah dan keterangan asset" id="historyT" required
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" rows="10"></textarea>
                                                     </td>
                                                 </tr>
@@ -190,7 +190,7 @@
                                                     <td>Morfologi<span class="text-red-700"> *</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <textarea name="morfologi" placeholder="Masukkan penjelasan morfologi pohon" id="morfologiT" required
+                                                        <textarea name="morfologi" placeholder="Masukkan penjelasan morfologi asset" id="morfologiT" required
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" rows="10"></textarea>
                                                     </td>
                                                 </tr>
@@ -198,7 +198,7 @@
                                                     <td>Manfaat<span class="text-red-700"> *</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <textarea name="benefit" placeholder="Masukkan penjelasan manfaat pohon" id="manfaatT" required
+                                                        <textarea name="benefit" placeholder="Masukkan penjelasan manfaat asset" id="manfaatT" required
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" rows="10"></textarea>
                                                     </td>
                                                 </tr>
@@ -206,7 +206,7 @@
                                                     <td>Fakta Unik<span class="text-red-700"> *</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <textarea name="fact" placeholder="Masukkan penjelasan fakta pohon" id="faktaT" required
+                                                        <textarea name="fact" placeholder="Masukkan penjelasan fakta asset" id="faktaT" required
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" rows="10"></textarea>
                                                     </td>
                                                 </tr>
@@ -333,7 +333,7 @@
                                                     <td>Nama Umum<span class="text-red-700"> *</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <input type="text" placeholder="Masukkan nama umum pohon"
+                                                        <input type="text" placeholder="Masukkan nama umum asset"
                                                             name="name_pohon" id="nama_pohonD" disabled
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
                                                     </td>
@@ -420,7 +420,7 @@
                                                     <td>Sejarah<span class="text-red-700"> *</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <textarea name="history" placeholder="Masukkan penjelasan sejarah dan keterangan pohon" id="historyD" disabled
+                                                        <textarea name="history" placeholder="Masukkan penjelasan sejarah dan keterangan asset" id="historyD" disabled
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" rows="10"></textarea>
                                                     </td>
                                                 </tr>
@@ -428,7 +428,7 @@
                                                     <td>Morfologi</td>
                                                     <td>:</td>
                                                     <td>
-                                                        <textarea name="morfologi" placeholder="Masukkan penjelasan morfologi pohon" id="morfologiD" disabled
+                                                        <textarea name="morfologi" placeholder="Masukkan penjelasan morfologi asset" id="morfologiD" disabled
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" rows="10"></textarea>
                                                     </td>
                                                 </tr>
@@ -436,7 +436,7 @@
                                                     <td>Manfaat</td>
                                                     <td>:</td>
                                                     <td>
-                                                        <textarea name="benefit" placeholder="Masukkan penjelasan manfaat pohon" id="manfaatD" disabled
+                                                        <textarea name="benefit" placeholder="Masukkan penjelasan manfaat asset" id="manfaatD" disabled
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" rows="10"></textarea>
                                                     </td>
                                                 </tr>
@@ -444,7 +444,7 @@
                                                     <td>Fakta Unik</td>
                                                     <td>:</td>
                                                     <td>
-                                                        <textarea name="fact" placeholder="Masukkan penjelasan fakta pohon" id="faktaD" disabled
+                                                        <textarea name="fact" placeholder="Masukkan penjelasan fakta asset" id="faktaD" disabled
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" rows="10"></textarea>
                                                     </td>
                                                 </tr>
@@ -650,7 +650,7 @@
                                                     <td>Sejarah<span class="text-red-700"> *</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <textarea name="history" placeholder="Masukkan penjelasan sejarah dan keterangan pohon" id="historyE" required
+                                                        <textarea name="history" placeholder="Masukkan penjelasan sejarah dan keterangan asset" id="historyE" required
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" rows="10"></textarea>
                                                     </td>
                                                 </tr>
@@ -658,7 +658,7 @@
                                                     <td>Morfologi</td>
                                                     <td>:</td>
                                                     <td>
-                                                        <textarea name="morfologi" placeholder="Masukkan penjelasan morfologi pohon" id="morfologiE"
+                                                        <textarea name="morfologi" placeholder="Masukkan penjelasan morfologi asset" id="morfologiE"
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" rows="10"></textarea>
                                                     </td>
                                                 </tr>
@@ -666,7 +666,7 @@
                                                     <td>Manfaat</td>
                                                     <td>:</td>
                                                     <td>
-                                                        <textarea name="benefit" placeholder="Masukkan penjelasan manfaat pohon" id="manfaatE"
+                                                        <textarea name="benefit" placeholder="Masukkan penjelasan manfaat asset" id="manfaatE"
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" rows="10"></textarea>
                                                     </td>
                                                 </tr>
@@ -674,7 +674,7 @@
                                                     <td>Fakta Unik</td>
                                                     <td>:</td>
                                                     <td>
-                                                        <textarea name="fact" placeholder="Masukkan penjelasan fakta pohon" id="faktaE"
+                                                        <textarea name="fact" placeholder="Masukkan penjelasan fakta asset" id="faktaE"
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" rows="10"></textarea>
                                                     </td>
                                                 </tr>
@@ -746,7 +746,7 @@
                             @csrf
                             <div class="w-full space-y-4">
                                 <h5 class="font-bold text-lg text-center">Apakah Anda Yakin?</h5>
-                                <p class="text-center">Apakah Anda yakin ingin menghapus konten data Pohon "<strong><span
+                                <p class="text-center">Apakah Anda yakin ingin menghapus konten data Asset "<strong><span
                                             id="name_del_pohon"></span></strong>"
                                     ?
                                 </p>
@@ -788,7 +788,7 @@
                                 fill="currentColor" />
                         </svg>
                     </li>
-                    <li>Database Pohon</li>
+                    <li>Database Asset</li>
                 </ul>
             </div>
         </div>
@@ -803,7 +803,7 @@
                             d="M12.6562 6.875C12.6562 7.40234 12.2168 7.8418 11.7188 7.8418H7.5V12.0605C7.5 12.5586 7.06055 12.9688 6.5625 12.9688C6.03516 12.9688 5.625 12.5586 5.625 12.0605V7.8418H1.40625C0.878906 7.8418 0.46875 7.40234 0.46875 6.875C0.46875 6.37695 0.878906 5.9668 1.40625 5.9668H5.625V1.74805C5.625 1.2207 6.03516 0.78125 6.5625 0.78125C7.06055 0.78125 7.5 1.2207 7.5 1.74805V5.9668H11.7188C12.2168 5.9375 12.6562 6.37695 12.6562 6.875Z"
                             fill="white" />
                     </svg>
-                    <span>Tambah Database Pohon</span>
+                    <span>Tambah Database Asset</span>
                 </div>
             </button>
         </div>
@@ -885,7 +885,7 @@
                                 </th>
                                 <th width="10%">
                                     <div class="flex items-center justify-between gap-2">
-                                        <p class="">Nama Pohon</p>
+                                        <p class="">Nama Asset</p>
                                         <div class="flex flex-col">
                                             <svg @click="sort('job', 'asc')" fill="none" fill="none"
                                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="4"
@@ -1143,7 +1143,7 @@
         function toggleTambah(params) {
             toggleModalTambah = !toggleModalTambah
             if (params) {
-                titleModal.textContent = params + " Pohon"
+                titleModal.textContent = params + " Asset"
             }
             modalTambah.classList.toggle("hidden");
         }
@@ -1151,7 +1151,7 @@
         function toggleDetail(params, id) {
             toggleModalDetail = !toggleModalDetail
             if (params) {
-                titleModalDetail.textContent = params + " Pohon"
+                titleModalDetail.textContent = params + " Asset"
             }
 
             //Taksonomi
@@ -1208,7 +1208,7 @@
 
             toggleModalEdit = !toggleModalEdit
             if (params) {
-                titleModal.textContent = params + " Pohon"
+                titleModal.textContent = params + " Asset"
             }
 
             //Taksonomi
@@ -1269,7 +1269,7 @@
             nama_pohon.textContent = name;
             modalDelete.classList.toggle("hidden");
         }
-        
+
         // // Live Preview Selected Image
         function handleFileChangeT(event) {
             // const fileInput = document.getElementById('file-uploadT');

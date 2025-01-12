@@ -38,7 +38,7 @@
                                         fill="currentColor" />
                                 </svg>
                             </li>
-                            <li>Tambah Data Pohon</li>
+                            <li>Tambah Data Asset</li>
                         </ul>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
 
                     </div>
                     <div class="overflow-x-auto py-6 pb-2">
-                        <form action="{{ route('dashboard.pohon.save') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('dashboard.asset.save') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="flex flex-row gap-5">
                                 <div class="lg:w-6/12 w-full border-2 border-[#5A6383]/10 p-5 rounded-lg">
@@ -66,13 +66,14 @@
                                         <div class="label">
                                             <label for="jenis"
                                                 class="label-text font-Manrope-semibold text-lg text-dark block leading-6">Jenis
-                                                Pohon</label>
+                                                Asset</label>
                                         </div>
                                         <select
                                             class="select select-bordered bg-[#7780A1]/10 w-full ring-[#7780A1]/5 focus:ring-2 focus:ring-inset focus:ring-[#7780A1]/15 rounded mt-2"
-                                            id="jenis" name="id_index_plants" autocomplete="jenis-pohon"
-                                            aria-placeholder="Pilih Jenis Pohon">
-                                            <option disabled {{ old('id_index_plants') ? '' : 'selected' }}>Pilih Jenis Pohon
+                                            id="jenis" name="id_index_plants" autocomplete="jenis-asset"
+                                            aria-placeholder="Pilih Jenis Asset">
+                                            <option disabled {{ old('id_index_plants') ? '' : 'selected' }}>Pilih Jenis
+                                                Asset
                                             </option>
                                             @foreach ($jenisPohon as $plant)
                                                 <option value="{{ $plant->id }}"
@@ -83,7 +84,7 @@
                                         </select>
                                     </div>
                                     <div class="flex flex-col my-5">
-                                        <label for="kode" class="capitalize">kode Pohon</label>
+                                        <label for="kode" class="capitalize">kode Asset</label>
                                         <div class="flex items-center">
                                             <input type="text" name="code_plant" value="{{ old('code_plant') }}"
                                                 class="mt-2 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"
@@ -91,7 +92,7 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col my-5">
-                                        <label for="age" class="capitalize">Usia pohon</label>
+                                        <label for="age" class="capitalize">Usia asset</label>
                                         <div class="flex items-center">
                                             <input type="number" name="age" value="{{ old('age') }}"
                                                 class="mt-2 grow !bg-[#7780A1]/10 !border-s-2 !border-e-0 !border-y-2 !border-[#7780A1]/15 !rounded-s"
@@ -101,7 +102,7 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col my-5">
-                                        <label for="tall" class="capitalize">tinggi pohon</label>
+                                        <label for="tall" class="capitalize">tinggi asset</label>
                                         <div class="flex items-center">
                                             <input type="number" name="tall" value="{{ old('tall') }}"
                                                 class="mt-2 grow !bg-[#7780A1]/10 !border-s-2 !border-e-0 !border-y-2 !border-[#7780A1]/15 !rounded-s"
@@ -111,7 +112,7 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col my-5">
-                                        <label for="round" class="capitalize">diameter pohon</label>
+                                        <label for="round" class="capitalize">diameter asset</label>
                                         <div class="flex items-center">
                                             <input type="number" name="round" value="{{ old('round') }}"
                                                 class="mt-2 grow !bg-[#7780A1]/10 !border-s-2 !border-e-0 !border-y-2 !border-[#7780A1]/15 !rounded-s"
@@ -130,13 +131,13 @@
                                     </div>
                                 </div>
                                 <div class="lg:w-6/12 w-full border-2 border-[#5A6383]/10 p-5 rounded-lg">
-                                    <h2 class="text-black text-lg font-semibold mb-8">Lokasi Pohon</h2>
+                                    <h2 class="text-black text-lg font-semibold mb-8">Lokasi Asset</h2>
                                     <div class="flex flex-col my-5">
                                         <label for="desa" class="capitalize">nama desa</label>
                                         <select
                                             class="select select-bordered bg-[#7780A1]/10 w-full ring-[#7780A1]/5 focus:ring-2 focus:ring-inset focus:ring-[#7780A1]/15 rounded mt-2"
-                                            id="desa" name="id_villages" autocomplete="desa-pohon"
-                                            aria-placeholder="Pilih desa Pohon">
+                                            id="desa" name="id_villages" autocomplete="desa-asset"
+                                            aria-placeholder="Pilih desa Asset">
                                             <option disabled {{ old('id_villages') ? '' : 'selected' }}>Pilih Desa</option>
                                             @foreach ($desa as $item)
                                                 <option class="capitalize" value="{{ $item->id }}"
@@ -149,7 +150,7 @@
                                         </select>
                                     </div>
                                     <div class="flex flex-col my-5">
-                                        <label for="alamat" class="capitalize">Alamat Lokasi Pohon</label>
+                                        <label for="alamat" class="capitalize">Alamat Lokasi Asset</label>
                                         <div class="flex items-center">
                                             <input type="text" name="address" value="{{ old('address') }}"
                                                 class="mt-3 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"

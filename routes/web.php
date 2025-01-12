@@ -20,88 +20,6 @@ use App\Http\Controllers\TablesController;
 use App\Http\Controllers\UserRolesController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/home', [DashboardController::class, 'index'])->name('dashboard.index');
-// Route::get('/changelog', [HomeController::class, 'changelog'])->name('changeLog');
-// Route::get('/chart', [HomeController::class, 'chart'])->name('chart');
-// Route::get('/contact', [HomeController::class, 'contacts'])->name('contact');
-// Route::get('/dragdrop', [HomeController::class, 'dragdrop'])->name('dragdrop');
-// Route::get('/fonticons', [HomeController::class, 'fonticons'])->name('fonticons');
-// Route::get('/orderlist', [HomeController::class, 'orderlist'])->name('orderList');
-// Route::get('/payments', [HomeController::class, 'payments'])->name('payments');
-// Route::get('/profilesetting', [HomeController::class, 'profilesetting'])->name('profileSetting');
-
-// Route::prefix('socialapps/')->group(function () {
-//     Route::controller(SocialAppsController::class)->group(function () {
-//         Route::get('compose', 'compose')->name('compose');
-//         Route::get('inbox', 'inbox')->name('inbox');
-//         Route::get('chat', 'chat')->name('chat');
-//     });
-// });
-
-// Route::prefix('components/')->group(function () {
-//     Route::controller(ComponentsController::class)->group(function () {
-//         Route::get('accordions', 'accordions')->name('accordions');
-//         Route::get('tabs', 'tabs')->name('tabs');
-//         Route::get('modal', 'modal')->name('modal');
-//         Route::get('notification', 'notification')->name('notification');
-//         Route::get('lightbox', 'lightbox')->name('lightbox');
-//         Route::get('swiper', 'swiper')->name('swiper');
-//     });
-// });
-
-// Route::prefix('element/')->group(function () {
-//     Route::controller(ElementController::class)->group(function () {
-//         Route::get('alert', 'alert')->name('alert');
-//         Route::get('avatar', 'avatar')->name('avatar');
-//         Route::get('buttons', 'buttons')->name('buttons');
-//         Route::get('badges', 'badges')->name('badges');
-//         Route::get('breadcrumb', 'breadcrumb')->name('breadcrumb');
-//         Route::get('dropdowns', 'dropdown')->name('dropdowns');
-//         Route::get('loader', 'loader')->name('loader');
-//         Route::get('pagination', 'pagination')->name('pagination');
-//         Route::get('progressbar', 'progressbar')->name('progressbar');
-//     });
-// });
-
-// Route::prefix('tables/')->group(function () {
-//     Route::controller(TablesController::class)->group(function () {
-//         Route::get('basictable', 'basicTable')->name('basicTable');
-//         Route::get('datatable', 'dataTable')->name('dataTable');
-//         Route::get('eidtabletable', 'eidtableTable')->name('eidtableTable');
-//     });
-// });
-
-// Route::prefix('forms/')->group(function () {
-//     Route::controller(FormsController::class)->group(function () {
-//         Route::get('basic', 'basic')->name('basic');
-//         Route::get('inputgroup', 'inputGroup')->name('inputGroup');
-//         Route::get('validation', 'validation')->name('validation');
-//         Route::get('checkbox', 'checkbox')->name('checkbox');
-//         Route::get('radio', 'radio')->name('radio');
-//         Route::get('switches', 'switches')->name('switches');
-//     });
-// });
-
-// Route::prefix('invoice/')->group(function () {
-//     Route::controller(InvoiceController::class)->group(function () {
-//         Route::get('invoice', 'invoice')->name('invoice');
-//         Route::get('invoiceadd', 'invoiceAdd')->name('invoiceAdd');
-//         Route::get('invoicelist', 'invoiceList')->name('invoiceList');
-//     });
-// });
-
-// Route::prefix('pages/')->group(function () {
-//     Route::controller(PagesController::class)->group(function () {
-//         Route::get('starterpage', 'starterPage')->name('starterPage');
-//         Route::get('pricing', 'pricing')->name('pricing');
-//         Route::get('comingsoon', 'comingsoon')->name('comingsoon');
-//         Route::get('maintenance', 'maintenance')->name('maintenance');
-//         Route::get('error404', 'error404')->name('error404');
-//         Route::get('error500', 'error500')->name('error500');
-//         Route::get('error503', 'error503')->name('error503');
-//     });
-// });
-
 Route::prefix('authentication/')->group(function () {
     Route::controller(AuthenticationController::class)->group(function () {
         // Route::get('login', 'login')->name('login');
@@ -115,7 +33,7 @@ Route::prefix('authentication/')->group(function () {
     });
 });
 
-Route::resource('/plant', FrontendController::class)->only(['index', 'store', 'create', 'destroy', 'edit', 'update', 'show']);
+Route::resource('/asset', FrontendController::class)->only(['index', 'store', 'create', 'destroy', 'edit', 'update', 'show']);
 Route::post('/savelocation', [FrontendController::class, 'location'])->name('location');
 
 Route::get('/', function () {
@@ -137,7 +55,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
     Route::get('/perlokasi/{id}', [DashboardController::class, 'perlokasi'])->name('perlokasi');
     Route::get('/update-plant/{id}', [PlantController::class, 'updatePlant'])->name('updateAllDataPlant');
 
-    Route::group(['prefix' => 'pohon', 'as' => 'pohon.'], function () {
+    Route::group(['prefix' => 'asset', 'as' => 'asset.'], function () {
         Route::get('/', [DataPohonController::class, 'index'])->name('index');
         Route::post('/', [DataPohonController::class, 'store'])->name('store');
         Route::post('/create', [DataPohonController::class, 'save'])->name('save');
