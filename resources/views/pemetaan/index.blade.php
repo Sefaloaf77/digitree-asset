@@ -62,7 +62,7 @@
                 <!-- Name Filter -->
                 <div class="w-full md:w-38">
                     <select class="w-full" name="name">
-                        <option value=""> Pohon</option>
+                        <option value=""> Asset</option>
                         @foreach ($names as $name)
                             <option value="{{ $name }}" {{ request('name') == $name ? 'selected' : '' }}>
                                 {{ $name }}</option>
@@ -84,7 +84,7 @@
                 <!-- Code Plants Filter -->
                 <div class="w-full md:w-38">
                     <select name="code_plant" class="w-full">
-                        <option value=""> Kode Pohon</option>
+                        <option value=""> Kode Asset</option>
                         @foreach ($codePlants as $codePlant)
                             <option value="{{ $codePlant }}"
                                 {{ request('code_plant') == $codePlant ? 'selected' : '' }}>
@@ -107,7 +107,7 @@
 
     <div class="zoom-panel absolute bottom-8 right-12 z-20">
         <div class="w-fit bg-white border-2 border-green-digitree p-4 text-center rounded-2xl shadow-lg">
-            <span class="text-black text-base">Legenda Usia Pohon</span>
+            <span class="text-black text-base">Legenda Usia Asset</span>
 
             <div class="flex flex-col gap-2 mt-4">
                 <a href="{{ route('dashboard.pemetaan.index', ['age' => '< 1 tahun']) }}"
@@ -204,12 +204,12 @@
 
             // Assuming the image filename is correctly stored in plant.content_plant.image
             let imageTag = plant.content_plant.image ?
-                `<img src="/storage/${plant.content_plant.image}" alt="Gambar Pohon" style="width: 70%; height:150px; display: block; margin: 0 auto;"><br><br>` :
+                `<img src="/storage/${plant.content_plant.image}" alt="Gambar Asset" style="width: 70%; height:150px; display: block; margin: 0 auto;"><br><br>` :
                 '';
 
             // Assuming the YouTube video ID is stored in plant.content_plant.video
             let videoLink = plant.content_plant.videos ?
-                `<b>Video Pohon:</b> <a href="https://www.youtube.com/watch?v=${plant.content_plant.videos}" target="_blank">Tonton Video by Youtube</a><br><br>` :
+                `<b>Video Asset:</b> <a href="https://www.youtube.com/watch?v=${plant.content_plant.videos}" target="_blank">Tonton Video by Youtube</a><br><br>` :
                 '';
 
             L.marker([lat, lng], {
@@ -221,10 +221,10 @@
             height: 40vh;
             width: 100%;
             overflow-y: scroll;">
-            <b style="color: #ff0000; font-size: 18px;">Data Pohon ID ${plant.code_plant}</b><br><br>
+            <b style="color: #ff0000; font-size: 18px;">Data Asset ID ${plant.code_plant}</b><br><br>
             ${imageTag}
             ${videoLink}
-            <b>Nama Pohon:</b> ${plant.index_plant.name}<br>
+            <b>Nama Asset:</b> ${plant.index_plant.name}<br>
             <b>Genus:</b> ${plant.index_plant.genus}<br>
             <b>Spesies:</b> ${plant.index_plant.species}<br>
             <b>Ordo:</b> ${plant.index_plant.ordo}<br>
@@ -232,16 +232,16 @@
             <b>Famili:</b> ${plant.index_plant.famili}<br>
             <b>Kelas:</b> ${plant.index_plant.kelas}<br>
             <b>Divisi:</b> ${plant.index_plant.divisi}<br>
-            <b>Alamat Pohon: </b>${plant.address}, ${plant.villages.name}, ${plant.villages.kecamatan}, ${plant.villages.kab_kota} - ${plant.villages.province}<br>
-            <b>Umur Pohon: </b>${plant.age} Tahun<br>
-            <b>Tinggi Pohon: </b>${plant.tall} Meter<br>
-            <b>Diameter Pohon: </b>${plant.round}<br>
+            <b>Alamat Asset: </b>${plant.address}, ${plant.villages.name}, ${plant.villages.kecamatan}, ${plant.villages.kab_kota} - ${plant.villages.province}<br>
+            <b>Umur Asset: </b>${plant.age} Tahun<br>
+            <b>Tinggi Asset: </b>${plant.tall} Meter<br>
+            <b>Diameter Asset: </b>${plant.round}<br>
             <b>Tanggal Tanam: </b>${plant.date_plant}<br>
             <b>Sumber Dana: </b>${plant.source_fund}<br>
-            <b>Sejarah Pohon:</b><br> ${plant.content_plant.history}<br><br>
-            <b>Morfologi Pohon:</b><br> ${plant.content_plant.morfologi}<br><br>
-            <b>Manfaat Pohon:</b><br> ${plant.content_plant.benefit}<br><br>
-            <b>Fakta Pohon:</b><br> ${plant.content_plant.fact}<br>
+            <b>Sejarah Asset:</b><br> ${plant.content_plant.history}<br><br>
+            <b>Morfologi Asset:</b><br> ${plant.content_plant.morfologi}<br><br>
+            <b>Manfaat Asset:</b><br> ${plant.content_plant.benefit}<br><br>
+            <b>Fakta Asset:</b><br> ${plant.content_plant.fact}<br>
         </div>
     `)
                 .addTo(map);

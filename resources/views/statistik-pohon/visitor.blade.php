@@ -98,7 +98,7 @@
                                 </th>
                                 <th width="10%">
                                     <div class="flex items-center justify-between gap-2">
-                                        <p class="">Nama Pohon</p>
+                                        <p class="">Nama Asset</p>
                                         <div class="flex flex-col">
                                             <svg fill="none" stroke-linecap="round" stroke-linejoin="round"
                                                 stroke-width="4" viewBox="0 0 24 24" stroke="currentColor"

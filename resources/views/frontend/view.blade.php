@@ -23,61 +23,15 @@
                 <div class="p-5 space-y-4">
                     @isset($plant)
                         <div class="w-full space-y-4">
-                            <h3 class="font-bold text-dark">Taksonomi Tanaman</h3>
-                            <table class="">
-                                <tbody>
-                                    <tr class="">
-                                        <td colspan="3">Kingdom</td>
-                                        <td class="px-10">:</td>
-                                        <td>{{ $plant['plant']['kingdom'] }} </td>
-                                    </tr>
-                                    <tr class="">
-                                        <td colspan="3">Divisi</td>
-                                        <td class="px-10">:</td>
-                                        <td>{{ $plant['plant']['divisi'] }}</td>
-                                    </tr>
-                                    <tr class="">
-                                        <td colspan="3">Kelas</td>
-                                        <td class="px-10">:</td>
-                                        <td>{{ $plant['plant']['kelas'] }}</td>
-                                    </tr>
-                                    <tr class="">
-                                        <td colspan="3">Ordo</td>
-                                        <td class="px-10">:</td>
-                                        <td>{{ $plant['plant']['ordo'] }}</td>
-                                    </tr>
-                                    <tr class="">
-                                        <td colspan="3">Famili</td>
-                                        <td class="px-10">:</td>
-                                        <td>{{ $plant['plant']['famili'] }}</td>
-                                    </tr>
-                                    <tr class="">
-                                        <td colspan="3">Genus</td>
-                                        <td class="px-10">:</td>
-                                        <td>{{ $plant['plant']['genus'] }}</td>
-                                    </tr>
-                                    <tr class="">
-                                        <td colspan="3">Species</td>
-                                        <td class="px-10">:</td>
-                                        <td>{{ $plant['plant']['species'] }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <h3 class="font-bold mt-5 text-dark capitalize">Sejarah Tanaman</h3>
+                            <h3 class="font-bold mt-5 text-dark capitalize">Sejarah Asset</h3>
                             <p class="my-4">
                                 {{ $plant['plant']['history'] }}
                             </p>
-
-                            <h3 class="font-bold mt-5 text-dark capitalize">Morfologi Tanaman</h3>
-                            <p class="my-4">
-                                {{ $plant['plant']['morfologi'] }}
-                            </p>
-                            <h3 class="font-bold mt-5 text-dark capitalize">benefit Tanaman</h3>
+                            <h3 class="font-bold mt-5 text-dark capitalize">Fungsi Asset</h3>
                             <p class="my-4">
                                 {{ $plant['plant']['benefit'] }}
                             </p>
-                            <h3 class="font-bold mt-5 text-dark capitalize">Fakta Tanaman</h3>
+                            <h3 class="font-bold mt-5 text-dark capitalize">Fakta Asset</h3>
                             <p class="my-4">
                                 {{ $plant['plant']['fact'] }}
                             </p>
@@ -124,7 +78,7 @@
         <section id="treeImage">
             <div class="w-full relative">
                 <img src="{{ Storage::url($plant['plant']['image']) }}" class="object-cover w-full h-[450px]"
-                    alt="display pohon">
+                    alt="display asset">
                 <div class="absolute inset-x-0 bottom-0 flex flex-row items-center gap-x-3 px-5 bg-black-gradient pb-4">
                     <div>
                         <img src="{{ asset('assets/img/icon/loc-icon.svg') }}" class="" alt="location icon">
@@ -161,31 +115,31 @@
                         <span class="font-normal"> (Ulasan)</span>
                     </p>
                 </div>
-                <h3 class="font-bold my-4 text-dark">Detail Pohon</h3>
+                <h3 class="font-bold my-4 text-dark">Detail Asset</h3>
                 <table class="">
                     <tbody>
                         <tr class="">
-                            <td colspan="3">Tinggi Pohon</td>
+                            <td colspan="3">Luas Asset</td>
                             <td class="px-10">:</td>
                             <td>{{ $plant['plant']['tall'] }} Centimeter</td>
                         </tr>
                         <tr class="">
-                            <td colspan="3">Diameter Pohon</td>
+                            <td colspan="3">Nilai Asset</td>
                             <td class="px-10">:</td>
                             <td>{{ $plant['plant']['round'] }} Centimeter</td>
                         </tr>
                         <tr class="">
-                            <td colspan="3">Usia Pohon</td>
+                            <td colspan="3">Usia Asset</td>
                             <td class="px-10">:</td>
                             <td>{{ $plant['plant']['age'] }} tahun</td>
                         </tr>
                         <tr class="">
-                            <td colspan="3">Tanggal Tanam</td>
+                            <td colspan="3">Tanggal Dibuka</td>
                             <td class="px-10">:</td>
                             <td>{{ $plant['plant']['date_plant'] }}</td>
                         </tr>
                         <tr class="">
-                            <td colspan="3">Sumber Dana</td>
+                            <td colspan="3">Pengelola</td>
                             <td class="px-10">:</td>
                             <td>{{ $plant['plant']['source_fund'] }}</td>
                         </tr>
@@ -193,48 +147,8 @@
                 </table>
 
                 <div class="my-4">
-                    <h3 class="font-bold my-3 text-dark">Taksonomi Tanaman</h3>
-                    <table class="">
-                        <tbody>
-                            <tr class="">
-                                <td colspan="3">Kingdom</td>
-                                <td class="px-10">:</td>
-                                <td class="capitalize">{{ $plant['plant']['kingdom'] }} </td>
-                            </tr>
-                            <tr class="">
-                                <td colspan="3">Divisi</td>
-                                <td class="px-10">:</td>
-                                <td class="capitalize">{{ $plant['plant']['divisi'] }}</td>
-                            </tr>
-                            <tr class="">
-                                <td colspan="3">Kelas</td>
-                                <td class="px-10">:</td>
-                                <td class="capitalize">{{ $plant['plant']['kelas'] }}</td>
-                            </tr>
-                            <tr class="">
-                                <td colspan="3">Ordo</td>
-                                <td class="px-10">:</td>
-                                <td class="capitalize">{{ $plant['plant']['ordo'] }}</td>
-                            </tr>
-                            <tr class="">
-                                <td colspan="3">Famili</td>
-                                <td class="px-10">:</td>
-                                <td class="capitalize">{{ $plant['plant']['famili'] }}</td>
-                            </tr>
-                            <tr class="">
-                                <td colspan="3">Genus</td>
-                                <td class="px-10">:</td>
-                                <td class="capitalize">{{ $plant['plant']['genus'] }}</td>
-                            </tr>
-                            <tr class="">
-                                <td colspan="3">Species</td>
-                                <td class="px-10">:</td>
-                                <td class="capitalize">{{ $plant['plant']['species'] }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
 
-                    <h3 class="font-bold mt-5 text-dark">Sejarah Tanaman</h3>
+                    <h3 class="font-bold mt-5 text-dark">Sejarah Asset</h3>
                     <p class="my-4">
                         {{ $plant['plant']['history'] }}
                     </p>
@@ -272,7 +186,7 @@
                     <div class="flex gap-5">
                         <button
                             class="bg-green-digitree rounded-lg px-5 py-3 text-white font-bold flex gap-2 items-center hover:bg-green-digitree/80"
-                            onclick="window.location.href='{{ route('plant.create', $data) }}'">
+                            onclick="window.location.href='{{ route('asset.create', $data) }}'">
                             <svg id="Layer_1" version="1.1" class="fill-white w-5 h-5" viewBox="0 0 512 512"
                                 xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                                 xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -283,9 +197,9 @@
                         </button>
 
                         <a href="https://wa.me/6285176887689" target="_blank"
-                            class="border-2 border-green-digitree bg-white rounded-lg px-5 py-3 text-green-digitree hover:bg-green-digitree/90 hover:text-white font-bold flex items-center">Tanya
-                            /
-                            Lapor</a>
+                            class="border-2 border-green-digitree bg-white rounded-lg px-5 py-3 text-green-digitree hover:bg-green-digitree/90 hover:text-white font-bold flex items-center">
+                            Tanya / Lapor
+                        </a>
                     </div>
 
                     @foreach ($plant['ulasan'] as $ulasan)

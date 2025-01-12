@@ -2,11 +2,10 @@
     <div class="bg-white h-full">
         <div class="p-3.5">
             <a href="{{ route('dashboard.index') }}" class="main-logo w-full">
-                <img src="{{ asset('assets/img/logo-digitree.png') }}" class="mx-auto dark-logo h-8 logo" alt="logo" />
-                <img src="{{ asset('assets/img/logo-digitree.png') }}" class="mx-auto light-logo h-8 logo hidden"
+                <img src="{{ asset('assets/img/logo-new.png') }}" class="mx-auto dark-logo h-8 logo" alt="logo" />
+                <img src="{{ asset('assets/img/logo-new.png') }}" class="mx-auto light-logo h-8 logo hidden"
                     alt="logo" />
-                <img src="{{ asset('assets/img/logo-digitree.png') }}" class="logo-icon h-8 mx-auto hidden"
-                    alt="">
+                <img src="{{ asset('assets/img/logo-new.png') }}" class="logo-icon h-8 mx-auto hidden" alt="">
             </a>
         </div>
         <div class="flex items-center gap-2.5 py-2.5 pe-2.5">
@@ -101,14 +100,14 @@
                                         d="M21.7383 5.4707C21.9844 5.61133 22.125 5.89258 22.125 6.13867V17.9512C22.125 18.3027 21.8789 18.6191 21.5625 18.7598L15.6562 21.0098C15.4805 21.0801 15.2695 21.0801 15.0938 21.0098L8.625 18.8652L3 21.0098C2.75391 21.1152 2.4375 21.0801 2.22656 20.9043C1.98047 20.7637 1.875 20.4824 1.875 20.2012V8.38867C1.875 8.03711 2.08594 7.75586 2.40234 7.61523L8.30859 5.36523C8.48438 5.29492 8.69531 5.29492 8.87109 5.36523L15.3398 7.50977L20.9648 5.36523C21.2109 5.25977 21.5273 5.29492 21.7383 5.4707ZM3.5625 19.0059L7.78125 17.3887V7.36914L3.5625 8.98633V19.0059ZM14.5312 9.02148L9.46875 7.33398V17.3535L14.5312 19.041V9.02148ZM16.2188 19.0059L20.4375 17.3887V7.36914L16.2188 8.98633V19.0059Z"
                                         fill="currentColor" />
                                 </svg>
-                                <span class="pl-1.5">Pemetaan Pohon</span>
+                                <span class="pl-1.5">Pemetaan Asset</span>
                             </div>
                         </a>
                     </li>
                     <li class="menu nav-item">
                         <a href="javaScript:;"
-                            class="nav-link group items-center justify-between @if (Request::is('dashboard/pohon') || Request::is('dashboard/lokasi')) text-green-digitree bg-[#00a85a36] @endif"
-                            @click="activeMenu === 'database-pohon' ? activeMenu = null : activeMenu = 'database-pohon'">
+                            class="nav-link group items-center justify-between @if (Request::is('dashboard/asset') || Request::is('dashboard/lokasi')) text-green-digitree bg-[#00a85a36] @endif"
+                            @click="activeMenu === 'database-asset' ? activeMenu = null : activeMenu = 'database-asset'">
                             <div class="flex items-center">
                                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -119,7 +118,7 @@
                                 <span class="pl-1.5">Database</span>
                             </div>
                             <div class="w-4 h-4 flex items-center justify-center dropdown-icon"
-                                :class="{ '!rotate-180': activeMenu === 'database-pohon' }">
+                                :class="{ '!rotate-180': activeMenu === 'database-asset' }">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6">
                                     <path
                                         d="M11.9997 13.1714L16.9495 8.22168L18.3637 9.63589L11.9997 15.9999L5.63574 9.63589L7.04996 8.22168L11.9997 13.1714Z"
@@ -127,11 +126,11 @@
                                 </svg>
                             </div>
                         </a>
-                        <ul x-cloak x-show="activeMenu === 'database-pohon'" x-collapse
+                        <ul x-cloak x-show="activeMenu === 'database-asset'" x-collapse
                             class="sub-menu flex flex-col gap-1 capitalize">
                             <li>
-                                <a class="@if (Request::is('dashboard/pohon')) !text-[#050c17] @endif"
-                                    href="{{ route('dashboard.pohon.index') }}">Database Pohon</a>
+                                <a class="@if (Request::is('dashboard/asset')) !text-[#050c17] @endif"
+                                    href="{{ route('dashboard.asset.index') }}">Database Asset</a>
                             </li>
                             <li>
                                 <a class="@if (Request::is('dashboard/lokasi')) !text-[#050c17] @endif"
@@ -150,13 +149,13 @@
                                         d="M5.25 18.2324C5.25 18.5488 5.49609 18.7949 5.8125 18.7949H19.875C20.4727 18.7949 21 19.3223 21 19.9199C21 20.5527 20.4727 21.0449 19.875 21.0449H5.8125C4.23047 21.0449 3 19.8145 3 18.2324V6.41992C3 5.82227 3.49219 5.29492 4.125 5.29492C4.72266 5.29492 5.25 5.82227 5.25 6.41992V18.2324ZM15.0234 13.9785C14.6016 14.4355 13.8633 14.4355 13.4414 13.9785L11.4375 11.9746L8.27344 15.1035C7.85156 15.5605 7.11328 15.5605 6.69141 15.1035C6.23438 14.6816 6.23438 13.9434 6.69141 13.5215L10.6289 9.58398C11.0508 9.12695 11.7891 9.12695 12.2109 9.58398L14.25 11.5879L17.9414 7.89648C18.3633 7.43945 19.1016 7.43945 19.5234 7.89648C19.9805 8.31836 19.9805 9.05664 19.5234 9.47852L15.0234 13.9785Z"
                                         fill="currentColor" />
                                 </svg>
-                                <span class="pl-1.5">Statistik Pohon</span>
+                                <span class="pl-1.5">Statistik Asset</span>
                             </div>
                         </a>
                     </li>
                     <li class="menu nav-item">
                         <a href="javaScript:;"
-                            class="nav-link group items-center justify-between @if (Request::is('dashboard/pohon/create')) text-green-digitree bg-[#00a85a36] @endif"
+                            class="nav-link group items-center justify-between @if (Request::is('dashboard/asset/create')) text-green-digitree bg-[#00a85a36] @endif"
                             @click="activeMenu === 'tables' ? activeMenu = null : activeMenu = 'tables'">
                             <div class="flex items-center">
                                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
@@ -178,8 +177,8 @@
                         </a>
                         <ul x-cloak x-show="activeMenu === 'tables'" x-collapse class="sub-menu flex flex-col gap-1">
                             <li>
-                                <a class="@if (Request::is('dashboard/pohon/create')) text-[#050c17] @endif"
-                                    href="{{ route('dashboard.pohon.create') }}">Pohon Per Lokasi</a>
+                                <a class="@if (Request::is('dashboard/asset/create')) text-[#050c17] @endif"
+                                    href="{{ route('dashboard.asset.create') }}">Asset Per Lokasi</a>
                             </li>
                         </ul>
                     </li>
