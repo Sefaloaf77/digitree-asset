@@ -1,5 +1,5 @@
 <nav class="sidebar fixed z-50 flex-none w-[226px] border-r-2 border-lightgray/[8%] transition-all duration-300">
-    <div class="bg-white h-full">
+    <div class="bg-green-800 h-full">
         <div class="p-3.5">
             <a href="{{ route('dashboard.index') }}" class="main-logo w-full">
                 <img src="{{ asset('assets/img/logo-new.png') }}" class="mx-auto dark-logo h-8 logo" alt="logo" />

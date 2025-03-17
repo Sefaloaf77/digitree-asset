@@ -1,22 +1,14 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\ComponentsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DatabaseLokasiController;
 use App\Http\Controllers\DataPohonController;
-use App\Http\Controllers\ElementController;
-use App\Http\Controllers\FormsController;
 use App\Http\Controllers\FrontendController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PemetaanController;
 use App\Http\Controllers\PlantController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SocialAppsController;
 use App\Http\Controllers\StatistikController;
-use App\Http\Controllers\TablesController;
 use App\Http\Controllers\UserRolesController;
 use Illuminate\Support\Facades\Route;
 
