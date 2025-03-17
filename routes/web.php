@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdsController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DatabaseLokasiController;
@@ -41,7 +42,7 @@ Route::post('/update-content', [DataPohonController::class, 'updateContentIndexP
 Route::post('/delete-content', [DataPohonController::class, 'deleteContentIndexPohon'])->name('deleteAllDataIndexContent');
 Route::post('/delete-plant', [PlantController::class, 'deletePlant'])->name('deleteAllDataPlant');
 
-Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth', 'superadmin']], function () {
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
 
     Route::get('/semua-lokasi', [DashboardController::class, 'index'])->name('index');
     Route::get('/perlokasi/{id}', [DashboardController::class, 'perlokasi'])->name('perlokasi');
@@ -82,6 +83,15 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     Route::group(['prefix' => 'pemetaan', 'as' => 'pemetaan.'], function () {
         Route::get('/', [PemetaanController::class, 'index'])->name('index');
+    });
+
+    Route::group(['prefix' => 'ads', 'as' => 'ads.'], function () {
+        Route::get('/', [AdsController::class, 'index'])->name('index');
+        Route::post('/', [AdsController::class, 'store'])->name('store');
+        Route::get('/create', [AdsController::class, 'create'])->name('create');
+        Route::get('/{id}/edit', [AdsController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [AdsController::class, 'update'])->name('update');
+        Route::delete('/{id}', [AdsController::class, 'destroy'])->name('delete');
     });
 });
 
