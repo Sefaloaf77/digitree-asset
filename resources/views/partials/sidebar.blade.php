@@ -41,7 +41,7 @@
 
         <div class="h-[calc(100vh-93px)] overflow-y-auto overflow-x-hidden space-y-16 px-4 pt-2 pb-4">
             <ul class="relative flex flex-col gap-1 text-sm" x-data="{ activeMenu: '{{ $activemenu }}', activeItem: '{{ $activeitem }}' }">
-                <h2 class="pt-3.5 pb-2.5 text-gray text-xs">Menu</h2>
+                <h2 class="pt-3.5 pb-2.5 text-white text-xs">Menu</h2>
                 <li class="menu nav-item">
                     <a href="javaScript:;"
                         class="nav-link group items-center justify-between @if (Request::is('dashboard/semua-lokasi') || Request::is('dashboard/perlokasi')) text-green-digitree bg-[#00a85a36] @endif"
@@ -71,7 +71,7 @@
                         class="sub-menu flex flex-col gap-1 capitalize">
                         @can('superadmin')
                             <li>
-                                <a class="@if (Request::is('dashboard/semua-lokasi')) !text-[#050c17] @endif"
+                                <a class="@if (Request::is('dashboard/semua-lokasi')) !text-[#bfc6d2] @endif"
                                     href="{{ route('dashboard.index') }}">
                                     semua
                                     lokasi
@@ -84,7 +84,7 @@
                             $id = end($segments); // Mengambil bagian terakhir dari URI sebagai ID
                         @endphp
                         <li>
-                            <a class="@if (Request::is('dashboard/perlokasi/' . $id)) !text-[#050c17] @endif"
+                            <a class="@if (Request::is('dashboard/perlokasi/' . $id)) !text-[#bfc6d2] @endif"
                                 href="{{ route('dashboard.perlokasi', ['id' => $id]) }}">per lokasi</a>
                         </li>
                     </ul>
@@ -220,7 +220,6 @@
                             </div>
                         </a>
                     </form>
-
                 </li>
             </ul>
         </div>

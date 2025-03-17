@@ -16,11 +16,11 @@
             <div class="w-full lg:w-1/2 flex flex-col justify-center items-center px-8">
                 <!-- Logo Probolinggo -->
 
-                <img src="{{ asset('assets/img/logo-probolinggo.png') }}" alt="logo probolinggo" class="h-14 w-18">
+                <img src="{{ asset('assets/img/logo-new.png') }}" alt="logo digitree" class="h-14 w-18">
                 
                 <!-- Logo Digitree -->
                
-                    <img src="{{ asset('assets/img/logo-digitree.png') }}" style="" alt="logo digitree" class="h-10 w-30">
+                    {{-- <img src="{{ asset('assets/img/logo-digitree.png') }}" style="" alt="logo digitree" class="h-10 w-30"> --}}
                 
                 <!-- Form -->
                 <div class="w-full max-w-md bg-white p-8">
