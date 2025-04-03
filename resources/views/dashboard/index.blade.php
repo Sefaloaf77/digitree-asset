@@ -163,39 +163,39 @@
 
     <div class="flex flex-col gap-5 min-h-[calc(100vh-188px)] sm:min-h-[calc(100vh-204px)]">
         <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-            <div class="bg-white border-2 border-lightgray/10 p-5 rounded-lg">
+            <div class="bg-green-100 border-2 border-lightgray/10 p-5 rounded-lg">
                 <div class="flex items-center gap-2.5 flex-wrap">
                     <div
                         class="shrink-0 h-[50px] w-[50px] flex items-center justify-center bg-primary/10 rounded-full text-primary">
-                        <img src="{{ asset('assets/img/icon/icon-jumlah-pohon.svg') }}" alt="icon jumlah pohon">
+                        <img src="{{ asset('assets/img/icon/home-asset-dashboard.svg') }}" alt="icon jumlah aset">
                     </div>
                     <div class="flex items-end gap-3">
                         <div class="flex-1">
-                            <h4 class="text-lightgray text-sm">Jumlah Pohon</h4>
+                            <h4 class="text-lightgray text-sm">Jumlah Aset</h4>
                             <p class="font-bold text-lg mt-1.5">{{ $summary['totalPlant'] }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="bg-white border-2 border-lightgray/10 p-5 rounded-lg">
+            <div class="bg-red-100 border-2 border-lightgray/10 p-5 rounded-lg">
                 <div class="flex items-center gap-2.5 flex-wrap">
                     <div
                         class="shrink-0 h-[50px] w-[50px] flex items-center justify-center bg-pink/10 rounded-full text-pink">
-                        <img src="{{ asset('assets/img/icon/icon-jenis-pohon.svg') }}" alt="icon jenis pohon">
+                        <img src="{{ asset('assets/img/icon/temple-asset-dashboard.svg') }}" alt="icon jenis aset">
                     </div>
                     <div class="flex items-end gap-3">
                         <div class="flex-1">
-                            <h4 class="text-lightgray text-sm">Jenis Pohon</h4>
+                            <h4 class="text-lightgray text-sm">Jenis Aset</h4>
                             <p class="font-bold text-lg mt-1.5">{{ $summary['totalIndexPlant'] }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="bg-white border-2 border-lightgray/10 p-5 rounded-lg">
+            <div class="bg-violet-100 border-2 border-lightgray/10 p-5 rounded-lg">
                 <div class="flex items-center gap-2.5 flex-wrap">
                     <div
                         class="shrink-0 h-[50px] w-[50px] flex items-center justify-center bg-orange/10 rounded-full text-orange">
-                        <img src="{{ asset('assets/img/icon/icon-scan-qr.svg') }}" alt="icon scan qr code">
+                        <img src="{{ asset('assets/img/icon/qr-asset-dashboard.svg') }}" alt="icon scan qr code">
                     </div>
                     <div class="flex items-end gap-3">
                         <div class="flex-1">
@@ -205,21 +205,21 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white border-2 border-lightgray/10 p-5 rounded-lg">
+            <div class="bg-yellow-100 border-2 border-lightgray/10 p-5 rounded-lg">
                 <div class="flex items-center gap-2.5 flex-wrap">
                     <div
                         class="shrink-0 h-[50px] w-[50px] flex items-center justify-center bg-purple/10 rounded-full text-purple">
-                        <img src="{{ asset('assets/img/icon/icon-rating-pohon.svg') }}" alt="icon rating pohon">
+                        <img src="{{ asset('assets/img/icon/star-asset-dashboard.svg') }}" alt="icon rating aset">
                     </div>
                     <div class="flex items-end gap-3">
                         <div class="flex-1">
-                            <h4 class="text-lightgray text-sm">Rating Pohon</h4>
+                            <h4 class="text-lightgray text-sm">Rating Aset</h4>
                             <p class="font-bold text-lg mt-1.5">{{ $summary['avgRating'] }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
 
         @if (session('error'))
             <div class="my-4 rounded p-3 bg-red-500/10 text-red-500 border border-red-500/60">

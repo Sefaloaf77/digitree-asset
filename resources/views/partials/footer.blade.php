@@ -3,12 +3,13 @@
     <p class="font-semibold">
         &copy;
         <script>
-            var year = new Date(); document.write(year.getFullYear());
+            var year = new Date();
+            document.write(year.getFullYear());
         </script>
         Digitree
     </p>
     <ul class="sm:flex items-center text-dark gap-4 sm:gap-[30px] font-semibold hidden">
-        <li><a href="javascirpt:;" class="hover:text-primary transition-all duration-300 cursor-pointer">Pemerintah Kota
-                Probolinggo</a></li>
+        <li><a href="javascirpt:;" class="hover:text-primary transition-all duration-300 cursor-pointer">Desa Wisata
+                Digital</a></li>
     </ul>
 </footer>
