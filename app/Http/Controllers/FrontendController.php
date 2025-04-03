@@ -207,7 +207,7 @@ class FrontendController extends Controller
             // Menyimpan data kunjungan
             RecordScans::create([
                 'scan_date' => Carbon::now(),
-                'code_plant' => $plantData->code_plant,
+                'code_plant' => $plantData->code_plant, 
                 'ip_address' => request()->ip(),
                 'location' => $location
             ]);

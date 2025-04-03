@@ -1,4 +1,4 @@
-<div class="h-[60px] bg-white border-b-2 border-lightgray/10 flex items-center justify-between gap-2.5 px-7">
+<div class="h-[60px] bg-[#BDFFFC] border-b-2 border-lightgray/10 flex items-center justify-between gap-2.5 px-7">
     <div class="flex-auto flex items-center gap-2.5">
         <div class="lg:hidden">
             <button type="button" class="hover:text-primary" @click="$store.app.toggleSidebar()">

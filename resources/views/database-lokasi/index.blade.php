@@ -43,30 +43,51 @@
                         enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" id="id">
+
+                        <!-- Pilihan Input -->
                         <div class="w-full space-y-4">
+                            <label class="text-base font-semibold mb-4">Pilih Metode Input</label>
+                            <div class="flex items-center gap-4">
+                                <label for="manual" class="cursor-pointer">Manual</label>
+                                <input type="radio" id="manual" name="input_method" value="manual" checked>
+
+                                <label for="import" class="cursor-pointer">Import Excel</label>
+                                <input type="radio" id="import" name="input_method" value="import">
+                            </div>
+                        </div>
+
+                        <!-- Input Form Manual -->
+                        <div id="manual-form" class="w-full space-y-4 mt-4">
                             <label class="text-base font-semibold mb-4">Nama Desa</label>
                             <input id="name" type="text" name="name"
-                                class="form-input mt-3 rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" class="name"
+                                class="form-input mt-3 rounded-lg p-2 text-gray-800 bg-[#F2F3F6]"
                                 placeholder="Masukkan nama desa" required>
-                        </div>
-                        <div class="w-full space-y-4 mt-4">
+
                             <label class="text-base font-semibold mb-4">Nama Kecamatan</label>
                             <input id="kecamatan" type="text" name="kecamatan"
-                                class="form-input mt-3 rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" class="kecamatan"
+                                class="form-input mt-3 rounded-lg p-2 text-gray-800 bg-[#F2F3F6]"
                                 placeholder="Masukkan nama kecamatan" required>
-                        </div>
-                        <div class="w-full space-y-4 mt-4">
+
                             <label class="text-base font-semibold mb-4">Nama Kabupaten/Kota</label>
                             <input id="kab_kota" type="text" name="kab_kota"
-                                class="form-input mt-3 rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" class="kab_kota"
+                                class="form-input mt-3 rounded-lg p-2 text-gray-800 bg-[#F2F3F6]"
                                 placeholder="Masukkan nama Kabupaten/kota" required>
-                        </div>
-                        <div class="w-full space-y-4 mt-4">
+
                             <label class="text-base font-semibold mb-4">Nama Provinsi</label>
                             <input id="province" type="text" name="province"
-                                class="form-input mt-3 rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" class="province"
+                                class="form-input mt-3 rounded-lg p-2 text-gray-800 bg-[#F2F3F6]"
                                 placeholder="Masukkan nama Provinsi" required>
                         </div>
+
+                        <!-- Import File Excel -->
+                        <div id="import-form" class="w-full space-y-4 mt-4 hidden">
+                            <label class="text-base font-semibold mb-4">Import Data Excel (Opsional)</label>
+                            <input type="file" name="file" id="file"
+                                class="form-input mt-3 rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" accept=".xlsx, .xls" />
+                            <p class="text-sm text-gray-500 mt-1">Format file: .xlsx, .xls (Opsional)</p>
+                        </div>
+
+                        <!-- Buttons -->
                         <div class="flex justify-center items-center gap-4 mt-6">
                             <button type="submit"
                                 class="btn grow border border-transparent rounded-md text-white flex justify-center gap-3 bg-green-digitree">
@@ -114,12 +135,13 @@
 
         <button onclick="toggle('Tambah')" class="py-3 px-5 rounded-lg bg-green-digitree text-white inline-block max-w-fit">
             <div class="flex items-center gap-2" id="openAddModalBtn">
-                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M12.6562 6.875C12.6562 7.40234 12.2168 7.8418 11.7188 7.8418H7.5V12.0605C7.5 12.5586 7.06055 12.9688 6.5625 12.9688C6.03516 12.9688 5.625 12.5586 5.625 12.0605V7.8418H1.40625C0.878906 7.8418 0.46875 7.40234 0.46875 6.875C0.46875 6.37695 0.878906 5.9668 1.40625 5.9668H5.625V1.74805C5.625 1.2207 6.03516 0.78125 6.5625 0.78125C7.06055 0.78125 7.5 1.2207 7.5 1.74805V5.9668H11.7188C12.2168 5.9375 12.6562 6.37695 12.6562 6.875Z"
                         fill="white" />
                 </svg>
-                <span>Tambah Database Index Lokasi</span>
+                <span>Tambah Database Lokasi</span>
             </div>
         </button>
 
@@ -426,6 +448,31 @@
                         }
                     });
                 }
+            });
+        });
+    </script>
+    <script>
+        // Toggling antara form manual dan import
+        // Toggle antara form manual dan import
+        document.getElementById('manual').addEventListener('change', function() {
+            document.getElementById('manual-form').style.display = 'block';
+            document.getElementById('import-form').style.display = 'none';
+
+            // Aktifkan input manual
+            const manualInputs = document.querySelectorAll('#manual-form input');
+            manualInputs.forEach(input => {
+                input.disabled = false; // Aktifkan input manual
+            });
+        });
+
+        document.getElementById('import').addEventListener('change', function() {
+            document.getElementById('import-form').style.display = 'block';
+            document.getElementById('manual-form').style.display = 'none';
+
+            // Nonaktifkan input manual
+            const manualInputs = document.querySelectorAll('#manual-form input');
+            manualInputs.forEach(input => {
+                input.disabled = true; // Nonaktifkan input manual
             });
         });
     </script>

@@ -167,7 +167,8 @@
         <div class="flex-col my-5 grid grid-cols-1 sm:grid-cols-4 xs:grid-cols-4 gap-5">
             <select
                 class="select bg-white border-2 border-lightgray/10 focus:ring-2 focus:ring-inset focus:ring-slate-300 p-5 rounded-lg"
-                id="desa" name="id_villages" autocomplete="desa-pohon" aria-placeholder="Pilih desa Pohon" @change="navigateToLocation">
+                id="desa" name="id_villages" autocomplete="desa-pohon" aria-placeholder="Pilih desa Pohon"
+                @change="navigateToLocation">
                 <option class="text-center" selected>Semua Lokasi</option>
                 @foreach ($desa as $item)
                     <option class="capitalize" value="{{ $item->id }}">{{ $item->name }}
@@ -179,39 +180,39 @@
 
 
         <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-            <div class="bg-white border-2 border-lightgray/10 p-5 rounded-lg">
+            <div class="bg-green-100 border-2 border-lightgray/10 p-5 rounded-lg">
                 <div class="flex items-center gap-2.5 flex-wrap">
                     <div
                         class="shrink-0 h-[50px] w-[50px] flex items-center justify-center bg-primary/10 rounded-full text-primary">
-                        <img src="{{ asset('assets/img/icon/icon-jumlah-pohon.svg') }}" alt="icon jumlah pohon">
+                        <img src="{{ asset('assets/img/icon/home-asset-dashboard.svg') }}" alt="icon jumlah aset">
                     </div>
                     <div class="flex items-end gap-3">
                         <div class="flex-1">
-                            <h4 class="text-lightgray text-sm">Jumlah Pohon</h4>
+                            <h4 class="text-lightgray text-sm">Jumlah Aset</h4>
                             <p class="font-bold text-lg mt-1.5">{{ $summary['totalPlant'] }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="bg-white border-2 border-lightgray/10 p-5 rounded-lg">
+            <div class="bg-red-100 border-2 border-lightgray/10 p-5 rounded-lg">
                 <div class="flex items-center gap-2.5 flex-wrap">
                     <div
                         class="shrink-0 h-[50px] w-[50px] flex items-center justify-center bg-pink/10 rounded-full text-pink">
-                        <img src="{{ asset('assets/img/icon/icon-jenis-pohon.svg') }}" alt="icon jenis pohon">
+                        <img src="{{ asset('assets/img/icon/temple-asset-dashboard.svg') }}" alt="icon jenis aset">
                     </div>
                     <div class="flex items-end gap-3">
                         <div class="flex-1">
-                            <h4 class="text-lightgray text-sm">Jenis Pohon</h4>
+                            <h4 class="text-lightgray text-sm">Jenis Aset</h4>
                             <p class="font-bold text-lg mt-1.5">{{ $summary['totalIndexPlant'] }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="bg-white border-2 border-lightgray/10 p-5 rounded-lg">
+            <div class="bg-violet-100 border-2 border-lightgray/10 p-5 rounded-lg">
                 <div class="flex items-center gap-2.5 flex-wrap">
                     <div
                         class="shrink-0 h-[50px] w-[50px] flex items-center justify-center bg-orange/10 rounded-full text-orange">
-                        <img src="{{ asset('assets/img/icon/icon-scan-qr.svg') }}" alt="icon scan qr code">
+                        <img src="{{ asset('assets/img/icon/qr-asset-dashboard.svg') }}" alt="icon scan qr code">
                     </div>
                     <div class="flex items-end gap-3">
                         <div class="flex-1">
@@ -221,15 +222,15 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white border-2 border-lightgray/10 p-5 rounded-lg">
+            <div class="bg-yellow-100 border-2 border-lightgray/10 p-5 rounded-lg">
                 <div class="flex items-center gap-2.5 flex-wrap">
                     <div
                         class="shrink-0 h-[50px] w-[50px] flex items-center justify-center bg-purple/10 rounded-full text-purple">
-                        <img src="{{ asset('assets/img/icon/icon-rating-pohon.svg') }}" alt="icon rating pohon">
+                        <img src="{{ asset('assets/img/icon/star-asset-dashboard.svg') }}" alt="icon rating aset">
                     </div>
                     <div class="flex items-end gap-3">
                         <div class="flex-1">
-                            <h4 class="text-lightgray text-sm">Rating Pohon</h4>
+                            <h4 class="text-lightgray text-sm">Rating Aset</h4>
                             <p class="font-bold text-lg mt-1.5">{{ $summary['avgRating'] }}</p>
                         </div>
                     </div>
@@ -748,16 +749,14 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-        const selectElement = document.getElementById('desa');
+            const selectElement = document.getElementById('desa');
 
-        selectElement.addEventListener('change', function() {
-            const selectedValue = this.value;
-            if (selectedValue) {
-                window.location.href = `/dashboard/perlokasi/${selectedValue}`;
-            }
+            selectElement.addEventListener('change', function() {
+                const selectedValue = this.value;
+                if (selectedValue) {
+                    window.location.href = `/dashboard/perlokasi/${selectedValue}`;
+                }
+            });
         });
-    });
-
-        
     </script>
 @endsection

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Ads;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 class AdsController extends Controller
@@ -44,11 +43,12 @@ class AdsController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all()); // Cek data yang dikirimkan
         $validator = Validator::make($request->all(), [
-            'id' => 'nullable',
             'title' => 'required|min:3',
-            'image' => 'required|image|max:2048',
+            'image' => 'required|image|max:4096',
         ]);
+
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
@@ -71,7 +71,7 @@ class AdsController extends Controller
         }
         $data = [
             'title' => ucwords(strtolower($request->title)),
-            'image' => $fileName
+            'image' => $fileName,
         ];
         // dd($data);
         Ads::create($data);
@@ -98,40 +98,41 @@ class AdsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'id' => 'required',
-            'title' => 'required|min:3',
-            'image' => 'nullable|image|max:2048',
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput()
-                ->with('error', 'Data gagal disimpan!');
-        }
-        $ads = Ads::findOrFail($id);
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $originalFileName = $file->getClientOriginalName();
-            $fileExtension = $file->getClientOriginalExtension();
-            $timestamp = now()->format('Ymd_His');
-            $fileName = 'iklan-' . $request->title . '_' . $timestamp . '.' . $fileExtension;
-            $filePath = $request->file('image')->storeAs('images/iklan', $fileName, 'public');
+    // public function update(Request $request, $id)
+    // {
+    //     // dd($request->all()); // Cek data yang dikirimkan
+    //     $validator = Validator::make($request->all(), [
+    //         'id' => 'required',
+    //         'title' => 'required|min:3',
+    //         'image' => 'nullable|image|max:2048',
+    //     ]);
+    //     if ($validator->fails()) {
+    //         return redirect()->back()
+    //             ->withErrors($validator)
+    //             ->withInput()
+    //             ->with('error', 'Data gagal disimpan!');
+    //     }
+    //     $ads = Ads::findOrFail($id);
+    //     if ($request->hasFile('image')) {
+    //         $file = $request->file('image');
+    //         $originalFileName = $file->getClientOriginalName();
+    //         $fileExtension = $file->getClientOriginalExtension();
+    //         $timestamp = now()->format('Ymd_His');
+    //         $fileName = 'iklan-' . $request->title . '_' . $timestamp . '.' . $fileExtension;
+    //         $filePath = $request->file('image')->storeAs('images/iklan', $fileName, 'public');
 
-            // $uploadedFile = $request->file('image');
-            // $imageName = 'iklan-' . $request->title . '.' . $uploadedFile->getClientOriginalExtension();
-            // $request->file('image')->storeAs('public/images', $imageName);
-        } else {
-            $fileName = $ads->image;
-        }
-        $ads->title = $request->title;
-        $ads->image = $fileName;
-        // dd($ads);
-        $ads->save();
-        return redirect()->route('dashboard.ads.index')->with('success', 'Data Berhasil Diperbarui!');
-    }
+    //         // $uploadedFile = $request->file('image');
+    //         // $imageName = 'iklan-' . $request->title . '.' . $uploadedFile->getClientOriginalExtension();
+    //         // $request->file('image')->storeAs('public/images', $imageName);
+    //     } else {
+    //         $fileName = $ads->image;
+    //     }
+    //     $ads->title = $request->title;
+    //     $ads->image = $fileName;
+    //     // dd($ads);
+    //     $ads->save();
+    //     return redirect()->route('dashboard.ads.index')->with('success', 'Data Berhasil Diperbarui!');
+    // }
 
     /**
      * Remove the specified resource from storage.
