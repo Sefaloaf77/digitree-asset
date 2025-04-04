@@ -7,35 +7,35 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Plants extends Model
+class Assets extends Model
 {
     use HasFactory;
-    protected $table = 'plants';
+    protected $table = 'assets';
     protected $guarded = ['id'];
     public $timestamps = true;
 
     protected $fillable = [
-        'id_index_plants',
-        'id_content_plants',
-        'code_plant',
+        'id_index_asset',
+        'id_content_asset',
+        'code_asset',
         'tall',
         'round',
         'location',
-        'date_plant',
+        'date_asset',
         'source_fund',
         'qr_code',
         'address',
-        'id_villages',
+        'id_village',
         'age'
     ];
-    public function IndexPlant()
+    public function IndexAsset()
     {
-        return $this->hasOne(IndexPlants::class, 'id', 'id_index_plants'); // Sesuaikan nama field
+        return $this->hasOne(IndexAssets::class, 'id', 'id_index_asset'); // Sesuaikan nama field
     }
 
-    public function ContentPlant()
+    public function ContentAsset()
     {
-        return $this->hasOne(ContentPlants::class, 'id', 'id_content_plants'); // Sesuaikan nama field
+        return $this->hasOne(ContentAssets::class, 'id', 'id_content_asset'); // Sesuaikan nama field
     }
 
     public function Villages()

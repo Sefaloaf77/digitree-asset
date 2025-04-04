@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\IndexPlants;
+use App\Models\Ads;
+use App\Models\Assets;
+use App\Models\IndexAssets;
 use App\Models\Plants;
 use App\Models\RecordScans;
 use App\Models\Reviews;
@@ -17,8 +19,8 @@ class DashboardController extends Controller
     public function index()
     {
         Gate::authorize('superadmin');
-        $totalPlant = Plants::count();
-        $totalIndexPlant = IndexPlants::count();
+        $totalPlant = Ads::count();
+        $totalIndexPlant = IndexAssets::count();
         $totalScannedQR = RecordScans::count();
         $avgRating = round(Reviews::avg('rating'), 1);
         $summaryData = [
@@ -35,7 +37,7 @@ class DashboardController extends Controller
     {
         // Gate::authorize('superadmin');
         // Ambil data plant berdasarkan code_plant
-        $plants = Plants::where('id_villages', $id)->get();
+        $plants = Assets::where('id_village', $id)->get();
         // Ambil list code_plant dari plants
         $codePlantsList = $plants->pluck('code_plant');
         $indexPlantsList = $plants->pluck('id_index_plants');
@@ -43,7 +45,7 @@ class DashboardController extends Controller
         // Hitung total plants berdasarkan id_villages
         $totalPlantbyVillages = $plants->count();
         // Hitung total index plant berdasarkan code_plant yang terkait
-        $totalIndexPlantByCode = IndexPlants::whereIn('id', $indexPlantsList)->count();
+        $totalIndexPlantByCode = IndexAssets::whereIn('id', $indexPlantsList)->count();
         // Hitung total reviews berdasarkan code_plant yang terkait
         $totalRecordByCode = RecordScans::whereIn('code_plant', $codePlantsList)->count();
         // Hitung rata-rata rating berdasarkan code_plant yang terkait

@@ -333,36 +333,6 @@
         });
         var toggleModal = false
 
-        // function toggle(params) {
-        //     modal.dataset.mode = mode;
-        //     toggleModal = !toggleModal
-        //     if (mode === "edit" && data) {
-        //         modalTitle.innerText = "Edit Iklan";
-        //         modalForm.action = `/dashboard/ads/${data.id}`;
-        //         formMethod.value = "PUT";
-        //         idInput.value = data.id;
-        //         titleInput.value = data.title;
-
-        //         // Jika ada gambar sebelumnya, tampilkan
-        //         if (data.image) {
-        //             previewImg.src = data.image;
-        //             previewImg.classList.remove("hidden");
-        //             imageNull.classList.add("hidden");
-        //         }
-        //     } else {
-        //         modalTitle.innerText = "Tambah Iklan";
-        //         modalForm.action = `/dashboard/ads/store`;
-        //         formMethod.value = "POST";
-        //         idInput.value = "";
-        //         titleInput.value = "";
-        //         previewImg.classList.add("hidden");
-        //         imageNull.classList.remove("hidden");
-        //     }
-
-        //     // modal.classList.remove("hidden");
-        //     modal.classList.toggle("hidden");
-        // }
-
         function toggle(mode, data = null) {
             const modal = document.getElementById("modal");
             const modalTitle = document.getElementById("titleModal");
@@ -390,7 +360,7 @@
                 }
             } else if (mode == 'tambah') {
                 modalTitle.innerText = "Tambah Iklan";
-                modalForm.action = `/dashboard/ads/store`;
+                modalForm.action = `/dashboard/ads`;
                 formMethod.value = "POST";
                 idInput.value = "";
                 titleInput.value = "";
