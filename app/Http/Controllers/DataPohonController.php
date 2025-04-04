@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Plants;
+use App\Models\Assets;
 use App\Models\Villages;
-use App\Models\IndexPlants;
+use App\Models\IndexAssets;
 use Illuminate\Http\Request;
-use App\Models\ContentPlants;
+use App\Models\ContentAssets;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -20,8 +20,7 @@ class DataPohonController extends Controller
     public function index()
     {
         Gate::authorize('superadmin');
-        $data = Plants::all();
-
+        $data = Assets::all();
         return view('database-pohon.index', ['data' => $data]);
     }
 
@@ -31,7 +30,7 @@ class DataPohonController extends Controller
     public function create()
     {
         Gate::authorize('superadmin');
-        $jenisPohon = IndexPlants::all();
+        $jenisPohon = IndexAssets::all();
         $desa = Villages::all();
         return view('database-pohon.create', ['jenisPohon' => $jenisPohon, 'desa' => $desa]);
     }
@@ -60,9 +59,9 @@ class DataPohonController extends Controller
             }
             // dd($request);
 
-            $contentId = ContentPlants::where('id_index_plant', $request->id_index_plants)->value('id');
+            $contentId = ContentAssets::where('id_index_plant', $request->id_index_plants)->value('id');
             // dd($contentId);
-            Plants::create([
+            Assets::create([
                 'id_index_plants' => $request->id_index_plants,
                 'id_content_plants' => $contentId,
                 'code_plant' => $request->code_plant,
@@ -88,73 +87,63 @@ class DataPohonController extends Controller
     //Store Index and Content pohon
     public function store(Request $request)
     {
-        // dd($request);
-        $rules = [
-            'file-uploadT' => 'required|image|mimes:jpeg,png,jpg,gif,bmp,svg', // File validation
-            'name_pohon' => 'required|string|max:255',
-            'kingdom' => 'required|string|max:255',
-            'divisi' => 'required|string|max:255',
-            'spesies' => 'required|string|max:255',
-            'kelas' => 'required|string|max:255',
-            'ordo' => 'required|string|max:255',
-            'genus' => 'required|string|max:255',
-            'history' => 'nullable|string',
-            'morfologi' => 'nullable|string',
-            'benefit' => 'nullable|string',
-            'fact' => 'nullable|string',
-            'link_youtube' => 'nullable|url', // Optional validation for URL
-        ];
+        try {
+            $rules = [
+                'file-uploadT' => 'required|image', // File validation
+                'nama_lokal' => 'required|string|max:255',
+                'jenis_asset' => 'required|string|max:255',
+                'history' => 'nullable|string',
+                'description' => 'nullable|string',
+                'benefit' => 'nullable|string',
+                'fact' => 'nullable|string',
+                'link_youtube' => 'nullable|url', // Optional validation for URL
+            ];
 
-        $uploadedFile = $request->file('file-uploadT');
-        $imageName = 'konten_pohon_' . $request->name_pohon . '.' . $uploadedFile->getClientOriginalExtension();
-        $request->file('file-uploadT')->storeAs('public/images', $imageName);
+            $validator = Validator::make($request->all(), $rules);
 
-        $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Data gagal disimpan');
+            }
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Data gagal disimpan');
+            $uploadedFile = $request->file('file-uploadT');
+            $imageName = 'konten_asset_' . $request->nama_lokal . '.' . $uploadedFile->getClientOriginalExtension();
+            $request->file('file-uploadT')->storeAs('public/images', $imageName);
+
+            $dataIndex = [
+                'nama_lokal' => $request->nama_lokal,
+                'jenis_aset' => $request->jenis_asset,
+            ];
+
+            // Save data to Table 1 first
+            $table_index = IndexAssets::create($dataIndex);
+            $id_index = $table_index->id;
+
+            // Memparse URL untuk mendapatkan komponen query-nya
+            $parsed_url = parse_url($request->link_youtube);
+
+            // Memparse query string untuk mendapatkan nilai dari 'v'
+            parse_str($parsed_url['query'], $query_params);
+
+            // Mendapatkan nilai dari 'v'
+            $video_id = $query_params['v'];
+
+            $dataContent = [
+                'history' => $request->history,
+                'description' => $request->description,
+                'benefit' => $request->benefit,
+                'fact' => $request->fact,
+                'video' => $video_id,
+                'image' => 'images/' . $imageName, // Store image path
+                'id_index_asset' => $id_index,
+            ];
+
+            // Save data to Table 2 with the retrieved ID
+            ContentAssets::create($dataContent);
+
+            return redirect('dashboard/asset')->with('success', 'Data berhasil disimpan');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
-
-        $dataIndex = [
-            'name' => $request->name_pohon,
-            'kingdom' => $request->kingdom,
-            'divisi' => $request->divisi,
-            'species' => $request->spesies,
-            'kelas' => $request->kelas,
-            'ordo' => $request->ordo,
-            'genus' => $request->genus,
-            'famili' => $request->famili,
-        ];
-
-        // Save data to Table 1 first
-        $table_index = IndexPlants::create($dataIndex);
-        $id_index = $table_index->id;
-
-        // Memparse URL untuk mendapatkan komponen query-nya
-        $parsed_url = parse_url($request->link_youtube);
-
-        // Memparse query string untuk mendapatkan nilai dari 'v'
-        parse_str($parsed_url['query'], $query_params);
-
-        // Mendapatkan nilai dari 'v'
-        $video_id = $query_params['v'];
-
-        $dataContent = [
-            'history' => $request->history,
-            'morfologi' => $request->morfologi,
-            'benefit' => $request->benefit,
-            'fact' => $request->fact,
-            'videos' => $video_id,
-            'image' => 'images/' . $imageName, // Store image path
-            'id_index_plant' => $id_index,
-        ];
-
-        // Save data to Table 2 with the retrieved ID
-        ContentPlants::create($dataContent);
-
-        // dd($tb_Content_Plant);
-
-        return redirect('dashboard/pohon')->with('success', 'Data berhasil disimpan');
     }
 
     /**
@@ -209,7 +198,7 @@ class DataPohonController extends Controller
             'address' => $request->address,
             'location' => $request->location,
         ];
-        Plants::where('code_plant', $request->code_plant)->update($data);
+        Assets::where('code_plant', $request->code_plant)->update($data);
         return redirect()->route('dashboard.index')->with('success', 'Data Berhasil Tersimpan!');
     }
 
@@ -224,7 +213,7 @@ class DataPohonController extends Controller
 
     public function getDataIndexPohon()
     {
-        $dataIndex = IndexPlants::get();
+        $dataIndex = IndexAssets::get();
 
         $dataIndexFilter = [];
         $no = 1;
@@ -246,9 +235,9 @@ class DataPohonController extends Controller
     public function getDataContentPohon($id)
     {
         // dd($id);
-        $dataIndex = IndexPlants::where('id', $id)->first();
+        $dataIndex = IndexAssets::where('id', $id)->first();
         $id_data_index = $dataIndex->id; //id index plant for the fix content match with the index
-        $dataContent = ContentPlants::where('id_index_plant', $id_data_index)->first();
+        $dataContent = ContentAssets::where('id_index_plant', $id_data_index)->first();
 
         $dataAll = [
             'name' => $dataIndex->name ? $dataIndex->name : '-',
@@ -278,7 +267,7 @@ class DataPohonController extends Controller
 
         // dd($content_plant_specifict);
         $dataIndexSpecifict = [
-            'name' => $request->name_pohon,
+            'name' => $request->name_asset,
             'kingdom' => $request->kingdom,
             'divisi' => $request->divisi,
             'species' => $request->spesies,
@@ -289,7 +278,7 @@ class DataPohonController extends Controller
         ];
 
         $id_index_plant = $request->id_index;
-        $content_plant_specifict = ContentPlants::where('id_index_plant', $id_index_plant)->firstOrFail();
+        $content_plant_specifict = ContentAssets::where('id_index_plant', $id_index_plant)->firstOrFail();
 
         // Memparse URL untuk mendapatkan komponen query-nya
         $parsed_url = parse_url($request->link_youtube);
@@ -312,16 +301,16 @@ class DataPohonController extends Controller
         if ($request->hasFile('file-uploadE') && $request->file('file-uploadE')->isValid()) {
             // Handle file upload
             $uploadedFile = $request->file('file-uploadE');
-            $imageName = 'konten_pohon_' . $request->name_pohon . '.' . $uploadedFile->getClientOriginalExtension();
+            $imageName = 'konten_asset_' . $request->name_asset . '.' . $uploadedFile->getClientOriginalExtension();
             $uploadedFile->storeAs('public/images', $imageName);
             $dataContentSpecifict['image'] = 'images/' . $imageName;
             // dd($dataContentSpecifict['image']);
         }
-        // Update data pada IndexPlants
-        $index_plant = IndexPlants::findOrFail($id_index_plant);
+        // Update data pada IndexAssets
+        $index_plant = IndexAssets::findOrFail($id_index_plant);
         $index_plant->update($dataIndexSpecifict);
 
-        // Update data pada ContentPlants
+        // Update data pada ContentAssets
         $content_plant_specifict->update($dataContentSpecifict);
 
         return redirect()->back()->with('success', 'Plant details updated successfully');
@@ -335,26 +324,26 @@ class DataPohonController extends Controller
         // dd($request);
 
         // $id_index_plant = $request->id_konten_delete;
-        // $content_plant_specifict = ContentPlants::where('id_index_plant', $id_index_plant)->firstOrFail();
+        // $content_plant_specifict = ContentAssets::where('id_index_plant', $id_index_plant)->firstOrFail();
         // $content_plant_specifict->delete();
 
-        // // Menghapus data dari tabel IndexPlants berdasarkan id_index
-        // $index_plant = IndexPlants::where('id', $id_index_plant)->findOrFail($id_index_plant);
+        // // Menghapus data dari tabel IndexAssets berdasarkan id_index
+        // $index_plant = IndexAssets::where('id', $id_index_plant)->findOrFail($id_index_plant);
         // $index_plant->delete();
 
         // Find the record to be deleted using the provided ID
-        // $plant = ContentPlants::findOrFail($id);
+        // $plant = ContentAssets::findOrFail($id);
 
         // Delete the record from the database
         // $plant->delete();
         $id_index_plant = $request->id_konten_delete;
         DB::transaction(function () use ($id_index_plant) {
-            // Menghapus data dari tabel ContentPlants berdasarkan id_index_plant
-            $content_plant_specific = ContentPlants::where('id_index_plant', $id_index_plant)->firstOrFail();
+            // Menghapus data dari tabel ContentAssets berdasarkan id_index_plant
+            $content_plant_specific = ContentAssets::where('id_index_plant', $id_index_plant)->firstOrFail();
             $content_plant_specific->delete();
 
-            // Menghapus data dari tabel IndexPlants berdasarkan id_index_plant
-            $index_plant = IndexPlants::findOrFail($id_index_plant);
+            // Menghapus data dari tabel IndexAssets berdasarkan id_index_plant
+            $index_plant = IndexAssets::findOrFail($id_index_plant);
             $index_plant->delete();
         });
 
@@ -379,12 +368,12 @@ class DataPohonController extends Controller
         // return response()->json(['qr_code' => base64_encode($qrCode)], 200);
 
         // Mengambil data dari tabel plant berdasarkan id
-        $plant = Plants::where('code_plant', $id)->first();
+        $plant = Assets::where('code_plant', $id)->first();
         // dd($plant);
 
         if ($plant) {
             // Mengambil data dari tabel index_plants berdasarkan id_index_plants
-            $indexPlant = IndexPlants::find($plant->id_index_plants);
+            $indexPlant = IndexAssets::find($plant->id_index_plants);
 
             if ($indexPlant) {
                 return response()->json([

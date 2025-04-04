@@ -39,14 +39,14 @@
                                                 clip-rule="evenodd" />
                                         </svg>
                                         <img id="previewImgT" :src="previewImgT"
-                                            class="mx-auto w-full max-h-48 object-cover hidden">
+                                            class="mx-auto w-full max-h-48 object-contain hidden">
                                         <div class="text-center mt-4 flex justify-center text-sm leading-6 text-gray-600"
                                             x-data="{ selectedFile: null }">
                                             <label for="file-uploadT"
                                                 class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                                                 <span>Upload New Image <span class="text-red-700"> *</span></span>
                                                 <input id="file-uploadT" name="file-uploadT" type="file" class="sr-only"
-                                                    x-on:change="handleFileChangeT" required>
+                                                    accept="image/*" x-on:change="handleFileChangeT" required>
                                             </label>
                                             <p class="pl-1">or drag and drop</p>
                                         </div>
@@ -77,87 +77,22 @@
                                         <table class="w-full max-w-5xl">
                                             <tbody>
                                                 <tr>
-                                                    <td>Nama Umum<span class="text-red-700"> *</span></td>
+                                                    <td>Nama Lokal<span class="text-red-700"> *</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <input type="text" placeholder="Masukkan nama umum asset"
-                                                            name="name_pohon" id="nama_pohonT" required
+                                                        <input type="text" placeholder="Masukkan nama lokal asset"
+                                                            name="nama_lokal" id="nama_lokalT"
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Taksonomi</td>
+                                                    <td>Jenis Asset<span class="text-red-700"> *</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>Kingdom<span class="text-red-700"> *</span></td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text"
-                                                                        placeholder="Masukkan nama Kingdom" name="kingdom"
-                                                                        id="kingdomT" required
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Divisi<span class="text-red-700"> *</span></td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text" placeholder="Masukkan nama Divisi"
-                                                                        name="divisi" id="divisiT" required
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Kelas<span class="text-red-700"> *</span></td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text" placeholder="Masukkan nama Kelas"
-                                                                        name="kelas" id="kelasT" required
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Ordo<span class="text-red-700"> *</span></td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text" placeholder="Masukkan nama Ordo"
-                                                                        name="ordo" id="ordoT" required
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Famili<span class="text-red-700"> *</span></td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text" placeholder="Masukkan nama Famili"
-                                                                        name="famili" id="familiT" required
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Genus<span class="text-red-700"> *</span></td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text" placeholder="Masukkan nama Genus"
-                                                                        name="genus" id="genusT" required
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Spesies<span class="text-red-700"> *</span></td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text"
-                                                                        placeholder="Masukkan nama Spesies" name="spesies"
-                                                                        id="spesiesT" required
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                        </table>
+                                                        <input type="text" placeholder="Masukkan jenis asset"
+                                                            name="jenis_asset" id="jenis_assetT"
+                                                            class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
                                                     </td>
-
                                                 </tr>
                                                 <tr class="align-top">
                                                     <td>Sejarah<span class="text-red-700"> *</span></td>
@@ -168,10 +103,10 @@
                                                     </td>
                                                 </tr>
                                                 <tr class="align-top">
-                                                    <td>Morfologi<span class="text-red-700"> *</span></td>
+                                                    <td>Deskripsi<span class="text-red-700"> *</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <textarea name="morfologi" placeholder="Masukkan penjelasan morfologi asset" id="morfologiT" required
+                                                        <textarea name="description" placeholder="Masukkan penjelasan deskripsi asset" id="descriptionT" required
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" rows="10"></textarea>
                                                     </td>
                                                 </tr>
@@ -273,14 +208,15 @@
                                                 clip-rule="evenodd" />
                                         </svg> --}}
                                         <img id="previewImgD" :src="previewImgD"
-                                            class="mx-auto w-full max-h-48 object-cover">
+                                            class="mx-auto w-full max-h-48 object-contain">
                                         <div class="text-center mt-4 flex justify-center text-sm leading-6 text-gray-600"
                                             x-data="{ selectedFile: null }">
                                             <label for="file-uploadD"
                                                 class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                                                 <span>Preview Image</span>
                                                 <input id="file-uploadD" name="file-uploadD" type="file"
-                                                    class="sr-only" x-on:change="handleFileChangeD" disabled>
+                                                    accept="image/*" class="sr-only" x-on:change="handleFileChangeD"
+                                                    disabled>
                                             </label>
                                             {{-- <p class="pl-1">or drag and drop</p> --}}
                                         </div>
@@ -311,91 +247,22 @@
                                         <table class="w-full max-w-5xl">
                                             <tbody>
                                                 <tr>
-                                                    <td>Nama Umum<span class="text-red-700"> *</span></td>
+                                                    <td>Nama Lokal<span class="text-red-700"> *</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <input type="text" placeholder="Masukkan nama umum asset"
-                                                            name="name_pohon" id="nama_pohonD" disabled
+                                                        <input type="text" placeholder="Masukkan nama lokal asset"
+                                                            name="nama_lokal" id="nama_lokalD" disabled
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Taksonomi</td>
+                                                    <td>Jenis Asset<span class="text-red-700"> *</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>Kingdom</td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text"
-                                                                        placeholder="Masukkan nama Kingdom" name="kingdom"
-                                                                        id="kingdomD" disabled
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Divisi</td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text"
-                                                                        placeholder="Masukkan nama Divisi" name="divisi"
-                                                                        id="divisiD" disabled
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Kelas</td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text"
-                                                                        placeholder="Masukkan nama Kelas" name="kelas"
-                                                                        id="kelasD" disabled
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Ordo</td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text" placeholder="Masukkan nama Ordo"
-                                                                        name="ordo" id="ordoD" disabled
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Famili</td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text"
-                                                                        placeholder="Masukkan nama Famili" name="famili"
-                                                                        id="familiD" disabled
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Genus<span class="text-red-700"> *</span></td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text"
-                                                                        placeholder="Masukkan nama Genus" name="genus"
-                                                                        id="genusD" disabled
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Spesies<span class="text-red-700"> *</span></td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text"
-                                                                        placeholder="Masukkan nama Spesies" name="spesies"
-                                                                        id="spesiesD" disabled
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                        </table>
+                                                        <input type="text" placeholder="Masukkan jenis asset"
+                                                            name="jenis_asset" id="jenis_assetD" disabled
+                                                            class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
                                                     </td>
-
                                                 </tr>
                                                 <tr class="align-top">
                                                     <td>Sejarah<span class="text-red-700"> *</span></td>
@@ -406,10 +273,10 @@
                                                     </td>
                                                 </tr>
                                                 <tr class="align-top">
-                                                    <td>Morfologi</td>
+                                                    <td>Deskripsi</td>
                                                     <td>:</td>
                                                     <td>
-                                                        <textarea name="morfologi" placeholder="Masukkan penjelasan morfologi asset" id="morfologiD" disabled
+                                                        <textarea name="description" placeholder="Masukkan penjelasan deskripsi asset" id="descriptionD" disabled
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" rows="10"></textarea>
                                                     </td>
                                                 </tr>
@@ -499,14 +366,14 @@
                                                 clip-rule="evenodd" />
                                         </svg> --}}
                                         <br>
-                                        <img id="previewImgE" class="mx-auto w-full max-h-48 object-cover">
+                                        <img id="previewImgE" class="mx-auto w-full max-h-48 object-contain">
                                         <div class="text-center mt-4 flex justify-center text-sm leading-6 text-gray-600"
                                             x-data="{ selectedFile: null }">
                                             <label for="file-uploadE"
                                                 class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                                                 <span>Preview Image</span>
                                                 <input id="file-uploadE" name="file-uploadE" type="file"
-                                                    class="sr-only" x-on:change="handleFileChangeE">
+                                                    accept="image/*" class="sr-only" x-on:change="handleFileChangeE">
                                             </label>
                                             <p class="pl-1">or drag and drop</p>
                                         </div>
@@ -541,91 +408,22 @@
                                             <tbody>
                                                 <input type="hidden" name="id_index" id="id_index" />
                                                 <tr>
-                                                    <td>Nama Umum<span class="text-red-700"> *</span></td>
+                                                    <td>Nama Lokal<span class="text-red-700"> *</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <input type="text" placeholder="Masukkan nama umum pohon"
-                                                            name="name_pohon" id="nama_pohonE" required
+                                                        <input type="text" placeholder="Masukkan nama lokal asset"
+                                                            name="nama_lokal" id="nama_lokalE"
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Taksonomi</td>
+                                                    <td>Jenis Asset<span class="text-red-700"> *</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>Kingdom</td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text"
-                                                                        placeholder="Masukkan nama Kingdom" name="kingdom"
-                                                                        id="kingdomE"
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Divisi</td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text"
-                                                                        placeholder="Masukkan nama Divisi" name="divisi"
-                                                                        id="divisiE"
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Kelas</td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text"
-                                                                        placeholder="Masukkan nama Kelas" name="kelas"
-                                                                        id="kelasE"
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Ordo</td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text" placeholder="Masukkan nama Ordo"
-                                                                        name="ordo" id="ordoE"
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Famili</td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text"
-                                                                        placeholder="Masukkan nama Famili" name="famili"
-                                                                        id="familiE"
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Genus<span class="text-red-700"> *</span></td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text"
-                                                                        placeholder="Masukkan nama Genus" name="genus"
-                                                                        id="genusE" required
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Spesies<span class="text-red-700"> *</span></td>
-                                                                {{-- <td></td> --}}
-                                                                <td>
-                                                                    <input type="text"
-                                                                        placeholder="Masukkan nama Spesies" name="spesies"
-                                                                        id="spesiesE" required
-                                                                        class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
-                                                                </td>
-                                                            </tr>
-                                                        </table>
+                                                        <input type="text" placeholder="Masukkan jenis asset"
+                                                            name="jenis_asset" id="jenis_assetE"
+                                                            class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]">
                                                     </td>
-
                                                 </tr>
                                                 <tr class="align-top">
                                                     <td>Sejarah<span class="text-red-700"> *</span></td>
@@ -636,10 +434,10 @@
                                                     </td>
                                                 </tr>
                                                 <tr class="align-top">
-                                                    <td>Morfologi</td>
+                                                    <td>Deskripsi</td>
                                                     <td>:</td>
                                                     <td>
-                                                        <textarea name="morfologi" placeholder="Masukkan penjelasan morfologi asset" id="morfologiE"
+                                                        <textarea name="description" placeholder="Masukkan penjelasan deskripsi asset" id="descriptionE"
                                                             class="w-full rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" rows="10"></textarea>
                                                     </td>
                                                 </tr>
@@ -728,7 +526,7 @@
                             <div class="w-full space-y-4">
                                 <h5 class="font-bold text-lg text-center">Apakah Anda Yakin?</h5>
                                 <p class="text-center">Apakah Anda yakin ingin menghapus konten data Asset "<strong><span
-                                            id="name_del_pohon"></span></strong>"
+                                            id="name_del_asset"></span></strong>"
                                     ?
                                 </p>
                                 <input type="hidden" name="id_konten_delete" id="id_del">
@@ -866,24 +664,24 @@
                                 </th>
                                 <th width="10%">
                                     <div class="flex items-center justify-between gap-2">
-                                        <p class="">Nama Asset</p>
+                                        <p class="">Nama Lokal Asset</p>
                                         <div class="flex flex-col">
-                                            <svg @click="sort('job', 'asc')" fill="none" fill="none"
+                                            <svg @click="sort('nama_lokal', 'asc')" fill="none" fill="none"
                                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="4"
                                                 viewBox="0 0 24 24" stroke="currentColor"
                                                 class="text-muted h-3 w-3 cursor-pointer fill-current"
                                                 x-bind:class="{
-                                                    '!text-black': sorted.field === 'job' && sorted
+                                                    '!text-black': sorted.field === 'nama_lokal' && sorted
                                                         .rule === 'asc'
                                                 }">
                                                 <path d="M5 15l7-7 7 7"></path>
                                             </svg>
-                                            <svg @click="sort('job', 'desc')" fill="none" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24"
-                                                stroke="currentColor"
+                                            <svg @click="sort('nama_lokal', 'desc')" fill="none"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="4"
+                                                viewBox="0 0 24 24" stroke="currentColor"
                                                 class="text-muted h-3 w-3 cursor-pointer fill-current"
                                                 x-bind:class="{
-                                                    '!text-black': sorted.field === 'job' && sorted
+                                                    '!text-black': sorted.field === 'nama_lokal' && sorted
                                                         .rule === 'desc'
                                                 }">
                                                 <path d="M19 9l-7 7-7-7"></path>
@@ -894,25 +692,25 @@
                                 <th width="10%">
                                     <div class="flex items-center justify-between gap-2">
                                         <span>
-                                            Nama Latin
+                                            Jenis Asset
                                         </span>
                                         <div class="flex flex-col">
-                                            <svg @click="sort('year', 'asc')" fill="none" fill="none"
+                                            <svg @click="sort('jenis_aset', 'asc')" fill="none" fill="none"
                                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="4"
                                                 viewBox="0 0 24 24" stroke="currentColor"
                                                 class="text-muted h-3 w-3 cursor-pointer fill-current"
                                                 x-bind:class="{
-                                                    '!text-black': sorted.field === 'year' && sorted
+                                                    '!text-black': sorted.field === 'jenis_aset' && sorted
                                                         .rule === 'asc'
                                                 }">
                                                 <path d="M5 15l7-7 7 7"></path>
                                             </svg>
-                                            <svg @click="sort('year', 'desc')" fill="none" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24"
-                                                stroke="currentColor"
+                                            <svg @click="sort('jenis_aset', 'desc')" fill="none"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="4"
+                                                viewBox="0 0 24 24" stroke="currentColor"
                                                 class="text-muted h-3 w-3 cursor-pointer fill-current"
                                                 x-bind:class="{
-                                                    '!text-black': sorted.field === 'year' && sorted
+                                                    '!text-black': sorted.field === 'jenis_aset' && sorted
                                                         .rule === 'desc'
                                                 }">
                                                 <path d="M19 9l-7 7-7-7"></path>
@@ -964,10 +762,10 @@
                                             <span x-text="item.no"></span>
                                         </td>
                                         <td>
-                                            <span x-text="item.name"></span>
+                                            <span x-text="item.nama_lokal"></span>
                                         </td>
                                         <td>
-                                            <span x-text="item.latin_name"></span>
+                                            <span x-text="item.jenis_aset"></span>
                                         </td>
                                         <td>
                                             <div class="flex gap-2">
@@ -1136,18 +934,11 @@
             }
 
             //Taksonomi
-            let nama_pohon = document.getElementById("nama_pohonD");
-            let genus = document.getElementById("genusD");
-            let spesies = document.getElementById("spesiesD");
-            let kingdom = document.getElementById("kingdomD");
-            let divisi = document.getElementById("divisiD");
-            let kelas = document.getElementById("kelasD");
-            let famili = document.getElementById("familiD");
-            let ordo = document.getElementById("ordoD");
-
+            let nama_lokal = document.getElementById("nama_lokalD");
+            let jenis_asset = document.getElementById("jenis_assetD");
             //Content
             let history = document.getElementById("historyD");
-            let morfologi = document.getElementById("morfologiD");
+            let description = document.getElementById("descriptionD");
             let benefit = document.getElementById("manfaatD");
             let fact = document.getElementById("faktaD");
             let previewImg = document.getElementById('previewImgD');
@@ -1157,16 +948,10 @@
                 .then((response) => response.json())
                 .then((data) => {
                     // console.log(data);
-                    nama_pohon.value = data.name || '-';
-                    genus.value = data.genus || '-';
-                    spesies.value = data.spesies || '-';
-                    kingdom.value = data.kingdom || '-';
-                    divisi.value = data.divisi || '-';
-                    kelas.value = data.kelas || '-';
-                    ordo.value = data.ordo || '-';
-                    famili.value = data.famili || '-';
+                    nama_lokal.value = data.name || '-';
+                    jenis_asset.value = data.jenis_asset || '-';
                     history.value = data.history || '-';
-                    morfologi.value = data.morfologi || '-';
+                    description.value = data.description || '-';
                     benefit.value = data.benefit || '-';
                     fact.value = data.fact || '-';
                     link.value = data.videos || '-';
@@ -1194,18 +979,11 @@
 
             //Taksonomi
             let id_index = document.getElementById("id_index");
-            let nama_pohon = document.getElementById("nama_pohonE");
-            let genus = document.getElementById("genusE");
-            let spesies = document.getElementById("spesiesE");
-            let kingdom = document.getElementById("kingdomE");
-            let divisi = document.getElementById("divisiE");
-            let kelas = document.getElementById("kelasE");
-            let famili = document.getElementById("familiE");
-            let ordo = document.getElementById("ordoE");
-
+            let nama_lokal = document.getElementById("nama_lokalE");
+            let jenis_asset = document.getElementById("jenis_assetE");
             //Content
             let history = document.getElementById("historyE");
-            let morfologi = document.getElementById("morfologiE");
+            let description = document.getElementById("descriptionE");
             let benefit = document.getElementById("manfaatE");
             let fact = document.getElementById("faktaE");
             let previewImg = document.getElementById('previewImgE');
@@ -1216,16 +994,10 @@
                 .then((data) => {
                     // console.log(data);
                     id_index.value = idE;
-                    nama_pohon.value = data.name;
-                    genus.value = data.genus;
-                    spesies.value = data.spesies;
-                    kingdom.value = data.kingdom;
-                    divisi.value = data.divisi;
-                    kelas.value = data.kelas;
-                    ordo.value = data.ordo;
-                    famili.value = data.famili;
+                    nama_lokal.value = data.name;
+                    jenis_asset.value = data.jenis_asset;
                     history.value = data.history;
-                    morfologi.value = data.morfologi;
+                    description.value = data.description;
                     benefit.value = data.benefit;
                     fact.value = data.fact;
                     link.value = data.videos;
@@ -1243,11 +1015,11 @@
 
         function toggleDelete(name, id) {
             toggleModalDelete = !toggleModalDelete
-            let nama_pohon = document.getElementById("name_del_pohon");
+            let nama_lokal = document.getElementById("name_del_asset");
             let id_del = document.getElementById("id_del");
 
             id_del.value = id;
-            nama_pohon.textContent = name;
+            nama_lokal.textContent = name;
             modalDelete.classList.toggle("hidden");
         }
 
