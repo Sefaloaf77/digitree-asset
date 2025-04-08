@@ -33,7 +33,7 @@
                                 class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                                 <div class="text-center">
                                     <canvas id="qrCanvas" class="mb-4"></canvas>
-                                    <p class="text-xs leading-5 text-gray-600"><span id="nama_pohon"></span></p>
+                                    <p class="text-xs leading-5 text-gray-600"><span id="nama_lokal"></span></p>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                         </div>
                         {{-- </form> --}}
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
     </div>
@@ -297,24 +297,24 @@
                                 </th>
                                 <th width="10%">
                                     <div class="flex items-center justify-between gap-2">
-                                        <p>Kode Pohon</p>
+                                        <p>Kode Asset</p>
                                         <div class="flex flex-col">
-                                            <svg @click="sort('code_plant', 'asc')" fill="none" stroke-linecap="round"
+                                            <svg @click="sort('code_asset', 'asc')" fill="none" stroke-linecap="round"
                                                 stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24"
                                                 stroke="currentColor"
                                                 class="h-3 w-3 cursor-pointer text-muted fill-current"
                                                 x-bind:class="{
-                                                    '!text-black': sorted.field === 'code_plant' && sorted
+                                                    '!text-black': sorted.field === 'code_asset' && sorted
                                                         .rule === 'asc'
                                                 }">
                                                 <path d="M5 15l7-7 7 7"></path>
                                             </svg>
-                                            <svg @click="sort('code_plant', 'desc')" fill="none" stroke-linecap="round"
+                                            <svg @click="sort('code_asset', 'desc')" fill="none" stroke-linecap="round"
                                                 stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24"
                                                 stroke="currentColor"
                                                 class="h-3 w-3 cursor-pointer text-muted fill-current"
                                                 x-bind:class="{
-                                                    '!text-black': sorted.field === 'code_plant' && sorted
+                                                    '!text-black': sorted.field === 'code_asset' && sorted
                                                         .rule === 'desc'
                                                 }">
                                                 <path d="M19 9l-7 7-7-7"></path>
@@ -324,7 +324,7 @@
                                 </th>
                                 <th width="10%">
                                     <div class="flex items-center justify-between gap-2">
-                                        <p class="">Nama Umum</p>
+                                        <p class="">Nama Lokal</p>
                                         <div class="flex flex-col">
                                             <svg @click="sort('index_plant_data.name', 'asc')" fill="none" fill="none"
                                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="4"
@@ -381,7 +381,7 @@
                                 <th width="10%">
                                     <div class="flex items-center justify-between gap-2">
                                         <span>
-                                            Usia Pohon
+                                            Usia Asset
                                         </span>
                                         <div class="flex flex-col">
                                             <svg @click="sort('age', 'asc')" fill="none" fill="none"
@@ -458,10 +458,10 @@
                                             <span x-text="item.no"></span>
                                         </td>
                                         <td>
-                                            <span x-text="item.code_plant"></span>
+                                            <span x-text="item.code_asset"></span>
                                         </td>
                                         <td>
-                                            <span x-text="item.index_plant_data.name"></span>
+                                            <span x-text="item.index_plant_data.nama_lokal"></span>
                                         </td>
                                         <td>
                                             <span x-bind:title="item.address" class="block truncate w-36">
@@ -498,20 +498,20 @@
                                         </td>
                                         <td>
                                             <div class="flex gap-2">
-                                                <a x-on:click="toggleQR('Lihat QR', {{ 'item.code_plant' }})"
+                                                <a x-on:click="toggleQR('Lihat QR', {{ 'item.code_asset' }})"
                                                     class="py-2 px-3 text-white bg-green-digitree rounded-lg cursor-pointer">Lihat
                                                     QR
                                                 </a>
-                                                <a x-on:click="toggleEdit({{ 'item.code_plant' }})"
+                                                <a x-on:click="toggleEdit({{ 'item.code_asset' }})"
                                                     class="py-2 px-3 text-white bg-blue-btn rounded-lg cursor-pointer">Edit
                                                 </a>
-                                                <a x-on:click="toggleDelete({{ 'item.index_plant_data.name' }}, {{ 'item.code_plant' }})"
+                                                <a x-on:click="toggleDelete({{ 'item.index_plant_data.nama_lokal' }}, {{ 'item.code_asset' }})"
                                                     class="py-2 px-3 text-white bg-red-btn rounded-lg cursor-pointer">Hapus
                                                 </a>
                                             </div>
                                         </td>
                                         <td>
-                                            <a x-on:click="toggleNote('Lihat Detail', {{ 'item.code_plant' }})"
+                                            <a x-on:click="toggleNote('Lihat Detail', {{ 'item.code_asset' }})"
                                                 class="py-2 px-3 text-white bg-green-digitree rounded-lg cursor-pointer">
                                                 Note
                                             </a>
@@ -583,8 +583,8 @@
 
             let previewImg = document.getElementById('previewImgQR');
             const qrCanvas = document.getElementById('qrCanvas');
-            const nama_pohon = document.getElementById('nama_pohon');
-            const code_pohon = document.getElementById('code_pohon');
+            const nama_lokal = document.getElementById('nama_lokal');
+            const code_asset = document.getElementById('code_asset');
             const copyLinkButton = document.getElementById('copyLinkButton');
             const copyImageButton = document.getElementById('copyImageButton');
             const downloadImageButton = document.getElementById('downloadImageButton');
@@ -593,10 +593,10 @@
                 .then((response) => response.json())
                 .then((data) => {
                     // console.log(data);
-                    nama_pohon.textContent = data.name || '-';
-                    // code_pohon.textContent = data.code_plant || '-';
+                    nama_lokal.textContent = data.nama_lokal || '-';
+                    // code_asset.textContent = data.code_asset || '-';
                     const baseURL_path = document.querySelector('meta[name="base-url"]').getAttribute('content');
-                    const dynamicLink = `${baseURL_path}/plant/${data.code_plant}`;
+                    const dynamicLink = `${baseURL_path}/aset/${data.code_asset}`;
                     copyLinkButton.setAttribute('data-link', dynamicLink);
 
                     // Generate QR Code

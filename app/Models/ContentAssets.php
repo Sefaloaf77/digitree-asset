@@ -16,11 +16,11 @@ class ContentAssets extends Model
     protected $fillable = [
         'id_index_asset',
         'history',
-        'morfologi',
+        'description',
         'benefit',
         'fact',
         'image',
-        'videos',
+        'video',
     ];
 
     public function content()

@@ -78,8 +78,8 @@
                                             @foreach ($jenisAsset as $asset)
                                                 <option value="{{ $asset->id }}"
                                                     {{ old('id_index_asset') == $asset->id ? 'selected' : '' }}class="capitalize">
-                                                    {{ $asset->name }} -
-                                                    {{ $asset->species }}</option>
+                                                    {{ $asset->nama_lokal }} -
+                                                    {{ $asset->jenis_aset }}</option>
                                             @endforeach
                                         </select>
                                     </div>

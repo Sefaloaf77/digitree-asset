@@ -102,13 +102,18 @@ class DataPohonController extends Controller
 
             $validator = Validator::make($request->all(), $rules);
 
+            
+
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Data gagal disimpan');
             }
 
             $uploadedFile = $request->file('file-uploadT');
             $imageName = 'konten_asset_' . $request->nama_lokal . '.' . $uploadedFile->getClientOriginalExtension();
-            $request->file('file-uploadT')->storeAs('public/images', $imageName);
+            // $path = $request->file('file-uploadT')->storeAs('public/images', $imageName);
+            $path = $request->file('file-uploadT')->storeAs('images', $imageName, 'public');
+            // $uploadedFile->storeAs('images', $imageName, 'public'); // Simpan ke 'storage/app/public/images'
+
 
             $dataIndex = [
                 'nama_lokal' => $request->nama_lokal,
@@ -128,13 +133,15 @@ class DataPohonController extends Controller
             // Mendapatkan nilai dari 'v'
             $video_id = $query_params['v'];
 
+            // dd($video_id);
+
             $dataContent = [
                 'history' => $request->history,
                 'description' => $request->description,
                 'benefit' => $request->benefit,
                 'fact' => $request->fact,
                 'video' => $video_id,
-                'image' => 'images/' . $imageName, // Store image path
+                'image' => "images/{$imageName}", // Store image path
                 'id_index_asset' => $id_index,
             ];
 
@@ -223,9 +230,9 @@ class DataPohonController extends Controller
             $dataIndexPohon = [
                 'no' => $no++,
                 'id' => $indexPohon->id,
-                'name' => $indexPohon['name'],
+                'nama_lokal' => $indexPohon['nama_lokal'],
                 // 'latin_name' => $indexPohon['genus'] . " " . $indexPohon['species'],
-                'latin_name' => $indexPohon['species'],
+                'jenis_aset' => $indexPohon['jenis_aset'],
             ];
             $dataIndexFilter[] = $dataIndexPohon;
         }
@@ -238,23 +245,17 @@ class DataPohonController extends Controller
         // dd($id);
         $dataIndex = IndexAssets::where('id', $id)->first();
         $id_data_index = $dataIndex->id; //id index plant for the fix content match with the index
-        $dataContent = ContentAssets::where('id_index_plant', $id_data_index)->first();
+        $dataContent = ContentAssets::where('id_index_asset', $id_data_index)->first();
 
         $dataAll = [
-            'name' => $dataIndex->name ? $dataIndex->name : '-',
-            'genus' => $dataIndex->genus ? $dataIndex->genus : '-',
-            'spesies' => $dataIndex->species ? $dataIndex->species : '-',
-            'ordo' => $dataIndex->ordo ? $dataIndex->ordo : '-',
-            'divisi' => $dataIndex->divisi ? $dataIndex->divisi : '-',
-            'kelas' => $dataIndex->kelas ? $dataIndex->kelas : '-',
-            'famili' => $dataIndex->famili ? $dataIndex->famili : '-',
-            'kingdom' => $dataIndex->kingdom ? $dataIndex->kingdom : '-',
+            'nama_lokal' => $dataIndex->nama_lokal ? $dataIndex->nama_lokal : '-',
+            'jenis_aset' => $dataIndex->jenis_aset ? $dataIndex->jenis_aset : '-',
             'history' => $dataContent->history ? $dataContent->history : '-',
-            'morfologi' => $dataContent->morfologi ? $dataContent->morfologi : '-',
+            'description' => $dataContent->description ? $dataContent->description : '-',
+            'video' => $dataContent->video ? 'https://www.youtube.com/watch?v=' . $dataContent->video : '-',
+            'image' => $dataContent->image ? $dataContent->image : '-',
             'benefit' => $dataContent->benefit ? $dataContent->benefit : '-',
             'fact' => $dataContent->fact ? $dataContent->fact : '-',
-            'image' => $dataContent->image ? $dataContent->image : '-',
-            'videos' => $dataContent->videos ? 'https://www.youtube.com/watch?v=' . $dataContent->videos : '-',
         ];
 
         // dd( json_encode(asset($dataContent->image )) );
@@ -295,7 +296,7 @@ class DataPohonController extends Controller
             'morfologi' => $request->morfologi,
             'benefit' => $request->benefit,
             'fact' => $request->fact,
-            'videos' => $video_id,
+            'video' => $video_id,
         ];
 
         // Cek apakah file input ada dan valid
@@ -369,26 +370,26 @@ class DataPohonController extends Controller
         // return response()->json(['qr_code' => base64_encode($qrCode)], 200);
 
         // Mengambil data dari tabel plant berdasarkan id
-        $plant = Assets::where('code_plant', $id)->first();
+        $plant = Assets::where('code_asset', $id)->first();
         // dd($plant);
 
-        if ($plant) {
+        if ($plant) {   
             // Mengambil data dari tabel index_plants berdasarkan id_index_plants
-            $indexPlant = IndexAssets::find($plant->id_index_plants);
+            $indexPlant = IndexAssets::find($plant->id_index_asset);
 
             if ($indexPlant) {
                 return response()->json([
-                    'name' => $indexPlant->name,
-                    'code_plant' => $plant->code_plant,
+                    'nama_lokal' => $indexPlant->nama_lokal,
+                    'code_asset' => $plant->code_asset,
                 ]);
             } else {
                 return response()->json([
-                    'error' => 'Index plant not found',
+                    'error' => 'Index Asset not found',
                 ], 404);
             }
         } else {
             return response()->json([
-                'error' => 'Plant not found',
+                'error' => 'Asset not found',
             ], 404);
         }
     }

@@ -55,7 +55,7 @@ window.dataTable = function () {
       return function (a, b) {
         if (
           key === "index_plant_data.name" ||
-          key === "code_plant" ||
+          key === "code_asset" ||
           key === "tall" ||
           key === "age" ||
           key === "round"
