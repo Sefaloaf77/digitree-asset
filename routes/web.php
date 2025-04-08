@@ -7,7 +7,7 @@ use App\Http\Controllers\DatabaseLokasiController;
 use App\Http\Controllers\DataPohonController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\PemetaanController;
-use App\Http\Controllers\PlantController;
+use App\Http\Controllers\AssetController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatistikController;
 use App\Http\Controllers\UserRolesController;
@@ -26,7 +26,7 @@ Route::prefix('authentication/')->group(function () {
     });
 });
 
-Route::resource('/asset', FrontendController::class)->only(['index', 'store', 'create', 'destroy', 'edit', 'update', 'show']);
+Route::resource('/aset', FrontendController::class)->only(['index', 'store', 'create', 'destroy', 'edit', 'update', 'show']);
 Route::post('/savelocation', [FrontendController::class, 'location'])->name('location');
 
 Route::get('/', function () {
@@ -34,19 +34,19 @@ Route::get('/', function () {
 });
 
 Route::get('/generate-qrcode/{id}', [DataPohonController::class, 'generateQr'])->name('generate.qr');
-Route::get('/get-plants', [PlantController::class, 'getDataPlant'])->name('getAllDataPlant');
-Route::get('/get-plants-location/{id}', [PlantController::class, 'getDataPlantLocation'])->name('getAllDataPlantLocation');
+Route::get('/get-plants', [AssetController::class, 'getDataPlant'])->name('getAllDataPlant');
+Route::get('/get-plants-location/{id}', [AssetController::class, 'getDataPlantLocation'])->name('getAllDataPlantLocation');
 Route::get('/get-index', [DataPohonController::class, 'getDataIndexPohon'])->name('getAllDataIndex');
 Route::get('/get-content/{id}', [DataPohonController::class, 'getDataContentPohon'])->name('getAllDataContent');
 Route::post('/update-content', [DataPohonController::class, 'updateContentIndexPohon'])->name('updateAllDataIndexContent');
 Route::post('/delete-content', [DataPohonController::class, 'deleteContentIndexPohon'])->name('deleteAllDataIndexContent');
-Route::post('/delete-plant', [PlantController::class, 'deletePlant'])->name('deleteAllDataPlant');
+Route::post('/delete-plant', [AssetController::class, 'deletePlant'])->name('deleteAllDataPlant');
 
-Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth', 'superadmin']], function () {
 
     Route::get('/semua-lokasi', [DashboardController::class, 'index'])->name('index');
     Route::get('/perlokasi/{id}', [DashboardController::class, 'perlokasi'])->name('perlokasi');
-    Route::get('/update-plant/{id}', [PlantController::class, 'updatePlant'])->name('updateAllDataPlant');
+    Route::get('/update-plant/{id}', [AssetController::class, 'updatePlant'])->name('updateAllDataPlant');
 
     Route::group(['prefix' => 'asset', 'as' => 'asset.'], function () {
         Route::get('/', [DataPohonController::class, 'index'])->name('index');

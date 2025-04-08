@@ -102,7 +102,7 @@ class DataPohonController extends Controller
 
             $validator = Validator::make($request->all(), $rules);
 
-            
+
 
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Data gagal disimpan');
@@ -177,14 +177,15 @@ class DataPohonController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id_index_plants' => 'required',
-            // 'id_content_plant' => 'nullable',
-            'code_plant' => 'required',
+            'id_index_asset' => 'required',
+            // 'id_content_asset' => 'nullable',
+            'code_asset' => 'required',
             'age' => 'required',
-            'tall' => 'required',
-            'round' => 'required',
-            'source_fund' => 'nullable',
-            'id_villages' => 'required',
+            'large' => 'required',
+            'value' => 'required',
+            'organizer' => 'nullable',
+            'date_open' => 'nullable',
+            'id_village' => 'required',
             'address' => 'required',
             'location' => 'required',
         ]);
@@ -196,17 +197,18 @@ class DataPohonController extends Controller
         }
 
         $data = [
-            'id_index_plants' => $request->id_index_plants,
-            'code_plant' => $request->code_plant,
+            'id_index_asset' => $request->id_index_asset,
+            'code_asset' => $request->code_asset,
             'age' => $request->age,
-            'tall' => $request->tall,
-            'round' => $request->round,
-            'source_fund' => ucwords(strtolower($request->source_fund)),
-            'id_villages' => $request->id_villages,
+            'large' => $request->large,
+            'value' => $request->value,
+            'organizer' => ucwords(strtolower($request->organizer)),
+            'date_open' => $request->date_open,
+            'id_village' => $request->id_village,
             'address' => $request->address,
             'location' => $request->location,
         ];
-        Assets::where('code_plant', $request->code_plant)->update($data);
+        Assets::where('code_asset', $request->code_asset)->update($data);
         return redirect()->route('dashboard.index')->with('success', 'Data Berhasil Tersimpan!');
     }
 
@@ -373,7 +375,7 @@ class DataPohonController extends Controller
         $plant = Assets::where('code_asset', $id)->first();
         // dd($plant);
 
-        if ($plant) {   
+        if ($plant) {
             // Mengambil data dari tabel index_plants berdasarkan id_index_plants
             $indexPlant = IndexAssets::find($plant->id_index_asset);
 

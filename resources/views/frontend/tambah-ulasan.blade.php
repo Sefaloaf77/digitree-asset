@@ -28,16 +28,16 @@
             </div>
         @endif
         <div class="text-center my-8">
-            <h1 class="font-bold text-dark text-2xl">Pohon {{ $ulasan['name_pohon'] }}</h1>
-            <p class="text-base text-primary py-2">{{ $ulasan['spesies'] }} ({{ $ulasan['id'] }})</p>
+            <h1 class="font-bold text-dark text-2xl">{{ $ulasan['nama_asset'] }} ( {{ $ulasan['jenis'] }} )</h1>
+            <p class="text-base text-primary py-2">({{ $ulasan['id'] }})</p>
         </div>
 
-        <form action="{{ route('plant.store') }}" method="POST">
+        <form action="{{ route('aset.store') }}" method="POST">
             @csrf
             {{-- @method('PUT') --}}
             <div id="tambah-ulasan" class="my-8">
                 <h2 class="font-bold text-dark text-xl my-2">Tambahkan Ulasan</h2>
-                <input type="hidden" name="code_plant" value="{{ $ulasan['id'] }}">
+                <input type="hidden" name="code_asset" value="{{ $ulasan['id'] }}">
                 <div class="my-4 flex flex-col">
                     <label for="nama" class="py-2 font-medium">Nama Lengkap</label>
                     <input type="text" placeholder="Andi Hermandyah" name="name" id="nama"

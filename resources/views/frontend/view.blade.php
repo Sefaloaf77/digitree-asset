@@ -21,19 +21,19 @@
                     </button>
                 </div>
                 <div class="p-5 space-y-4">
-                    @isset($plant)
+                    @isset($asset)
                         <div class="w-full space-y-4">
                             <h3 class="font-bold mt-5 text-dark capitalize">Sejarah Asset</h3>
                             <p class="my-4">
-                                {{ $plant['plant']['history'] }}
+                                {{ $asset['asset']['history'] }}
                             </p>
                             <h3 class="font-bold mt-5 text-dark capitalize">Fungsi Asset</h3>
                             <p class="my-4">
-                                {{ $plant['plant']['benefit'] }}
+                                {{ $asset['asset']['benefit'] }}
                             </p>
                             <h3 class="font-bold mt-5 text-dark capitalize">Fakta Asset</h3>
                             <p class="my-4">
-                                {{ $plant['plant']['fact'] }}
+                                {{ $asset['asset']['fact'] }}
                             </p>
                         </div>
                     @endisset
@@ -74,17 +74,23 @@
         </div>
     </div>
 
-    @isset($plant)
+    @isset($asset)
+        <section id="iklan-atas">
+            <div class="w-full">
+                <img src="{{ Storage::url('images/iklan/' . $asset['ads']['image']) }}" class="object-contain w-full h-32"
+                    alt="iklan">
+            </div>
+        </section>
         <section id="treeImage">
             <div class="w-full relative">
-                <img src="{{ Storage::url($plant['plant']['image']) }}" class="object-cover w-full h-[450px]"
+                <img src="{{ Storage::url($asset['asset']['image']) }}" class="object-cover w-full h-[450px]"
                     alt="display asset">
                 <div class="absolute inset-x-0 bottom-0 flex flex-row items-center gap-x-3 px-5 bg-black-gradient pb-4">
                     <div>
                         <img src="{{ asset('assets/img/icon/loc-icon.svg') }}" class="" alt="location icon">
                     </div>
-                    <a class="text-white" href="https://www.google.com/maps/place/{{ $plant['plant']['location'] }}"
-                        target="_blank">{{ $plant['plant']['address'] }}</a>
+                    <a class="text-white" href="https://www.google.com/maps/place/{{ $asset['asset']['location'] }}"
+                        target="_blank">{{ $asset['asset']['address'] }}</a>
                 </div>
             </div>
         </section>
@@ -97,13 +103,15 @@
 
         <section>
             <div class="w-full px-5 py-8">
-                <h1 class="font-bold text-dark text-2xl">Pohon {{ $plant['plant']['name'] }}</h1>
-                <input type="hidden" name="id_plant" id="id_plant" value="{{ $plant['plant']['id'] }}">
-                <p class="text-lg text-green-digitree py-2 capitalize">{{ $plant['plant']['species'] }}
-                </p>
+                <h1 class="font-bold text-dark text-2xl">{{ $asset['asset']['jenis_aset'] }}
+                    {{ $asset['asset']['nama'] }}
+                </h1>
+                <p class="text-lg text-green-digitree py-2 capitalize">{{ $asset['asset']['nama_lokal'] }}</p>
+
+                <input type="hidden" name="id_asset" id="id_asset" value="{{ $asset['asset']['id'] }}">
                 <div class="flex flex-row gap-3 my-3">
                     @php
-                        $rating = round($plant['avgRating'], 0) ?? 0;
+                        $rating = round($asset['avgRating'], 0) ?? 0;
                         // echo $rating;
                     @endphp
                     @for ($i = 1; $i <= $rating; $i++)
@@ -111,7 +119,7 @@
                     @endfor
                     {{-- <img src="{{ asset('assets/img/icon/star-fill.svg') }}"> --}}
                     <p class="font-bold text-dark">
-                        {{ round($plant['avgRating'], 0) }}/5
+                        {{ round($asset['avgRating'], 0) }}/5
                         <span class="font-normal"> (Ulasan)</span>
                     </p>
                 </div>
@@ -121,27 +129,27 @@
                         <tr class="">
                             <td colspan="3">Luas Asset</td>
                             <td class="px-10">:</td>
-                            <td>{{ $plant['plant']['tall'] }} Centimeter</td>
+                            <td>{{ $asset['asset']['large'] }} Meter</td>
                         </tr>
                         <tr class="">
                             <td colspan="3">Nilai Asset</td>
                             <td class="px-10">:</td>
-                            <td>{{ $plant['plant']['round'] }} Centimeter</td>
+                            <td>{{ $asset['asset']['value'] }}</td>
                         </tr>
                         <tr class="">
                             <td colspan="3">Usia Asset</td>
                             <td class="px-10">:</td>
-                            <td>{{ $plant['plant']['age'] }} tahun</td>
+                            <td>{{ $asset['asset']['age'] }} tahun</td>
                         </tr>
                         <tr class="">
                             <td colspan="3">Tanggal Dibuka</td>
                             <td class="px-10">:</td>
-                            <td>{{ $plant['plant']['date_plant'] }}</td>
+                            <td>{{ $asset['asset']['date_open'] }}</td>
                         </tr>
                         <tr class="">
                             <td colspan="3">Pengelola</td>
                             <td class="px-10">:</td>
-                            <td>{{ $plant['plant']['source_fund'] }}</td>
+                            <td>{{ $asset['asset']['organizer'] }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -150,7 +158,7 @@
 
                     <h3 class="font-bold mt-5 text-dark">Sejarah Asset</h3>
                     <p class="my-4">
-                        {{ $plant['plant']['history'] }}
+                        {{ $asset['asset']['history'] }}
                     </p>
 
                     <a id="modalDeskripsi" onclick="modalDeskripsi()"
@@ -166,7 +174,7 @@
                 <div class="my-4" id="videoContainer">
                     <h3 class="font-bold my-3 text-dark">Video</h3>
                     <div id="youtubeContainer">
-                        {{-- <iframe src="https://www.youtube.com/embed/{{ $plant['plant']['videos'] }}?autoplay=1"
+                        {{-- <iframe src="https://www.youtube.com/embed/{{ $asset['asset']['video'] }}?autoplay=1"
                             class="w-full h-72" frameborder="0" allow="autoplay; encrypted-media;unmute"
                             id="videoIframe"></iframe> --}}
                     </div>
@@ -176,17 +184,16 @@
                 <div class="my-4">
                     <h3 class="font-bold my-3 text-dark">Tulis Ulasan kamu
                         @php
-                            $idplant = 'id=' . request()->segment(count(request()->segments()));
-                            $nama_pohon = '&name_pohon=' . $plant['plant']['name'];
-                            $genus = '&genus=' . $plant['plant']['genus'];
-                            $spesies = '&spesies=' . $plant['plant']['species'];
-                            $data = $idplant . $nama_pohon . $genus . $spesies;
+                            $idasset = 'id=' . request()->segment(count(request()->segments()));
+                            $nama_asset = '&nama_asset=' . $asset['asset']['nama'];
+                            $jenis = '&jenis=' . $asset['asset']['jenis_aset'];
+                            $data = $idasset . $nama_asset . $jenis;
                         @endphp
                     </h3>
                     <div class="flex gap-5">
                         <button
                             class="bg-green-digitree rounded-lg px-5 py-3 text-white font-bold flex gap-2 items-center hover:bg-green-digitree/80"
-                            onclick="window.location.href='{{ route('asset.create', $data) }}'">
+                            onclick="window.location.href='{{ route('aset.create', $data) }}'">
                             <svg id="Layer_1" version="1.1" class="fill-white w-5 h-5" viewBox="0 0 512 512"
                                 xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                                 xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -202,7 +209,7 @@
                         </a>
                     </div>
 
-                    @foreach ($plant['ulasan'] as $ulasan)
+                    @foreach ($asset['ulasan'] as $ulasan)
                         <div class="ulasan my-5">
                             <span class="text-sm font-medium">{{ $ulasan['name'] }}</span>
                             <div class="flex flex-row gap-3 my-2 items-center justify-start">
@@ -221,6 +228,12 @@
                         </div>
                     @endforeach
                 </div>
+            </div>
+        </section>
+        <section id="iklan-bawah">
+            <div class="w-full">
+                <img src="{{ Storage::url('images/iklan/' . $asset['ads']['image']) }}" class="object-contain w-full h-32"
+                    alt="iklan">
             </div>
         </section>
     @endisset
@@ -245,7 +258,7 @@
             var modalKonfirm = document.getElementById("modalKonfirm")
 
             iframe.setAttribute("src",
-                "https://www.youtube.com/embed/{{ $plant['plant']['videos'] }}?autoplay=1&controls=0&rel=0")
+                "https://www.youtube.com/embed/{{ $asset['asset']['video'] }}?autoplay=1&controls=0&rel=0")
 
             iframe.setAttribute("frameborder", "0")
             if (params == true) {
@@ -267,7 +280,7 @@
                     // console.log("Location access granted. Latitude: " + position.coords.latitude + ", Longitude: " +
                     //     position.coords.longitude);
 
-                    var plantId = document.getElementById("id_plant").value
+                    var assetId = document.getElementById("id_asset").value
 
                     // Kirim data ke server menggunakan AJAX
                     $.ajax({
@@ -276,7 +289,7 @@
                         data: {
                             latitude: position.coords.latitude,
                             longitude: position.coords.longitude,
-                            id: plantId,
+                            id: assetId,
                             _token: '{{ csrf_token() }}' // Pastikan untuk menyertakan token CSRF
                         },
                         success: function(response) {

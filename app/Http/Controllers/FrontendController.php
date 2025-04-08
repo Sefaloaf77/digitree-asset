@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ads;
+use App\Models\Assets;
+use App\Models\ContentAssets;
 use App\Models\ContentPlants;
+use App\Models\IndexAssets;
 use App\Models\IndexPlants;
 use App\Models\Plants;
 use App\Models\RecordScans;
@@ -31,15 +35,13 @@ class FrontendController extends Controller
     {
         // dd($request->all());
 
-        $id_pohon = $request->id;
-        $name_pohon = $request->name_pohon;
-        $genus = $request->genus;
-        $spesies = $request->spesies;
+        $id_asset = $request->id;
+        $nama_asset = $request->nama_asset;
+        $jenis = $request->jenis;
         $ulasan = [
-            "id" => $id_pohon,
-            "name_pohon" => $name_pohon,
-            "genus" => $genus,
-            "spesies" => $spesies,
+            "id" => $id_asset,
+            "nama_asset" => $nama_asset,
+            "jenis" => $jenis,
         ];
         // dd($ulasan);
         return view('frontend.tambah-ulasan', ['ulasan' => $ulasan]);
@@ -56,7 +58,7 @@ class FrontendController extends Controller
             'phone' => 'required|min:10',
             'rating' => 'required|numeric',
             'comment' => 'required|min:3',
-            'code_plant' => 'required|numeric',
+            'code_asset' => 'required|numeric',
         ]);
         if ($validator->fails()) {
             return redirect()->back()
@@ -70,11 +72,11 @@ class FrontendController extends Controller
         //     'phone' => $request->phone,
         //     'rating' => $request->rating,
         //     'comment' => $request->comment,
-        //     'code_plant' => $request->code_plant
+        //     'code_asset' => $request->code_asset
         // ]);
         Reviews::create($request->all());
 
-        return redirect()->route('plant.show', $request->code_plant)->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('aset.show', $request->code_asset)->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     /**
@@ -82,78 +84,35 @@ class FrontendController extends Controller
      */
     public function show($id)
     {
-        $plantData = Plants::where('code_plant', $id)->first();
-        $plantContent = ContentPlants::find($plantData->id_content_plants);
-        $plantIndex = IndexPlants::find($plantData->id_index_plants);
-        $reviewData = Reviews::where('code_plant', $id)->orderBy('created_at', 'desc')->limit(20)->get();
-        $avgRating = Reviews::where('code_plant', $id)->avg('rating');
-
+        $assetData = Assets::where('code_asset', $id)->first();
+        $assetContent = ContentAssets::find($assetData->id_content_asset);
+        $assetIndex = IndexAssets::find($assetData->id_index_asset);
+        $reviewData = Reviews::where('code_asset', $id)->orderBy('created_at', 'desc')->limit(20)->get();
+        $avgRating = Reviews::where('code_asset', $id)->avg('rating');
+        $ads = Ads::first(); //ini nanti diubah sesuai relasi
         Carbon::setLocale('id'); // Mengatur bahasa ke bahasa Indonesia
-        $tanggalTanam = Carbon::parse($plantData->date_plant);
-        $tanggalTanam = $tanggalTanam->translatedFormat('d F Y');
+        $tanggalBuka = Carbon::parse($assetData->date_open);
+        $tanggalBuka = $tanggalBuka->translatedFormat('d F Y');
 
-
-        // foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key) {
-        //     if (array_key_exists($key, $_SERVER) === true) {
-        //         foreach (explode(',', $_SERVER[$key]) as $ip) {
-        //             $ip = trim($ip); // just to be safe
-        //             if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false) {
-        //                 return $ip;
-        //             }
-        //         }
-        //     }
-        // }
-        // dd(request()->ip());
-
-
-
-        // if (!Session::has('scanned')) {
-        //     // Menyimpan data kunjungan
-        //     RecordScans::create([
-        //         'scan_date' => Carbon::now(),
-        //         'code_plant' => $plantData->code_plant,
-        //         'ip_address' => request()->ip(),
-        //     ]);
-
-        //     // Mengatur session 'scanned' untuk menandakan kunjungan telah tercatat
-        //     Session::put('scanned', true);
-        // }
-        // $currentDate = Carbon::now();
-        // $agePlantNow = $tanggalTanam->diffInDays($currentDate);
-        // $currentDate = Carbon::now();
-
-        // // Pastikan tanggal tanam valid sebelum menghitung usia
-        // if ($tanggalTanam && $tanggalTanam->lessThanOrEqualTo($currentDate)) {
-        //     $agePlantNow = $tanggalTanam->diffInYears($currentDate);
-        // } else {
-        //     $agePlantNow = 0; // atau handle sesuai kebutuhan Anda
-        // }
-
-        $plant = [
-            "id" => $plantData->id,
-            "tall" => $plantData->tall ? $plantData->tall : '-',
-            "round" => $plantData->round ? $plantData->round : '-',
-            "location" => $plantData->location ? $plantData->location : '-',
-            "address" => $plantData->address ? $plantData->address : '-',
-            "age" => $plantData->age ? $plantData->age : '-',
-            "date_plant" => $tanggalTanam ? $tanggalTanam : '-',
-            "source_fund" => $plantData->source_fund ? $plantData->source_fund : '-',
-            "name" => 'Pohon ' . $plantIndex->name ? $plantIndex->name : '-',
-            "genus" => $plantIndex->genus ? $plantIndex->genus : '-',
-            "species" => $plantIndex->species ? $plantIndex->species : '-',
-            "ordo" => $plantIndex->ordo ? $plantIndex->ordo : '-',
-            "kingdom" => $plantIndex->kingdom ? $plantIndex->kingdom : '-',
-            "famili" => $plantIndex->famili ? $plantIndex->famili : '-',
-            "kelas" => $plantIndex->kelas ? $plantIndex->kelas : '-',
-            "divisi" => $plantIndex->divisi ? $plantIndex->divisi : '-',
-            "history" => $plantContent->history ? $plantContent->history : '-',
-            "videos" => $plantContent->videos ? $plantContent->videos : '-',
-            "image" => $plantContent->image ? $plantContent->image : '-',
-            "morfologi" => $plantContent->morfologi ? $plantContent->morfologi : '-',
-            "benefit" => $plantContent->benefit ? $plantContent->benefit : '-',
-            "fact" => $plantContent->fact ? $plantContent->fact : '-',
+        $asset = [
+            "id" => $assetData->id,
+            "large" => $assetData->large ? $assetData->large : '-',
+            "value" => $assetData->value ? $assetData->value : '-',
+            "location" => $assetData->location ? $assetData->location : '-',
+            "address" => $assetData->address ? $assetData->address : '-',
+            "age" => $assetData->age ? $assetData->age : '-',
+            "date_open" => $tanggalBuka ? $tanggalBuka : '-',
+            "organizer" => $assetData->organizer ? $assetData->organizer : '-',
+            "nama" => $assetIndex->nama ? $assetIndex->nama : '-',
+            "nama_lokal" => $assetIndex->nama_lokal ? $assetIndex->nama_lokal : '-',
+            "jenis_aset" => $assetIndex->jenis_aset ? $assetIndex->jenis_aset : '-',
+            "history" => $assetContent->history ? $assetContent->history : '-',
+            "video" => $assetContent->video ? $assetContent->video : '-',
+            "image" => $assetContent->image ? $assetContent->image : '-',
+            "benefit" => $assetContent->benefit ? $assetContent->benefit : '-',
+            "fact" => $assetContent->fact ? $assetContent->fact : '-',
         ];
-
+        $review = [];
         foreach ($reviewData as $key => $value) {
             // Tanggal yang ingin Anda konversi
             $dateReview = $value->created_at;
@@ -163,7 +122,7 @@ class FrontendController extends Controller
 
             // Menghasilkan string waktu relatif
             $stringTime = $carbonDate->diffForHumans();
-            $reviewData[$key] = [
+            $review[$key] = [
                 'id' => $value->id,
                 'name' => $value->name,
                 'phone' => $value->phone,
@@ -174,21 +133,15 @@ class FrontendController extends Controller
         }
         // dd($reviewData);
 
-        $mergeContentPlant = [
-            'plant' => $plant,
-            'ulasan' => $reviewData,
+        $mergeContentAsset = [
+            'asset' => $asset,
+            'ulasan' => $review,
             'avgRating' => $avgRating,
+            'ads' => $ads,
         ];
 
-        // Menambahkan URL gambar ke response
-        // return response()->json([
-        //     'plant' => $plant,
-        //     'image_url' => $imageUrl
-        // ]);
 
-        // dd($mergeContentPlant);
-
-        return view('frontend.view', ['plant' => $mergeContentPlant]);
+        return view('frontend.view', ['asset' => $mergeContentAsset]);
     }
 
     public function location(Request $request)
@@ -200,14 +153,14 @@ class FrontendController extends Controller
             'longitude' => 'required|numeric',
         ]);
 
-        $plantData = Plants::where('id', $request->id)->first();
+        $assetData = Assets::where('id', $request->id)->first();
         $location = $request->latitude . ',' . $request->longitude;
         // dd($location);
         if (!Session::has('scanned')) {
             // Menyimpan data kunjungan
             RecordScans::create([
                 'scan_date' => Carbon::now(),
-                'code_plant' => $plantData->code_plant, 
+                'code_asset' => $assetData->code_asset,
                 'ip_address' => request()->ip(),
                 'location' => $location
             ]);
@@ -219,27 +172,4 @@ class FrontendController extends Controller
 
     }
 
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  */
-    // public function edit(frontend $frontend)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Update the specified resource in storage.
-    //  */
-    // public function update(Request $request, frontend $frontend)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Remove the specified resource from storage.
-    //  */
-    // public function destroy(frontend $frontend)
-    // {
-    //     //
-    // }
 }
