@@ -70,23 +70,23 @@
                                         </div>
                                         <select
                                             class="select select-bordered bg-[#7780A1]/10 w-full ring-[#7780A1]/5 focus:ring-2 focus:ring-inset focus:ring-[#7780A1]/15 rounded mt-2"
-                                            id="jenis" name="id_index_plants" autocomplete="jenis-asset"
+                                            id="jenis" name="id_index_asset" autocomplete="jenis-asset"
                                             aria-placeholder="Pilih Jenis Asset">
-                                            <option disabled {{ old('id_index_plants') ? '' : 'selected' }}>Pilih Jenis
+                                            <option disabled {{ old('id_index_asset') ? '' : 'selected' }}>Pilih Jenis
                                                 Asset
                                             </option>
-                                            @foreach ($jenisPohon as $plant)
-                                                <option value="{{ $plant->id }}"
-                                                    {{ old('id_index_plants') == $plant->id ? 'selected' : '' }}class="capitalize">
-                                                    {{ $plant->name }} -
-                                                    {{ $plant->species }}</option>
+                                            @foreach ($jenisAsset as $asset)
+                                                <option value="{{ $asset->id }}"
+                                                    {{ old('id_index_asset') == $asset->id ? 'selected' : '' }}class="capitalize">
+                                                    {{ $asset->name }} -
+                                                    {{ $asset->species }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="flex flex-col my-5">
                                         <label for="kode" class="capitalize">kode Asset</label>
                                         <div class="flex items-center">
-                                            <input type="text" name="code_plant" value="{{ old('code_plant') }}"
+                                            <input type="text" name="code_asset" value="{{ old('code_asset') }}"
                                                 class="mt-2 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"
                                                 placeholder="Masukkan kode">
                                         </div>
@@ -102,31 +102,37 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col my-5">
-                                        <label for="tall" class="capitalize">tinggi asset</label>
+                                        <label for="large" class="capitalize">Luas asset</label>
                                         <div class="flex items-center">
-                                            <input type="number" name="tall" value="{{ old('tall') }}"
+                                            <input type="number" name="large" value="{{ old('large') }}"
                                                 class="mt-2 grow !bg-[#7780A1]/10 !border-s-2 !border-e-0 !border-y-2 !border-[#7780A1]/15 !rounded-s"
                                                 placeholder="Masukkan Usia">
                                             <span
-                                                class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e">Centimeter</span>
+                                                class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e">Meter2</span>
                                         </div>
                                     </div>
                                     <div class="flex flex-col my-5">
-                                        <label for="round" class="capitalize">diameter asset</label>
+                                        <label for="value" class="capitalize">Nilai asset</label>
                                         <div class="flex items-center">
-                                            <input type="number" name="round" value="{{ old('round') }}"
-                                                class="mt-2 grow !bg-[#7780A1]/10 !border-s-2 !border-e-0 !border-y-2 !border-[#7780A1]/15 !rounded-s"
-                                                placeholder="Masukkan Usia">
-                                            <span
-                                                class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e">Centimeter</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col my-5">
-                                        <label for="sumber dana" class="capitalize">sumber dana</label>
-                                        <div class="flex items-center">
-                                            <input type="text" name="source_fund" value="{{ old('source_fund') }}"
+                                            <input type="text" name="value" value="{{ old('value') }}"
                                                 class="mt-2 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"
-                                                placeholder="Masukkan sumber dana">
+                                                placeholder="Masukkan Nilai">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col my-5">
+                                        <label for="tanggal" class="capitalize">Tanggal Dibuka</label>
+                                        <div class="flex items-center">
+                                            <input type="date" name="date_open" value="{{ old('date_open') }}"
+                                                class="mt-2 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"
+                                                placeholder="Masukkan tanggal">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col my-5">
+                                        <label for="pengelola" class="capitalize">Pengelola</label>
+                                        <div class="flex items-center">
+                                            <input type="text" name="organizer" value="{{ old('organizer') }}"
+                                                class="mt-2 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"
+                                                placeholder="Masukkan pengelola">
                                         </div>
                                     </div>
                                 </div>
@@ -136,12 +142,12 @@
                                         <label for="desa" class="capitalize">nama desa</label>
                                         <select
                                             class="select select-bordered bg-[#7780A1]/10 w-full ring-[#7780A1]/5 focus:ring-2 focus:ring-inset focus:ring-[#7780A1]/15 rounded mt-2"
-                                            id="desa" name="id_villages" autocomplete="desa-asset"
+                                            id="desa" name="id_village" autocomplete="desa-asset"
                                             aria-placeholder="Pilih desa Asset">
-                                            <option disabled {{ old('id_villages') ? '' : 'selected' }}>Pilih Desa</option>
+                                            <option disabled {{ old('id_village') ? '' : 'selected' }}>Pilih Desa</option>
                                             @foreach ($desa as $item)
                                                 <option class="capitalize" value="{{ $item->id }}"
-                                                    {{ old('id_villages') == $item->id ? 'selected' : '' }}>
+                                                    {{ old('id_village') == $item->id ? 'selected' : '' }}>
                                                     {{ $item->name }}
                                                     -
                                                     {{ $item->kecamatan }},
