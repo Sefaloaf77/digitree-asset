@@ -762,7 +762,7 @@
                                             <span x-text="item.no"></span>
                                         </td>
                                         <td>
-                                            <span x-text="item.nama_lokal"></span>
+                                            <span x-text="item.nama_lokal"></span> 
                                         </td>
                                         <td>
                                             <span x-text="item.jenis_aset"></span>
@@ -944,17 +944,19 @@
             let previewImg = document.getElementById('previewImgD');
             let link = document.getElementById("link_youtubeD")
 
+            console.log(id);
+
             fetch("/get-content/" + id) // Replace with your actual data URL
                 .then((response) => response.json())
                 .then((data) => {
                     // console.log(data);
-                    nama_lokal.value = data.name || '-';
-                    jenis_asset.value = data.jenis_asset || '-';
+                    nama_lokal.value = data.nama_lokal || '-';
+                    jenis_asset.value = data.jenis_aset || '-';
                     history.value = data.history || '-';
                     description.value = data.description || '-';
                     benefit.value = data.benefit || '-';
                     fact.value = data.fact || '-';
-                    link.value = data.videos || '-';
+                    link.value = data.video || '-';
                     // previewImg.src = data.image|| '-';
                     previewImg.src = data.image ? `/storage/${data.image}` : '-';
                     // console.log(previewImg.src);
@@ -1000,7 +1002,7 @@
                     description.value = data.description;
                     benefit.value = data.benefit;
                     fact.value = data.fact;
-                    link.value = data.videos;
+                    link.value = data.video;
                     previewImgE.src = data.image ? `/storage/${data.image}` : '-';
                     console.log(previewImg.src);
                 })

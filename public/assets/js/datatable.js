@@ -52,8 +52,8 @@ window.dataTable = function () {
       return function (a, b) {
         if (
           key === "no" ||
-          key === "name" ||
-          key === "latin_name"
+          key === "nama_lokal" ||
+          key === "jenis_aset"
         ) {
           let comparison = 0;
           const fieldA = a[key];
@@ -106,7 +106,7 @@ window.dataTable = function () {
           if (value.length > 1) {
             const options = {
               shouldSort: true,
-              keys: ["no","name", "latin_name"],
+              keys: ["no","nama_lokal", "jenis_aset"],
               threshold: 0,
             };
             const fuse = new Fuse(data, options);

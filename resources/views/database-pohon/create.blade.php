@@ -70,23 +70,23 @@
                                         </div>
                                         <select
                                             class="select select-bordered bg-[#7780A1]/10 w-full ring-[#7780A1]/5 focus:ring-2 focus:ring-inset focus:ring-[#7780A1]/15 rounded mt-2"
-                                            id="jenis" name="id_index_plants" autocomplete="jenis-asset"
+                                            id="jenis" name="id_index_asset" autocomplete="jenis-asset"
                                             aria-placeholder="Pilih Jenis Asset">
-                                            <option disabled {{ old('id_index_plants') ? '' : 'selected' }}>Pilih Jenis
+                                            <option disabled {{ old('id_index_asset') ? '' : 'selected' }}>Pilih Jenis
                                                 Asset
                                             </option>
-                                            @foreach ($jenisPohon as $plant)
-                                                <option value="{{ $plant->id }}"
-                                                    {{ old('id_index_plants') == $plant->id ? 'selected' : '' }}class="capitalize">
-                                                    {{ $plant->name }} -
-                                                    {{ $plant->species }}</option>
+                                            @foreach ($jenisAsset as $asset)
+                                                <option value="{{ $asset->id }}"
+                                                    {{ old('id_index_asset') == $asset->id ? 'selected' : '' }}class="capitalize">
+                                                    {{ $asset->nama_lokal }} -
+                                                    {{ $asset->jenis_aset }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="flex flex-col my-5">
                                         <label for="kode" class="capitalize">kode Asset</label>
                                         <div class="flex items-center">
-                                            <input type="text" name="code_plant" value="{{ old('code_plant') }}"
+                                            <input type="text" name="code_asset" value="{{ old('code_plant') }}"
                                                 class="mt-2 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"
                                                 placeholder="Masukkan kode">
                                         </div>
