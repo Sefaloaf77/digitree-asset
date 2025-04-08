@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\IndexPlants;
+use App\Models\Assets;
+use App\Models\IndexAssets;
 use App\Models\Pemetaan;
-use App\Models\Plants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -15,13 +15,13 @@ class PemetaanController extends Controller
         Gate::authorize('superadmin');
 
         // Fetch distinct values for dropdown filters
-        $ages = Plants::distinct()->pluck('age')->sort()->values();
-        $addresses = Plants::distinct()->pluck('address')->sort()->values();
-        $names = IndexPlants::distinct()->pluck('name')->sort()->values();
-        $species = IndexPlants::distinct()->pluck('species')->sort()->values();
-        $codePlants = Plants::distinct()->pluck('code_plant')->sort()->values();  // Fetch distinct code_plant
+        $ages = Assets::distinct()->pluck('age')->sort()->values();
+        $addresses = Assets::distinct()->pluck('address')->sort()->values();
+        $names = IndexAssets::distinct()->pluck('nama')->sort()->values();
+        // $species = IndexAssets::distinct()->pluck('species')->sort()->values();
+        $codeAssets = Assets::distinct()->pluck('code_asset')->sort()->values();  // Fetch distinct code_asset
 
-        $query = Plants::with('indexPlant', 'contentPlant', 'villages');
+        $query = Assets::with('indexAsset', 'contentAsset', 'villages');
 
         // Apply filters based on request parameters
         if ($request->has('search') && $request->search) {
@@ -29,10 +29,9 @@ class PemetaanController extends Controller
             $query->where(function ($q) use ($search) {
                 $q->where('address', 'like', '%' . $search . '%')
                     ->orWhere('age', 'like', '%' . $search . '%')
-                    ->orWhere('code_plant', 'like', '%' . $search . '%')
-                    ->orWhereHas('indexPlant', function ($q) use ($search) {
-                        $q->where('name', 'like', '%' . $search . '%')
-                            ->orWhere('species', 'like', '%' . $search . '%');
+                    ->orWhere('code_asset', 'like', '%' . $search . '%')
+                    ->orWhereHas('indexAsset', function ($q) use ($search) {
+                        $q->where('nama', 'like', '%' . $search . '%');
                     });
             });
         }
@@ -63,24 +62,24 @@ class PemetaanController extends Controller
         }
 
         if ($request->has('name') && $request->name) {
-            $query->whereHas('indexPlant', function ($q) use ($request) {
-                $q->where('name', $request->name);
+            $query->whereHas('indexAsset', function ($q) use ($request) {
+                $q->where('nama', $request->name);
             });
         }
 
-        if ($request->has('species') && $request->species) {
-            $query->whereHas('indexPlant', function ($q) use ($request) {
-                $q->where('species', $request->species);
-            });
+        // if ($request->has('species') && $request->species) {
+        //     $query->whereHas('indexPlant', function ($q) use ($request) {
+        //         $q->where('species', $request->species);
+        //     });
+        // }
+
+        if ($request->has('code_asset') && $request->code_asset) {
+            $query->where('code_asset', $request->code_asset);
         }
 
-        if ($request->has('code_plant') && $request->code_plant) {
-            $query->where('code_plant', $request->code_plant);
-        }
+        // Fetch filtered assets
+        $assets = $query->get();
 
-        // Fetch filtered plants
-        $plants = $query->get();
-
-        return view('pemetaan.index', compact('plants', 'ages', 'addresses', 'names', 'species', 'codePlants'));
+        return view('pemetaan.index', compact('assets', 'ages', 'addresses', 'names', 'codeAssets'));
     }
 }

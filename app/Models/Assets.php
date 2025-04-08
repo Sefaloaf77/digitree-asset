@@ -39,6 +39,6 @@ class Assets extends Model
 
     public function Villages()
     {
-        return $this->hasOne(Villages::class, 'id', 'id_villages'); // Sesuaikan nama field
+        return $this->hasOne(Villages::class, 'id', 'id_village'); // Sesuaikan nama field
     }
 }

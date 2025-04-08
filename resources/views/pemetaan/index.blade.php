@@ -71,7 +71,7 @@
                 </div>
 
                 <!-- Species Filter -->
-                <div class="w-full md:w-38">
+                {{-- <div class="w-full md:w-38">
                     <select class="w-full" name="species">
                         <option value=""> Nama Latin</option>
                         @foreach ($species as $speciesItem)
@@ -79,16 +79,15 @@
                                 {{ $speciesItem }}</option>
                         @endforeach
                     </select>
-                </div>
+                </div> --}}
 
                 <!-- Code Plants Filter -->
                 <div class="w-full md:w-38">
-                    <select name="code_plant" class="w-full">
+                    <select name="code_asset" class="w-full">
                         <option value=""> Kode Asset</option>
-                        @foreach ($codePlants as $codePlant)
-                            <option value="{{ $codePlant }}"
-                                {{ request('code_plant') == $codePlant ? 'selected' : '' }}>
-                                {{ $codePlant }}
+                        @foreach ($codeAssets as $codeAsset)
+                            <option value="{{ $codeAsset }}" {{ request('code_asset') == $codeAsset ? 'selected' : '' }}>
+                                {{ $codeAsset }}
                             </option>
                         @endforeach
                     </select>
@@ -191,25 +190,25 @@
             iconSize: [35, 35]
         });
 
-        // Data plants from PHP
-        let plants = @json($plants);
+        // Data assets from PHP
+        let assets = @json($assets);
 
-        console.log(plants);
+        console.log(assets);
 
-        // Add markers for each plant location
-        plants.forEach(function(plant) {
-            let location = plant.location.split(',');
+        // Add markers for each asset location
+        assets.forEach(function(asset) {
+            let location = asset.location.split(',');
             let lat = parseFloat(location[0]);
             let lng = parseFloat(location[1]);
 
-            // Assuming the image filename is correctly stored in plant.content_plant.image
-            let imageTag = plant.content_plant.image ?
-                `<img src="/storage/${plant.content_plant.image}" alt="Gambar Asset" style="width: 70%; height:150px; display: block; margin: 0 auto;"><br><br>` :
+            // Assuming the image filename is correctly stored in asset.content_asset.image
+            let imageTag = asset.content_asset.image ?
+                `<img src="/storage/${asset.content_asset.image}" alt="Gambar Asset" style="width: 70%; height:150px; display: block; margin: 0 auto;"><br><br>` :
                 '';
 
-            // Assuming the YouTube video ID is stored in plant.content_plant.video
-            let videoLink = plant.content_plant.videos ?
-                `<b>Video Asset:</b> <a href="https://www.youtube.com/watch?v=${plant.content_plant.videos}" target="_blank">Tonton Video by Youtube</a><br><br>` :
+            // Assuming the YouTube video ID is stored in asset.content_asset.video
+            let videoLink = asset.content_asset.video ?
+                `<b>Video Asset:</b> <a href="https://www.youtube.com/watch?v=${asset.content_asset.video}" target="_blank">Tonton Video by Youtube</a><br><br>` :
                 '';
 
             L.marker([lat, lng], {
@@ -221,27 +220,20 @@
             height: 40vh;
             width: 100%;
             overflow-y: scroll;">
-            <b style="color: #ff0000; font-size: 18px;">Data Asset ID ${plant.code_plant}</b><br><br>
+            <b style="color: #ff0000; font-size: 18px;">Data Asset ID ${asset.code_asset}</b><br><br>
             ${imageTag}
             ${videoLink}
-            <b>Nama Asset:</b> ${plant.index_plant.name}<br>
-            <b>Genus:</b> ${plant.index_plant.genus}<br>
-            <b>Spesies:</b> ${plant.index_plant.species}<br>
-            <b>Ordo:</b> ${plant.index_plant.ordo}<br>
-            <b>Kingdom:</b> ${plant.index_plant.kingdom}<br>
-            <b>Famili:</b> ${plant.index_plant.famili}<br>
-            <b>Kelas:</b> ${plant.index_plant.kelas}<br>
-            <b>Divisi:</b> ${plant.index_plant.divisi}<br>
-            <b>Alamat Asset: </b>${plant.address}, ${plant.villages.name}, ${plant.villages.kecamatan}, ${plant.villages.kab_kota} - ${plant.villages.province}<br>
-            <b>Umur Asset: </b>${plant.age} Tahun<br>
-            <b>Tinggi Asset: </b>${plant.tall} Meter<br>
-            <b>Diameter Asset: </b>${plant.round}<br>
-            <b>Tanggal Tanam: </b>${plant.date_plant}<br>
-            <b>Sumber Dana: </b>${plant.source_fund}<br>
-            <b>Sejarah Asset:</b><br> ${plant.content_plant.history}<br><br>
-            <b>Morfologi Asset:</b><br> ${plant.content_plant.morfologi}<br><br>
-            <b>Manfaat Asset:</b><br> ${plant.content_plant.benefit}<br><br>
-            <b>Fakta Asset:</b><br> ${plant.content_plant.fact}<br>
+            <b>Nama Asset:</b> ${asset.index_asset.nama}<br>
+            <b>Alamat Asset: </b>${asset.address}, ${asset.villages.name}, ${asset.villages.kecamatan}, ${asset.villages.kab_kota} - ${asset.villages.province}<br>
+            <b>Umur Asset: </b>${asset.age} Tahun<br>
+            <b>Luas Asset: </b>${asset.large} Meter<br>
+            <b>Nilai Asset: </b>${asset.value}<br>
+            <b>Tanggal Buka: </b>${asset.date_open}<br>
+            <b>Pengelola: </b>${asset.organizer}<br>
+            <b>Sejarah Asset:</b><br> ${asset.content_asset.history}<br><br>
+            <b>Morfologi Asset:</b><br> ${asset.content_asset.morfologi}<br><br>
+            <b>Manfaat Asset:</b><br> ${asset.content_asset.benefit}<br><br>
+            <b>Fakta Asset:</b><br> ${asset.content_asset.fact}<br>
         </div>
     `)
                 .addTo(map);
