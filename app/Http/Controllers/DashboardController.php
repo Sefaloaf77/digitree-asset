@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Ads;
 use App\Models\Assets;
 use App\Models\IndexAssets;
-use App\Models\Plants;
 use App\Models\RecordScans;
 use App\Models\Reviews;
 use App\Models\Villages;
@@ -19,7 +18,7 @@ class DashboardController extends Controller
     public function index()
     {
         Gate::authorize('superadmin');
-        $totalPlant = Ads::count();
+        $totalPlant = Assets::count();
         $totalIndexPlant = IndexAssets::count();
         $totalScannedQR = RecordScans::count();
         $avgRating = round(Reviews::avg('rating'), 1);
@@ -37,19 +36,19 @@ class DashboardController extends Controller
     {
         // Gate::authorize('superadmin');
         // Ambil data plant berdasarkan code_plant
-        $plants = Assets::where('id_village', $id)->get();
+        $asset = Assets::where('id_village', $id)->get();
         // Ambil list code_plant dari plants
-        $codePlantsList = $plants->pluck('code_plant');
-        $indexPlantsList = $plants->pluck('id_index_plants');
+        $codePlantsList = $asset->pluck('code_asset');
+        $indexPlantsList = $asset->pluck('id_index_asset');
 
         // Hitung total plants berdasarkan id_villages
-        $totalPlantbyVillages = $plants->count();
+        $totalPlantbyVillages = $asset->count();
         // Hitung total index plant berdasarkan code_plant yang terkait
         $totalIndexPlantByCode = IndexAssets::whereIn('id', $indexPlantsList)->count();
         // Hitung total reviews berdasarkan code_plant yang terkait
-        $totalRecordByCode = RecordScans::whereIn('code_plant', $codePlantsList)->count();
+        $totalRecordByCode = RecordScans::whereIn('code_asset', $codePlantsList)->count();
         // Hitung rata-rata rating berdasarkan code_plant yang terkait
-        $averageRatingByCode = round(Reviews::whereIn('code_plant', $codePlantsList)->avg('rating'), 1);
+        $averageRatingByCode = round(Reviews::whereIn('code_asset', $codePlantsList)->avg('rating'), 1);
         $desa = Villages::all();
         $summaryData = [
             'totalPlant' => $totalPlantbyVillages ?: 0,

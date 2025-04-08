@@ -370,26 +370,26 @@ class DataPohonController extends Controller
         // return response()->json(['qr_code' => base64_encode($qrCode)], 200);
 
         // Mengambil data dari tabel plant berdasarkan id
-        $plant = Assets::where('code_plant', $id)->first();
+        $plant = Assets::where('code_asset', $id)->first();
         // dd($plant);
 
-        if ($plant) {
+        if ($plant) {   
             // Mengambil data dari tabel index_plants berdasarkan id_index_plants
-            $indexPlant = IndexAssets::find($plant->id_index_plants);
+            $indexPlant = IndexAssets::find($plant->id_index_asset);
 
             if ($indexPlant) {
                 return response()->json([
-                    'name' => $indexPlant->name,
-                    'code_plant' => $plant->code_plant,
+                    'nama_lokal' => $indexPlant->nama_lokal,
+                    'code_asset' => $plant->code_asset,
                 ]);
             } else {
                 return response()->json([
-                    'error' => 'Index plant not found',
+                    'error' => 'Index Asset not found',
                 ], 404);
             }
         } else {
             return response()->json([
-                'error' => 'Plant not found',
+                'error' => 'Asset not found',
             ], 404);
         }
     }

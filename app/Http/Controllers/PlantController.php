@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContentPlants;
-use App\Models\IndexPlants;
-use App\Models\Plants;
+use App\Models\Assets;
+use App\Models\ContentAssets;
+use App\Models\IndexAssets;
 use App\Models\RecordScans;
 use App\Models\Reviews;
 use App\Models\Villages;
@@ -15,37 +15,36 @@ class PlantController extends Controller
     //
     public function getDataPlant()
     {
-        $plants = Plants::all();
+        $plants = Assets::all();
         $no = 1;
 
         foreach ($plants as $plant) {
 
             $result = $plants->map(function ($plant) use (&$no) {
                 // Ambil data IndexPlant berdasarkan id_index_plants
-                $indexPlant = IndexPlants::find($plant->id_index_plants);
+                $indexPlant = IndexAssets::find($plant->id_index_asset);
                 // Ambil data ContentPlant berdasarkan id_content_plants
-                $contentPlant = ContentPlants::find($plant->id_content_plants);
+                $contentPlant = ContentAssets::find($plant->id_content_asset);
                 // Ambil data Review berdasarkan code_plant
-                $reviews = Reviews::where('code_plant', $plant->code_plant)->get();
+                $reviews = Reviews::where('code_asset', $plant->code_asset)->get();
                 // Hitung rata-rata rating
                 $averageRating = $reviews->avg('rating');
 
                 return [
                     'no' => $no++,
                     'id' => $plant->id ? $plant->id : '-',
-                    'code_plant' => $plant->code_plant ? $plant->code_plant : '-',
-                    'tall' => $plant->tall ? $plant->tall : '-',
+                    'code_asset' => $plant->code_asset ? $plant->code_asset : '-',
+                    'large' => $plant->large ? $plant->large : '-',
                     'age' => $plant->age ? $plant->age : '-',
-                    'round' => $plant->round ? $plant->round : '-',
+                    'value' => $plant->value ? $plant->value : '-',
                     'location' => $plant->location ? $plant->location : '-',
-                    'date_plant' => $plant->date_plant ? $plant->date_plant : '-',
-                    'source_fund' => $plant->source_fund ? $plant->source_fund : '-',
-                    'qr_code' => $plant->qr_code ? $plant->qr_code : '-',
+                    'date_open' => $plant->date_open ? $plant->date_open : '-',
+                    'organizer' => $plant->organizer ? $plant->organizer : '-',
                     'address' => $plant->address ? $plant->address : '-',
                     'index_plant_data' => [
                         'id' => $indexPlant->id ? $indexPlant->id : '-',
-                        'name' => $indexPlant->name ? $indexPlant->name : '-',
-                        'genus' => $indexPlant->genus ? $indexPlant->genus : '-',
+                        'nama_lokal' => $indexPlant->nama_lokal ? $indexPlant->nama_lokal : '-',
+                        'jenis_aset' => $indexPlant->jenis_aset ? $indexPlant->jenis_aset : '-',
                     ],
                     'content_plant_data' => [
                         'history' => $contentPlant->history ? $contentPlant->history : '-',
@@ -57,7 +56,7 @@ class PlantController extends Controller
                             'comment' => $review->comment ? $review->comment : '-',
                         ];
                     }),
-                    'avg_rating' => $averageRating ? $averageRating : '-',
+                    'avg_rating' => $averageRating ? $averageRating : '0',
                 ];
             });
         }
@@ -148,7 +147,7 @@ class PlantController extends Controller
         // dd($request);
 
         $code_plant = $request->id_plant_delete;
-        $plant_specifict = Plants::where('code_plant', $code_plant)->firstOrFail();
+        $plant_specifict = Assets::where('code_plant', $code_plant)->firstOrFail();
         $plant_specifict->delete();
 
         // Find the record to be deleted using the provided ID
