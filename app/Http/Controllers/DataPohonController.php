@@ -30,9 +30,9 @@ class DataPohonController extends Controller
     public function create()
     {
         Gate::authorize('superadmin');
-        $jenisPohon = IndexAssets::all();
+        $jenisAsset = IndexAssets::all();
         $desa = Villages::all();
-        return view('database-pohon.create', ['jenisPohon' => $jenisPohon, 'desa' => $desa]);
+        return view('database-pohon.create', ['jenisAsset' => $jenisAsset, 'desa' => $desa]);
     }
 
     public function save(Request $request)
@@ -40,14 +40,14 @@ class DataPohonController extends Controller
         try {
             // dd($request->all());
             $validator = Validator::make($request->all(), [
-                'id_index_plants' => 'required',
-                // 'id_content_plant' => 'nullable',
-                'code_plant' => 'required',
+                'id_index_asset' => 'required',
+                'code_asset' => 'required',
                 'age' => 'required',
-                'tall' => 'required',
-                'round' => 'required',
-                'source_fund' => 'nullable',
-                'id_villages' => 'required',
+                'large' => 'required',
+                'value' => 'required',
+                'organizer' => 'nullable',
+                'id_village' => 'required',
+                'date_open' => 'required',
                 'address' => 'required',
                 'location' => 'required',
             ]);
@@ -59,17 +59,18 @@ class DataPohonController extends Controller
             }
             // dd($request);
 
-            $contentId = ContentAssets::where('id_index_plant', $request->id_index_plants)->value('id');
+            $contentId = ContentAssets::where('id_index_asset', $request->id_index_asset)->value('id');
             // dd($contentId);
             Assets::create([
-                'id_index_plants' => $request->id_index_plants,
-                'id_content_plants' => $contentId,
-                'code_plant' => $request->code_plant,
+                'id_index_asset' => $request->id_index_asset,
+                'id_content_asset' => $contentId,
+                'code_asset' => $request->code_asset,
                 'age' => $request->age,
-                'tall' => $request->tall,
-                'round' => $request->round,
-                'source_fund' => ucwords(strtolower($request->source_fund)),
-                'id_villages' => $request->id_villages,
+                'large' => $request->large,
+                'value' => $request->value,
+                'organizer' => ucwords(strtolower($request->organizer)),
+                'id_village' => $request->id_village,
+                'date_open' => $request->date_open,
                 'address' => $request->address,
                 'location' => $request->location,
             ]);

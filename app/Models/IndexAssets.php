@@ -18,10 +18,10 @@ class IndexAssets extends Model
     ];
     public function assets()
     {
-        return $this->hasMany(Plants::class, 'index_asset_id');
+        return $this->hasMany(Assets::class, 'index_asset_id');
     }
     public function content_asset()
     {
-        return $this->hasMany(ContentPlants::class, 'id_index_asset');
+        return $this->hasMany(ContentAssets::class, 'id_index_asset');
     }
 }
