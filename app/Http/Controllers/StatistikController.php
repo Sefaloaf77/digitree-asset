@@ -24,10 +24,10 @@ class StatistikController extends Controller
         $per_page = $request->input('per_page', 10);
 
         $statistik = DB::table('record_scans as rs')
-            ->join('plants as p', 'rs.code_plant', '=', 'p.code_plant')
-            ->join('index_plants as ip', 'p.id_index_plants', '=', 'ip.id')
-            ->select('rs.id as rs_id', 'rs.ip_address', 'rs.scan_date', 'rs.code_plant', 'rs.location', 'p.id_index_plants', 'p.id_content_plants', 'p.address', 'ip.name')
-            ->where('ip.name', 'like', "%{$request->search}%")
+            ->join('assets as p', 'rs.code_asset', '=', 'p.code_asset')
+            ->join('index_assets as ip', 'p.id_index_asset', '=', 'ip.id')
+            ->select('rs.id as rs_id', 'rs.ip_address', 'rs.scan_date', 'rs.code_asset', 'rs.location', 'p.id_index_asset', 'p.id_content_plant', 'p.address', 'ip.nama')
+            ->where('ip.nama', 'like', "%{$request->search}%")
             ->orderBy($sortBy, $sortDirection)
             ->paginate($per_page);
         // dd($statistik);
@@ -69,7 +69,7 @@ class StatistikController extends Controller
 
     public function getReviewPlant($id)
     {
-        $reviews = Reviews::where('code_plant', $id)->get();
+        $reviews = Reviews::where('code_asset', $id)->get();
         // dd($reviews);
         if ($reviews) {
             return response()->json($reviews);
