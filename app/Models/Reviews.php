@@ -20,13 +20,13 @@ class Reviews extends Model
         'phone',
         'rating',
         'comment',
-        'code_plant',
+        'code_asset',
         'created_at'
     ];
 
-    public function plant()
+    public function asset()
     {
-        return $this->belongsToMany(Plants::class);
+        return $this->belongsToMany(Assets::class);
     }
 
 }

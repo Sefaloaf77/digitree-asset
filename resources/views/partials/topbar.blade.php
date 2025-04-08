@@ -278,7 +278,7 @@
                 <div class="text-start">
                     <div class="flex items-center gap-1">
                         <span class="hidden xl:block text-sm font-semibold">
-                            {{-- {{ Auth::user()->name }} --}}
+                            {{ Auth::user()->name ?? 'user' }}
                         </span>
                         <svg width="12" height="13" viewBox="0 0 12 13" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -287,7 +287,7 @@
                                 fill="currentColor" />
                         </svg>
                     </div>
-                    <span class="hidden xl:block text-xs text-lightgray">User</span>
+                    {{-- <span class="hidden xl:block text-xs text-lightgray">User</span> --}}
                 </div>
             </button>
             <ul x-show="open" x-transition="" x-transition.duration.300ms="" style="display: none;">

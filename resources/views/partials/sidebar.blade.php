@@ -213,9 +213,10 @@
                 <li class="menu nav-item px-3 mt-3">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <a href="route('logout')" onclick="event.preventDefault();this.closest('form').submit();"
+                        <button type="submit" class="cursor-pointer"
+                            onclick="event.preventDefault();this.closest('form').submit();"
                             class="nav-link group capitalize">
-                            <div class="flex items-center">
+                            <div class="flex items-center bg-white px-3 py-2 rounded-lg">
                                 <svg width="19" height="17" viewBox="0 0 19 17" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -224,7 +225,7 @@
                                 </svg>
                                 <span class="pl-1.5 text-[#f7434f]">Logout</span>
                             </div>
-                        </a>
+                        </button>
                     </form>
                 </li>
             </ul>

@@ -639,22 +639,49 @@
                                     <div class="flex items-center justify-between gap-2">
                                         <p>No</p>
                                         <div class="flex flex-col">
-                                            <svg @click="sort('name', 'asc')" fill="none" stroke-linecap="round"
+                                            <svg @click="sort('id', 'asc')" fill="none" stroke-linecap="round"
                                                 stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24"
                                                 stroke="currentColor"
                                                 class="h-3 w-3 cursor-pointer text-muted fill-current"
                                                 x-bind:class="{
-                                                    '!text-black': sorted.field === 'name' && sorted
+                                                    '!text-black': sorted.field === 'id' && sorted
                                                         .rule === 'asc'
                                                 }">
                                                 <path d="M5 15l7-7 7 7"></path>
                                             </svg>
-                                            <svg @click="sort('name', 'desc')" fill="none" stroke-linecap="round"
+                                            <svg @click="sort('id', 'desc')" fill="none" stroke-linecap="round"
                                                 stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24"
                                                 stroke="currentColor"
                                                 class="h-3 w-3 cursor-pointer text-muted fill-current"
                                                 x-bind:class="{
-                                                    '!text-black': sorted.field === 'name' && sorted
+                                                    '!text-black': sorted.field === 'id' && sorted
+                                                        .rule === 'desc'
+                                                }">
+                                                <path d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th width="10%">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <p class="">Nama Asset</p>
+                                        <div class="flex flex-col">
+                                            <svg @click="sort('nama', 'asc')" fill="none" fill="none"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="4"
+                                                viewBox="0 0 24 24" stroke="currentColor"
+                                                class="text-muted h-3 w-3 cursor-pointer fill-current"
+                                                x-bind:class="{
+                                                    '!text-black': sorted.field === 'nama' && sorted
+                                                        .rule === 'asc'
+                                                }">
+                                                <path d="M5 15l7-7 7 7"></path>
+                                            </svg>
+                                            <svg @click="sort('nama', 'desc')" fill="none" stroke-linecap="round"
+                                                stroke-linejoin="round" stroke-width="4" viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                                class="text-muted h-3 w-3 cursor-pointer fill-current"
+                                                x-bind:class="{
+                                                    '!text-black': sorted.field === 'nama' && sorted
                                                         .rule === 'desc'
                                                 }">
                                                 <path d="M19 9l-7 7-7-7"></path>
@@ -762,7 +789,10 @@
                                             <span x-text="item.no"></span>
                                         </td>
                                         <td>
-                                            <span x-text="item.nama_lokal"></span> 
+                                            <span x-text="item.nama"></span>
+                                        </td>
+                                        <td>
+                                            <span x-text="item.nama_lokal"></span>
                                         </td>
                                         <td>
                                             <span x-text="item.jenis_aset"></span>

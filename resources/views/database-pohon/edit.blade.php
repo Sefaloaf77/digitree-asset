@@ -56,139 +56,141 @@
                         </a>
                     </div>
                     <div class="overflow-x-auto py-6 pb-2">
-                        <form action="{{ route('dashboard.asset.update', ['id' => $plantData->code_plant]) }}"
+                        <form action="{{ route('dashboard.asset.update', ['id' => $assetData['code_asset']]) }}"
                             method="POST" enctype="multipart/form-data">
-                            <form action="{{ route('dashboard.asset.update', ['id' => $plantData->code_plant]) }}"
-                                method="POST" enctype="multipart/form-data">
-                                @csrf
-                                @method('PUT')
-                                <div class="flex flex-row gap-5">
-                                    <div class="lg:w-6/12 w-full border-2 border-[#5A6383]/10 p-5 rounded-lg">
-                                        <h2 class="text-black text-lg font-semibold mb-8">Informasi Dasar</h2>
-                                        <div class="form-control w-full">
-                                            <div class="label">
-                                                <label for="jenis"
-                                                    class="label-text font-Manrope-semibold text-lg text-dark block leading-6">Jenis
-                                                    Asset</label>
-                                            </div>
-                                            <select
-                                                class="select select-bordered bg-[#7780A1]/10 w-full ring-[#7780A1]/5 focus:ring-2 focus:ring-inset focus:ring-[#7780A1]/15 rounded mt-2"
-                                                id="jenis" name="id_index_plants" autocomplete="jenis-asset"
-                                                aria-placeholder="Pilih Jenis Asset">
-                                                <option disabled selected>Pilih Jenis Asset</option>
-                                                {{-- @php
+                            @csrf
+                            @method('PUT')
+                            <div class="flex flex-row gap-5">
+                                <div class="lg:w-6/12 w-full border-2 border-[#5A6383]/10 p-5 rounded-lg">
+                                    <h2 class="text-black text-lg font-semibold mb-8">Informasi Dasar</h2>
+                                    <div class="form-control w-full">
+                                        <div class="label">
+                                            <label for="jenis"
+                                                class="label-text font-Manrope-semibold text-lg text-dark block leading-6">Jenis
+                                                Asset</label>
+                                        </div>
+                                        <select
+                                            class="select select-bordered bg-[#7780A1]/10 w-full ring-[#7780A1]/5 focus:ring-2 focus:ring-inset focus:ring-[#7780A1]/15 rounded mt-2"
+                                            id="jenis" name="id_index_asset" autocomplete="jenis-asset"
+                                            aria-placeholder="Pilih Jenis Asset">
+                                            <option disabled selected>Pilih Jenis Asset</option>
+                                            {{-- @php
                                                 function toInt($values)
                                                 {
                                                     return (int) $values;
                                                 }
                                             @endphp --}}
-                                                @foreach ($jenisPohon as $asset)
-                                                    <option value="{{ $asset->id }}"
-                                                        {{ old('id_index_plants', $asset->id ?? '') == $asset->id ? 'selected' : '' }}>
-                                                        {{ $asset->name }} -
-                                                        {{ $asset->genus }}
-                                                        {{ $asset->species }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="flex flex-col my-5">
-                                            <label for="kode" class="capitalize">kode Asset</label>
-                                            <div class="flex items-center">
-                                                <input type="text" name="code_plant" value="{{ $plantData->code_plant }}"
-                                                    class="mt-2 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"
-                                                    placeholder="Masukkan kode">
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-col my-5">
-                                            <label for="age" class="capitalize">Usia asset</label>
-                                            <div class="flex items-center">
-                                                <input type="number" name="age" value="{{ $plantData->age }}"
-                                                    class="mt-2 grow !bg-[#7780A1]/10 !border-s-2 !border-e-0 !border-y-2 !border-[#7780A1]/15 !rounded-s"
-                                                    placeholder="Masukkan Usia">
-                                                <span
-                                                    class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e">Tahun</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-col my-5">
-                                            <label for="tall" class="capitalize">tinggi asset</label>
-                                            <div class="flex items-center">
-                                                <input type="number" name="tall" value="{{ $plantData->tall }}"
-                                                    class="mt-2 grow !bg-[#7780A1]/10 !border-s-2 !border-e-0 !border-y-2 !border-[#7780A1]/15 !rounded-s"
-                                                    placeholder="Masukkan Usia">
-                                                <span
-                                                    class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e">Centimeter</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-col my-5">
-                                            <label for="round" class="capitalize">diameter asset</label>
-                                            <div class="flex items-center">
-                                                <input type="number" name="round" value="{{ $plantData->round }}"
-                                                    class="mt-2 grow !bg-[#7780A1]/10 !border-s-2 !border-e-0 !border-y-2 !border-[#7780A1]/15 !rounded-s"
-                                                    placeholder="Masukkan Usia">
-                                                <span
-                                                    class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e">Centimeter</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-col my-5">
-                                            <label for="sumber dana" class="capitalize">sumber dana</label>
-                                            <div class="flex items-center">
-                                                <input type="text" name="source_fund"
-                                                    value="{{ $plantData->source_fund }}"
-                                                    class="mt-2 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"
-                                                    placeholder="Masukkan sumber dana">
-                                            </div>
+                                            @foreach ($jenisAsset as $asset)
+                                                <option value="{{ $asset->id }}"
+                                                    {{ old('id_index_asset', $asset->id ?? '') == $asset->id ? 'selected' : '' }}>
+                                                    {{ $asset->nama }} - {{ $asset->nama_lokal }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="flex flex-col my-5">
+                                        <label for="kode" class="capitalize">kode Asset</label>
+                                        <div class="flex items-center">
+                                            <input type="text" name="code_asset" value="{{ $assetData->code_asset }}"
+                                                class="mt-2 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"
+                                                placeholder="Masukkan kode">
                                         </div>
                                     </div>
-                                    <div class="lg:w-6/12 w-full border-2 border-[#5A6383]/10 p-5 rounded-lg">
-                                        <h2 class="text-black text-lg font-semibold mb-8">Lokasi Asset</h2>
-                                        <div class="flex flex-col my-5">
-                                            <label for="desa" class="capitalize">nama desa</label>
-                                            <select
-                                                class="select select-bordered bg-[#7780A1]/10 w-full ring-[#7780A1]/5 focus:ring-2 focus:ring-inset focus:ring-[#7780A1]/15 rounded mt-2"
-                                                id="desa" name="id_villages" autocomplete="desa-asset"
-                                                aria-placeholder="Pilih desa Asset">
-                                                <option disabled selected>Pilih Desa</option>
-                                                @foreach ($desa as $item)
-                                                    <option class="capitalize" value="{{ $item->id }}"
-                                                        {{ old('id_villages', $item->id ?? '') == $item->id ? 'selected' : '' }}>
-                                                        {{ $item->name }}
-                                                        -
-                                                        {{ $item->kecamatan }},
-                                                        {{ $item->kab_kota }},{{ $item->province }}</option>
-                                                @endforeach
-                                            </select>
+                                    <div class="flex flex-col my-5">
+                                        <label for="age" class="capitalize">Usia asset</label>
+                                        <div class="flex items-center">
+                                            <input type="number" name="age" value="{{ $assetData->age }}"
+                                                class="mt-2 grow !bg-[#7780A1]/10 !border-s-2 !border-e-0 !border-y-2 !border-[#7780A1]/15 !rounded-s"
+                                                placeholder="Masukkan Usia">
+                                            <span
+                                                class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e">Tahun</span>
                                         </div>
-                                        <div class="flex flex-col my-5">
-                                            <label for="alamat" class="capitalize">Alamat Lokasi Asset</label>
-                                            <div class="flex items-center">
-                                                <input type="text" name="address" value="{{ $plantData->address }}"
-                                                    class="mt-3 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"
-                                                    placeholder="Masukkan alamat">
-                                            </div>
+                                    </div>
+                                    <div class="flex flex-col my-5">
+                                        <label for="large" class="capitalize">Luas asset</label>
+                                        <div class="flex items-center">
+                                            <input type="number" name="large" value="{{ $assetData->large }}"
+                                                class="mt-2 grow !bg-[#7780A1]/10 !border-s-2 !border-e-0 !border-y-2 !border-[#7780A1]/15 !rounded-s"
+                                                placeholder="Masukkan luas">
+                                            <span
+                                                class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e">Meter2</span>
                                         </div>
-                                        <div class="flex flex-col my-5">
-                                            <label for="titik koordinate" class="capitalize">Titik koordinat
-                                                Lokasi</label>
-                                            <div class="flex items-center">
-                                                <input type="text" name="location" value="{{ $plantData->location }}"
-                                                    class="mt-3 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"
-                                                    placeholder="Masukkan titik koordinate">
-                                            </div>
+                                    </div>
+                                    <div class="flex flex-col my-5">
+                                        <label for="value" class="capitalize">nilai asset</label>
+                                        <div class="flex items-center">
+                                            <input type="text" name="value" value="{{ $assetData->value }}"
+                                                class="mt-2 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded-s"
+                                                placeholder="Masukkan Nilai">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col my-5">
+                                        <label for="tanggal" class="capitalize">Tanggal Dibuka</label>
+                                        <div class="flex items-center">
+                                            <input type="date" name="date_open" value="{{ $assetData->date_open }}"
+                                                class="mt-2 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"
+                                                placeholder="Masukkan tanggal">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col my-5">
+                                        <label for="pengelola" class="capitalize">Pengelola</label>
+                                        <div class="flex items-center">
+                                            <input type="text" name="organizer" value="{{ $assetData->organizer }}"
+                                                class="mt-2 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"
+                                                placeholder="Masukkan pengelola">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="flex justify-end my-5">
-                                    <button type="submit"
-                                        class="bg-green-digitree py-3 px-6 flex  justify-center items-center w-fit h-fit gap-3 rounded-md text-white font-Manrope-semibold text-lg">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
-                                            class="w-5 h-5" viewBox="0 0 24 24">
-                                            <path fill="white"
-                                                d="M17.59 3.59c-.38-.38-.89-.59-1.42-.59H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7.83c0-.53-.21-1.04-.59-1.41zM12 19c-1.66 0-3-1.34-3-3s1.34-3 3-3s3 1.34 3 3s-1.34 3-3 3m1-10H7c-1.1 0-2-.9-2-2s.9-2 2-2h6c1.1 0 2 .9 2 2s-.9 2-2 2" />
-                                        </svg>
-                                        <span class="text-white font-Manrope-medium">Simpan Data</span>
-                                    </button>
+                                <div class="lg:w-6/12 w-full border-2 border-[#5A6383]/10 p-5 rounded-lg">
+                                    <h2 class="text-black text-lg font-semibold mb-8">Lokasi Asset</h2>
+                                    <div class="flex flex-col my-5">
+                                        <label for="desa" class="capitalize">nama desa</label>
+                                        <select
+                                            class="select select-bordered bg-[#7780A1]/10 w-full ring-[#7780A1]/5 focus:ring-2 focus:ring-inset focus:ring-[#7780A1]/15 rounded mt-2"
+                                            id="desa" name="id_village" autocomplete="desa-asset"
+                                            aria-placeholder="Pilih desa Asset">
+                                            <option disabled selected>Pilih Desa</option>
+                                            @foreach ($desa as $item)
+                                                <option class="capitalize" value="{{ $item->id }}"
+                                                    {{ old('id_village', $item->id ?? '') == $item->id ? 'selected' : '' }}>
+                                                    {{ $item->name }}
+                                                    -
+                                                    {{ $item->kecamatan }},
+                                                    {{ $item->kab_kota }},{{ $item->province }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="flex flex-col my-5">
+                                        <label for="alamat" class="capitalize">Alamat Lokasi Asset</label>
+                                        <div class="flex items-center">
+                                            <input type="text" name="address" value="{{ $assetData->address }}"
+                                                class="mt-3 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"
+                                                placeholder="Masukkan alamat">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col my-5">
+                                        <label for="titik koordinate" class="capitalize">Titik koordinat
+                                            Lokasi</label>
+                                        <div class="flex items-center">
+                                            <input type="text" name="location" value="{{ $assetData->location }}"
+                                                class="mt-3 grow !bg-[#7780A1]/10 !border-2 !border-[#7780A1]/15 !rounded"
+                                                placeholder="Masukkan titik koordinate">
+                                        </div>
+                                    </div>
                                 </div>
-                            </form>
+                            </div>
+                            <div class="flex justify-end my-5">
+                                <button type="submit"
+                                    class="bg-green-digitree py-3 px-6 flex  justify-center items-center w-fit h-fit gap-3 rounded-md text-white font-Manrope-semibold text-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
+                                        class="w-5 h-5" viewBox="0 0 24 24">
+                                        <path fill="white"
+                                            d="M17.59 3.59c-.38-.38-.89-.59-1.42-.59H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7.83c0-.53-.21-1.04-.59-1.41zM12 19c-1.66 0-3-1.34-3-3s1.34-3 3-3s3 1.34 3 3s-1.34 3-3 3m1-10H7c-1.1 0-2-.9-2-2s.9-2 2-2h6c1.1 0 2 .9 2 2s-.9 2-2 2" />
+                                    </svg>
+                                    <span class="text-white font-Manrope-medium">Simpan Data</span>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

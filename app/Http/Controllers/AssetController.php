@@ -10,7 +10,7 @@ use App\Models\Reviews;
 use App\Models\Villages;
 use Illuminate\Http\Request;
 
-class PlantController extends Controller
+class AssetController extends Controller
 {
     //
     public function getDataPlant()
@@ -21,7 +21,7 @@ class PlantController extends Controller
         foreach ($plants as $plant) {
 
             $result = $plants->map(function ($plant) use (&$no) {
-                // Ambil data IndexPlant berdasarkan id_index_plants
+                // Ambil data IndexPlant berdasarkan id_index_plant
                 $indexPlant = IndexAssets::find($plant->id_index_asset);
                 // Ambil data ContentPlant berdasarkan id_content_plants
                 $contentPlant = ContentAssets::find($plant->id_content_asset);
@@ -68,7 +68,7 @@ class PlantController extends Controller
     public function getDataPlantLocation($id)
     {
         // Ambil data plant berdasarkan code_plant
-        $plants = Plants::where('id_villages', $id)->get();
+        $plants = Assets::where('id_villages', $id)->get();
 
         // Cek apakah data ditemukan
         if ($plants->isEmpty()) {
@@ -77,7 +77,7 @@ class PlantController extends Controller
 
         // // Ambil list code_plant dari plants
         // $codePlantsList = $plants->pluck('code_plant');
-        // $indexPlantsList = $plants->pluck('id_index_plants');
+        // $indexPlantsList = $plants->pluck('id_index_plant');
 
         // // Hitung total plants berdasarkan id_villages
         // $totalPlantbyVillages = $plants->count();
@@ -90,18 +90,18 @@ class PlantController extends Controller
 
         $results = $plants->map(function ($plant) {
 
-            // Ambil data IndexPlant berdasarkan id_index_plants
-            $indexPlant = IndexPlants::find($plant->id_index_plants);
+            // Ambil data IndexPlant berdasarkan id_index_plant
+            $indexPlant = IndexAssets::find($plant->id_index_plant);
             // Ambil data ContentPlant berdasarkan id_content_plants
-            $contentPlant = ContentPlants::find($plant->id_content_plants);
+            $contentPlant = ContentAssets::find($plant->id_content_plants);
             // Ambil data Review berdasarkan code_plant
             $reviews = Reviews::where('code_plant', $plant->code_plant)->get();
             // Hitung rata-rata rating
             $averageRating = round($reviews->avg('rating'), 1);
 
             // Hitung jumlah terkait
-            $relatedIndexPlantCount = IndexPlants::where('id', $plant->id_index_plants)->count();
-            $relatedContentPlantCount = ContentPlants::where('id', $plant->id_content_plants)->count();
+            $relatedIndexPlantCount = IndexAssets::where('id', $plant->id_index_plant)->count();
+            $relatedContentPlantCount = ContentAssets::where('id', $plant->id_content_plants)->count();
             $relatedReviewsCount = $reviews->count();
             $relatedQRScanCount = RecordScans::where('code_plant', $plant->code_plant)->count();
 
@@ -146,8 +146,8 @@ class PlantController extends Controller
     {
         // dd($request);
 
-        $code_plant = $request->id_plant_delete;
-        $plant_specifict = Assets::where('code_plant', $code_plant)->firstOrFail();
+        $code_asset = $request->id_plant_delete;
+        $plant_specifict = Assets::where('code_asset', $code_asset)->firstOrFail();
         $plant_specifict->delete();
 
         // Find the record to be deleted using the provided ID
@@ -157,36 +157,37 @@ class PlantController extends Controller
         // $plant->delete();
 
         // Return a success response (e.g., JSON or redirect)
-        return redirect()->back()->with('success', 'Plant deleted successfully!');
+        return redirect()->back()->with('success', 'Asset deleted successfully!');
     }
 
     public function updatePlant($id)
     {
-        $plantData = Plants::where('code_plant', $id)->firstOrFail();
-        $jenisPohon = IndexPlants::all();
+        $assetData = Assets::where('code_asset', $id)->firstOrFail();
+        $jenisAsset = IndexAssets::all();
         $desa = Villages::all();
-        // $desaData = Villages::where('id', $plantData->id_villages)->firstOrFail();
-        // $indexData = IndexPlants::where('id', $plantData->id_index_plants)->firstOrFail();
-        // dd($jenisPohon);
+        // $desaData = Villages::where('id', $assetData->id_villages)->firstOrFail();
+        // $indexData = IndexPlants::where('id', $assetData->id_index_plant)->firstOrFail();
+        // dd($jenisAsset);
         // $data = [
-        //     'id_index_plants' => $plantData->id_index_plants,
+        //     'id_index_plant' => $assetData->id_index_plant,
         //     // 'id_content_plants' => $contentId,
-        //     'code_plant' => $plantData->code_plant,
-        //     'age' => $plantData->age,
-        //     'tall' => $plantData->tall,
-        //     'round' => $plantData->round,
-        //     'source_fund' => ucwords(strtolower($plantData->source_fund)),
+        //     'code_plant' => $assetData->code_plant,
+        //     'age' => $assetData->age,
+        //     'tall' => $assetData->tall,
+        //     'round' => $assetData->round,
+        //     'source_fund' => ucwords(strtolower($assetData->source_fund)),
         //     'id_villages' => $desaData->id_villages,
         //     'address' => $request->address,
         //     'location' => $request->location,
         // ];
 
         $data = [
-            'plantData' => $plantData,
-            'jenisPohon' => $jenisPohon,
+            'assetData' => $assetData,
+            'jenisAsset' => $jenisAsset,
             'desa' => $desa,
         ];
-        // dd($data);
-        return view('database-pohon.edit', $data);
+        return view('database-pohon.edit', ['data' => $data, 'assetData' => $assetData, 'jenisAsset' => $jenisAsset, 'desa' => $desa]);
+
+
     }
 }
