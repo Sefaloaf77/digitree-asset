@@ -12,6 +12,9 @@ class Assets extends Model
     use HasFactory;
     protected $table = 'assets';
     protected $guarded = ['id'];
+    protected $casts = [
+        'age' => 'float', // atau 'double'
+    ];
     public $timestamps = true;
 
     protected $fillable = [

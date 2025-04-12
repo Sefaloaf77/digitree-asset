@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ads;
 use App\Models\Assets;
 use App\Models\ContentAssets;
-use App\Models\ContentPlants;
 use App\Models\IndexAssets;
-use App\Models\IndexPlants;
-use App\Models\Plants;
 use App\Models\RecordScans;
 use App\Models\Reviews;
 use Carbon\Carbon;
@@ -100,7 +97,7 @@ class FrontendController extends Controller
             "value" => $assetData->value ? $assetData->value : '-',
             "location" => $assetData->location ? $assetData->location : '-',
             "address" => $assetData->address ? $assetData->address : '-',
-            "age" => $assetData->age ? $assetData->age : '-',
+            "age" => floatval($assetData->age) ? floatval($assetData->age) : 0.0,
             "date_open" => $tanggalBuka ? $tanggalBuka : '-',
             "organizer" => $assetData->organizer ? $assetData->organizer : '-',
             "nama" => $assetIndex->nama ? $assetIndex->nama : '-',
@@ -112,6 +109,8 @@ class FrontendController extends Controller
             "benefit" => $assetContent->benefit ? $assetContent->benefit : '-',
             "fact" => $assetContent->fact ? $assetContent->fact : '-',
         ];
+
+        // dd($asset['age']);
         $review = [];
         foreach ($reviewData as $key => $value) {
             // Tanggal yang ingin Anda konversi
@@ -140,6 +139,7 @@ class FrontendController extends Controller
             'ads' => $ads,
         ];
 
+        
 
         return view('frontend.view', ['asset' => $mergeContentAsset]);
     }
@@ -162,7 +162,7 @@ class FrontendController extends Controller
                 'scan_date' => Carbon::now(),
                 'code_asset' => $assetData->code_asset,
                 'ip_address' => request()->ip(),
-                'location' => $location
+                'location' => $location,
             ]);
 
             // Mengatur session 'scanned' untuk menandakan kunjungan telah tercatat

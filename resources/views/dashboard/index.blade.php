@@ -381,7 +381,7 @@
                                 <th width="10%">
                                     <div class="flex items-center justify-between gap-2">
                                         <span>
-                                            Usia Asset
+                                            Jarak dari Desa
                                         </span>
                                         <div class="flex flex-col">
                                             <svg @click="sort('age', 'asc')" fill="none" fill="none"
@@ -478,7 +478,7 @@
                                                     'text-green-600 bg-green-200 rounded px-2 py-1': item.age >= 3,
                                                     'text-blue-600 bg-blue-200 rounded px-2 py-1': item.age >= 10
                                                 }"
-                                                x-text="item.age < 1 ? '< 1 Tahun' : (item.age == 1 ? '1 Tahun' : item.age + ' Tahun')">
+                                                x-text="item.age < 1 ? '< 1 KM' : (item.age == 1 ? '1 KM' : item.age + ' KM')">
                                             </span>
                                         </td>
 

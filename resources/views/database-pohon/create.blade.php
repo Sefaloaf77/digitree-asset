@@ -92,23 +92,23 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col my-5">
-                                        <label for="age" class="capitalize">Usia asset</label>
+                                        <label for="age" class="capitalize">Jarak dari Pusat Desa</label>
                                         <div class="flex items-center">
-                                            <input type="number" name="age" value="{{ old('age') }}"
+                                            <input type="text" name="age" value="{{ old('age') }}"
                                                 class="mt-2 grow !bg-[#7780A1]/10 !border-s-2 !border-e-0 !border-y-2 !border-[#7780A1]/15 !rounded-s"
-                                                placeholder="Masukkan Usia">
+                                                placeholder="Masukkan Jarak KM">
                                             <span
-                                                class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e">Tahun</span>
+                                                class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e">KM</span>
                                         </div>
                                     </div>
                                     <div class="flex flex-col my-5">
-                                        <label for="large" class="capitalize">Luas asset</label>
+                                        <label for="large" class="capitalize">Moda Tranportasi ke Lokasi</label>
                                         <div class="flex items-center">
-                                            <input type="number" name="large" value="{{ old('large') }}"
+                                            <input type="text" name="large" value="{{ old('large') }}"
                                                 class="mt-2 grow !bg-[#7780A1]/10 !border-s-2 !border-e-0 !border-y-2 !border-[#7780A1]/15 !rounded-s"
-                                                placeholder="Masukkan Usia">
-                                            <span
-                                                class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e">Meter2</span>
+                                                placeholder="Moda Transportasi">
+                                            {{-- <span
+                                                class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e"></span> --}}
                                         </div>
                                     </div>
                                     <div class="flex flex-col my-5">
