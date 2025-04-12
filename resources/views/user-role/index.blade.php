@@ -1,4 +1,4 @@
-@extends('Layout.layout')
+@extends('layout.layout')
 
 @push('styles')
 @endpush

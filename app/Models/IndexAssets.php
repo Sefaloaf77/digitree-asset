@@ -13,6 +13,7 @@ class IndexAssets extends Model
     protected $guarded = ['id'];
     public $timestamps = true;
     protected $fillable = [
+        'nama',
         'nama_lokal',
         'jenis_aset',
     ];

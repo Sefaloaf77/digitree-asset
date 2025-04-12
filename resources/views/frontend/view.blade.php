@@ -77,9 +77,14 @@
     @isset($asset)
         <section id="iklan-atas">
             <div class="w-full">
-                <img src="{{ Storage::url('images/iklan/' . $asset['ads']['image']) }}" class="object-contain w-full h-32"
-                    alt="iklan">
+                @if (isset($asset['ads']['image']) && $asset['ads']['image'])
+                    <img src="{{ Storage::url('images/iklan/' . $asset['ads']['image']) }}" class="object-contain w-full h-32"
+                        alt="iklan">
+                @else
+                    <img src="{{ asset('images/tree.png') }}" class="object-contain w-full h-32" alt="iklan default">
+                @endif
             </div>
+
         </section>
         <section id="treeImage">
             <div class="w-full relative">
@@ -126,20 +131,21 @@
                 <h3 class="font-bold my-4 text-dark">Detail Asset</h3>
                 <table class="">
                     <tbody>
-                        <tr class="">
-                            <td colspan="3">Luas Asset</td>
-                            <td class="px-10">:</td>
-                            <td>{{ $asset['asset']['large'] }} Meter</td>
-                        </tr>
+
                         <tr class="">
                             <td colspan="3">Nilai Asset</td>
                             <td class="px-10">:</td>
                             <td>{{ $asset['asset']['value'] }}</td>
                         </tr>
                         <tr class="">
-                            <td colspan="3">Usia Asset</td>
+                            <td colspan="3">Jarak dari Pusat Desa</td>
                             <td class="px-10">:</td>
-                            <td>{{ $asset['asset']['age'] }} tahun</td>
+                            <td>{{ number_format($asset['asset']['age'], 2) }} KM</td>
+                        </tr>
+                        <tr class="">
+                            <td colspan="3">Moda Tranportasi ke Lokasi</td>
+                            <td class="px-10">:</td>
+                            <td>{{ $asset['asset']['large'] }}</td>
                         </tr>
                         <tr class="">
                             <td colspan="3">Tanggal Dibuka</td>
@@ -232,8 +238,12 @@
         </section>
         <section id="iklan-bawah">
             <div class="w-full">
-                <img src="{{ Storage::url('images/iklan/' . $asset['ads']['image']) }}" class="object-contain w-full h-32"
-                    alt="iklan">
+                @if (isset($asset['ads']['image']) && $asset['ads']['image'])
+                    <img src="{{ Storage::url('images/iklan/' . $asset['ads']['image']) }}"
+                        class="object-contain w-full h-32" alt="iklan">
+                @else
+                    <img src="{{ asset('images/tree.png') }}" class="object-contain w-full h-32" alt="iklan default">
+                @endif
             </div>
         </section>
     @endisset

@@ -116,9 +116,12 @@ class DataPohonController extends Controller
 
 
             $dataIndex = [
+                'nama' => $request->nama_lokal,
                 'nama_lokal' => $request->nama_lokal,
                 'jenis_aset' => $request->jenis_asset,
             ];
+
+            // dd($dataIndex);  
 
             // Save data to Table 1 first
             $table_index = IndexAssets::create($dataIndex);
@@ -232,6 +235,7 @@ class DataPohonController extends Controller
             $dataIndexPohon = [
                 'no' => $no++,
                 'id' => $indexPohon->id,
+                'nama' => $indexPohon['nama'],
                 'nama_lokal' => $indexPohon['nama_lokal'],
                 // 'latin_name' => $indexPohon['genus'] . " " . $indexPohon['species'],
                 'jenis_aset' => $indexPohon['jenis_aset'],
