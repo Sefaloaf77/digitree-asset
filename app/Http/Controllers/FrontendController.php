@@ -139,7 +139,7 @@ class FrontendController extends Controller
             'ads' => $ads,
         ];
 
-        
+
 
         return view('frontend.view', ['asset' => $mergeContentAsset]);
     }
@@ -153,9 +153,10 @@ class FrontendController extends Controller
             'longitude' => 'required|numeric',
         ]);
 
-        $assetData = Assets::where('id', $request->id)->first();
+        $assetData = Assets::where('id', (int) $request->id)->first();
         $location = $request->latitude . ',' . $request->longitude;
         // dd($location);
+        // return response()->json($a, 200);
         if (!Session::has('scanned')) {
             // Menyimpan data kunjungan
             RecordScans::create([

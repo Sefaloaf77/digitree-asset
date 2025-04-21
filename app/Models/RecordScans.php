@@ -14,7 +14,7 @@ class RecordScans extends Model
     protected $guarded = ['id'];
     protected $fillable = [
         'scan_date',
-        'code_plant',
+        'code_asset',
         'ip_address',
         'location'
     ];

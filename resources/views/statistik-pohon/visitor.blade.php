@@ -144,7 +144,7 @@
                                             <span>{{ $item->ip_address }}</span>
                                         </td>
                                         <td>
-                                            <span>{{ $item->name }}</span>
+                                            <span>{{ $item->nama }}</span>
                                         </td>
                                         <td>
                                             <span>{{ $item->location }}</span>

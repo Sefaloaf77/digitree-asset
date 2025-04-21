@@ -186,7 +186,7 @@
 
         // Define custom icon for trees
         var treeIcon = L.icon({
-            iconUrl: '/images/tree.png',
+            iconUrl: '/images/loc-icon.png',
             iconSize: [35, 35]
         });
 
