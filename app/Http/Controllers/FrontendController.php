@@ -104,6 +104,7 @@ class FrontendController extends Controller
             "nama_lokal" => $assetIndex->nama_lokal ? $assetIndex->nama_lokal : '-',
             "jenis_aset" => $assetIndex->jenis_aset ? $assetIndex->jenis_aset : '-',
             "history" => $assetContent->history ? $assetContent->history : '-',
+            "description" => $assetContent->description ? $assetContent->description : '-',
             "video" => $assetContent->video ? $assetContent->video : '-',
             "image" => $assetContent->image ? $assetContent->image : '-',
             "benefit" => $assetContent->benefit ? $assetContent->benefit : '-',
