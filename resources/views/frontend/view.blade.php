@@ -23,15 +23,15 @@
                 <div class="p-5 space-y-4">
                     @isset($asset)
                         <div class="w-full space-y-4">
-                            <h3 class="font-bold mt-5 text-dark capitalize">Sejarah Asset</h3>
+                            <h3 class="font-bold mt-5 text-dark capitalize">Sejarah Aset</h3>
                             <p class="my-4">
                                 {{ $asset['asset']['history'] }}
                             </p>
-                            <h3 class="font-bold mt-5 text-dark capitalize">Fungsi Asset</h3>
+                            <h3 class="font-bold mt-5 text-dark capitalize">Manfaat Aset</h3>
                             <p class="my-4">
                                 {{ $asset['asset']['benefit'] }}
                             </p>
-                            <h3 class="font-bold mt-5 text-dark capitalize">Fakta Asset</h3>
+                            <h3 class="font-bold mt-5 text-dark capitalize">Cerita Rakyat/Fakta Aset</h3>
                             <p class="my-4">
                                 {{ $asset['asset']['fact'] }}
                             </p>
@@ -108,10 +108,10 @@
 
         <section>
             <div class="w-full px-5 py-8">
-                <h1 class="font-bold text-dark text-2xl">{{ $asset['asset']['jenis_aset'] }}
-                    {{ $asset['asset']['nama'] }}
+                <h1 class="font-bold text-dark text-2xl">{{ $asset['asset']['nama'] ?? '' }}
+                    <span class="text-xl italic">({{ $asset['asset']['nama_lokal'] ?? '' }})</span>
                 </h1>
-                <p class="text-lg text-green-digitree py-2 capitalize">{{ $asset['asset']['nama_lokal'] }}</p>
+                <p class="text-lg text-green-digitree py-2 capitalize">{{ $asset['asset']['jenis_aset'] ?? '' }}</p>
 
                 <input type="hidden" name="id_asset" id="id_asset" value="{{ $asset['asset']['id'] }}">
                 <div class="flex flex-row gap-3 my-3">
@@ -128,12 +128,12 @@
                         <span class="font-normal"> (Ulasan)</span>
                     </p>
                 </div>
-                <h3 class="font-bold my-4 text-dark">Detail Asset</h3>
+                <h3 class="font-bold my-4 text-dark">Detail Aset</h3>
                 <table class="">
                     <tbody>
 
                         <tr class="">
-                            <td colspan="3">Nilai Asset</td>
+                            <td colspan="3">Nilai Aset</td>
                             <td class="px-10">:</td>
                             <td>{{ $asset['asset']['value'] }}</td>
                         </tr>
@@ -162,7 +162,7 @@
 
                 <div class="my-4">
 
-                    <h3 class="font-bold mt-5 text-dark">Sejarah Asset</h3>
+                    <h3 class="font-bold mt-5 text-dark">Sejarah Aset</h3>
                     <p class="my-4">
                         {{ $asset['asset']['history'] }}
                     </p>
@@ -287,22 +287,26 @@
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 function(position) {
-                    // console.log("Location access granted. Latitude: " + position.coords.latitude + ", Longitude: " +
-                    //     position.coords.longitude);
+                    console.log("Location access granted. Latitude: " + position.coords.latitude + ", Longitude: " +
+                        position.coords.longitude);
 
                     var assetId = document.getElementById("id_asset").value
+                    console.log('assetId', assetId);
+
 
                     // Kirim data ke server menggunakan AJAX
                     $.ajax({
                         url: '/savelocation',
                         method: 'POST',
                         data: {
+                            id: assetId,
                             latitude: position.coords.latitude,
                             longitude: position.coords.longitude,
-                            id: assetId,
                             _token: '{{ csrf_token() }}' // Pastikan untuk menyertakan token CSRF
                         },
+
                         success: function(response) {
+                            console.log('data', response)
                             console.log(response.message);
                         },
                         error: function(xhr) {

@@ -26,7 +26,7 @@ class StatistikController extends Controller
         $statistik = DB::table('record_scans as rs')
             ->join('assets as p', 'rs.code_asset', '=', 'p.code_asset')
             ->join('index_assets as ip', 'p.id_index_asset', '=', 'ip.id')
-            ->select('rs.id as rs_id', 'rs.ip_address', 'rs.scan_date', 'rs.code_asset', 'rs.location', 'p.id_index_asset', 'p.id_content_plant', 'p.address', 'ip.nama')
+            ->select('rs.id as rs_id', 'rs.ip_address', 'rs.scan_date', 'rs.code_asset', 'rs.location', 'p.id_index_asset', 'p.id_content_asset', 'p.address', 'ip.nama')
             ->where('ip.nama', 'like', "%{$request->search}%")
             ->orderBy($sortBy, $sortDirection)
             ->paginate($per_page);
