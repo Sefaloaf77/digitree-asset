@@ -275,18 +275,13 @@ class DataPohonController extends Controller
 
         // dd($content_plant_specifict);
         $dataIndexSpecifict = [
-            'name' => $request->name_asset,
-            'kingdom' => $request->kingdom,
-            'divisi' => $request->divisi,
-            'species' => $request->spesies,
-            'kelas' => $request->kelas,
-            'ordo' => $request->ordo,
-            'genus' => $request->genus,
-            'famili' => $request->famili,
+            'nama' => $request->nama_lokal,
+            'nama_lokal' => $request->nama_lokal,
+            'jenis_aset' => $request->jenis_asset,
         ];
 
         $id_index_plant = $request->id_index;
-        $content_plant_specifict = ContentAssets::where('id_index_plant', $id_index_plant)->firstOrFail();
+        $content_plant_specifict = ContentAssets::where('id_index_asset', $id_index_plant)->firstOrFail();
 
         // Memparse URL untuk mendapatkan komponen query-nya
         $parsed_url = parse_url($request->link_youtube);
@@ -299,7 +294,7 @@ class DataPohonController extends Controller
 
         $dataContentSpecifict = [
             'history' => $request->history,
-            'morfologi' => $request->morfologi,
+            'description' => $request->description,
             'benefit' => $request->benefit,
             'fact' => $request->fact,
             'video' => $video_id,
@@ -309,7 +304,7 @@ class DataPohonController extends Controller
         if ($request->hasFile('file-uploadE') && $request->file('file-uploadE')->isValid()) {
             // Handle file upload
             $uploadedFile = $request->file('file-uploadE');
-            $imageName = 'konten_asset_' . $request->name_asset . '.' . $uploadedFile->getClientOriginalExtension();
+            $imageName = 'konten_asset_' . $request->nama_lokal . '.' . $uploadedFile->getClientOriginalExtension();
             $uploadedFile->storeAs('public/images', $imageName);
             $dataContentSpecifict['image'] = 'images/' . $imageName;
             // dd($dataContentSpecifict['image']);
@@ -321,7 +316,7 @@ class DataPohonController extends Controller
         // Update data pada ContentAssets
         $content_plant_specifict->update($dataContentSpecifict);
 
-        return redirect()->back()->with('success', 'Plant details updated successfully');
+        return redirect()->back()->with('success', 'Data berhasil diupdate');
 
         // dd($dataContentSpecifict);
 
