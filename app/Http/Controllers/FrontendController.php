@@ -79,71 +79,148 @@ class FrontendController extends Controller
     /**
      * Display the specified resource.
      */
+    // public function show($id)
+    // {
+    //     $assetData = Assets::where('code_asset', $id)->first();
+    //     $assetContent = ContentAssets::find($assetData->id_content_asset);
+    //     $assetIndex = IndexAssets::find($assetData->id_index_asset);
+    //     $reviewData = Reviews::where('code_asset', $id)->orderBy('created_at', 'desc')->limit(20)->get();
+    //     $avgRating = Reviews::where('code_asset', $id)->avg('rating');
+    //     $ads = Ads::first(); //ini nanti diubah sesuai relasi
+    //     Carbon::setLocale('id'); // Mengatur bahasa ke bahasa Indonesia
+    //     $tanggalBuka = Carbon::parse($assetData->date_open);
+    //     $tanggalBuka = $tanggalBuka->translatedFormat('d F Y');
+
+    //     $asset = [
+    //         "id" => $assetData->id,
+    //         "large" => $assetData->large ? $assetData->large : '-',
+    //         "value" => $assetData->value ? $assetData->value : '-',
+    //         "location" => $assetData->location ? $assetData->location : '-',
+    //         "address" => $assetData->address ? $assetData->address : '-',
+    //         "age" => floatval($assetData->age) ? floatval($assetData->age) : 0.0,
+    //         "date_open" => $tanggalBuka ? $tanggalBuka : '-',
+    //         "organizer" => $assetData->organizer ? $assetData->organizer : '-',
+    //         "nama" => $assetIndex->nama ? $assetIndex->nama : '-',
+    //         "nama_lokal" => $assetIndex->nama_lokal ? $assetIndex->nama_lokal : '-',
+    //         "jenis_aset" => $assetIndex->jenis_aset ? $assetIndex->jenis_aset : '-',
+    //         "history" => $assetContent->history ? $assetContent->history : '-',
+    //         "description" => $assetContent->description ? $assetContent->description : '-',
+    //         "video" => $assetContent->video ? $assetContent->video : '-',
+    //         "image" => $assetContent->image ? $assetContent->image : '-',
+    //         "benefit" => $assetContent->benefit ? $assetContent->benefit : '-',
+    //         "fact" => $assetContent->fact ? $assetContent->fact : '-',
+    //     ];
+
+    //     // dd($asset['age']);
+    //     $review = [];
+    //     foreach ($reviewData as $key => $value) {
+    //         // Tanggal yang ingin Anda konversi
+    //         $dateReview = $value->created_at;
+
+    //         // Membuat instance Carbon dari tanggal tersebut
+    //         $carbonDate = Carbon::parse($dateReview);
+
+    //         // Menghasilkan string waktu relatif
+    //         $stringTime = $carbonDate->diffForHumans();
+    //         $review[$key] = [
+    //             'id' => $value->id,
+    //             'name' => $value->name,
+    //             'phone' => $value->phone,
+    //             'rating' => $value->rating,
+    //             'comment' => $value->comment,
+    //             'created_at' => $stringTime,
+    //         ];
+    //     }
+    //     // dd($reviewData);
+
+    //     $mergeContentAsset = [
+    //         'asset' => $asset,
+    //         'ulasan' => $review,
+    //         'avgRating' => $avgRating,
+    //         'ads' => $ads,
+    //     ];
+
+    //     return view('frontend.view', ['asset' => $mergeContentAsset]);
+    // }
+
+    #New Show ID handling
     public function show($id)
-    {
-        $assetData = Assets::where('code_asset', $id)->first();
-        $assetContent = ContentAssets::find($assetData->id_content_asset);
-        $assetIndex = IndexAssets::find($assetData->id_index_asset);
-        $reviewData = Reviews::where('code_asset', $id)->orderBy('created_at', 'desc')->limit(20)->get();
-        $avgRating = Reviews::where('code_asset', $id)->avg('rating');
-        $ads = Ads::first(); //ini nanti diubah sesuai relasi
-        Carbon::setLocale('id'); // Mengatur bahasa ke bahasa Indonesia
-        $tanggalBuka = Carbon::parse($assetData->date_open);
-        $tanggalBuka = $tanggalBuka->translatedFormat('d F Y');
+{
+    // 1) Coba ambil assetData
+    $assetData = Assets::where('code_asset', $id)->first();
 
-        $asset = [
-            "id" => $assetData->id,
-            "large" => $assetData->large ? $assetData->large : '-',
-            "value" => $assetData->value ? $assetData->value : '-',
-            "location" => $assetData->location ? $assetData->location : '-',
-            "address" => $assetData->address ? $assetData->address : '-',
-            "age" => floatval($assetData->age) ? floatval($assetData->age) : 0.0,
-            "date_open" => $tanggalBuka ? $tanggalBuka : '-',
-            "organizer" => $assetData->organizer ? $assetData->organizer : '-',
-            "nama" => $assetIndex->nama ? $assetIndex->nama : '-',
-            "nama_lokal" => $assetIndex->nama_lokal ? $assetIndex->nama_lokal : '-',
-            "jenis_aset" => $assetIndex->jenis_aset ? $assetIndex->jenis_aset : '-',
-            "history" => $assetContent->history ? $assetContent->history : '-',
-            "description" => $assetContent->description ? $assetContent->description : '-',
-            "video" => $assetContent->video ? $assetContent->video : '-',
-            "image" => $assetContent->image ? $assetContent->image : '-',
-            "benefit" => $assetContent->benefit ? $assetContent->benefit : '-',
-            "fact" => $assetContent->fact ? $assetContent->fact : '-',
-        ];
-
-        // dd($asset['age']);
-        $review = [];
-        foreach ($reviewData as $key => $value) {
-            // Tanggal yang ingin Anda konversi
-            $dateReview = $value->created_at;
-
-            // Membuat instance Carbon dari tanggal tersebut
-            $carbonDate = Carbon::parse($dateReview);
-
-            // Menghasilkan string waktu relatif
-            $stringTime = $carbonDate->diffForHumans();
-            $review[$key] = [
-                'id' => $value->id,
-                'name' => $value->name,
-                'phone' => $value->phone,
-                'rating' => $value->rating,
-                'comment' => $value->comment,
-                'created_at' => $stringTime,
-            ];
-        }
-        // dd($reviewData);
-
-        $mergeContentAsset = [
-            'asset' => $asset,
-            'ulasan' => $review,
-            'avgRating' => $avgRating,
-            'ads' => $ads,
-        ];
-
-
-
-        return view('frontend.view', ['asset' => $mergeContentAsset]);
+    // Jika tidak ketemu, tampilkan halaman maintenance
+    if (! $assetData) {
+        return response()->view('pages.maintenance', [], 503);
     }
+
+    // 2) Coba ambil konten dan index
+    $assetContent = ContentAssets::find($assetData->id_content_asset);
+    $assetIndex   = IndexAssets::find($assetData->id_index_asset);
+
+    // Jika salah satu kosong, juga tampilkan maintenance
+    if (! $assetContent || ! $assetIndex) {
+        return response()->view('pages.maintenance', [], 503);
+    }
+
+    // 3) Ambil ulasan, rating, ads, format tanggal
+    $reviewData = Reviews::where('code_asset', $id)
+                         ->orderBy('created_at', 'desc')
+                         ->limit(20)
+                         ->get();
+
+    $avgRating = Reviews::where('code_asset', $id)->avg('rating');
+    $ads       = Ads::first(); // nanti sesuaikan relasi jika perlu
+
+    Carbon::setLocale('id');
+    $tanggalBuka = Carbon::parse($assetData->date_open)
+                         ->translatedFormat('d F Y');
+
+    // 4) Siapkan array asset
+    $asset = [
+        'id'          => $assetData->id,
+        'large'       => $assetData->large ?: '-',
+        'value'       => $assetData->value ?: '-',
+        'location'    => $assetData->location ?: '-',
+        'address'     => $assetData->address ?: '-',
+        'age'         => floatval($assetData->age) ?: 0.0,
+        'date_open'   => $tanggalBuka ?: '-',
+        'organizer'   => $assetData->organizer ?: '-',
+        'nama'        => $assetIndex->nama ?: '-',
+        'nama_lokal'  => $assetIndex->nama_lokal ?: '-',
+        'jenis_aset'  => $assetIndex->jenis_aset ?: '-',
+        'history'     => $assetContent->history ?: '-',
+        'description' => $assetContent->description ?: '-',
+        'video'       => $assetContent->video ?: '-',
+        'image'       => $assetContent->image ?: '-',
+        'benefit'     => $assetContent->benefit ?: '-',
+        'fact'        => $assetContent->fact ?: '-',
+    ];
+
+    // 5) Format ulasan dengan waktu relatif
+    $review = $reviewData->map(function($r) {
+        $stringTime = Carbon::parse($r->created_at)->diffForHumans();
+        return [
+            'id'         => $r->id,
+            'name'       => $r->name,
+            'phone'      => $r->phone,
+            'rating'     => $r->rating,
+            'comment'    => $r->comment,
+            'created_at' => $stringTime,
+        ];
+    });
+
+    // 6) Merge dan kirim ke view
+    $mergeContentAsset = [
+        'asset'     => $asset,
+        'ulasan'    => $review->toArray(),
+        'avgRating' => $avgRating,
+        'ads'       => $ads,
+    ];
+
+    return view('frontend.view', ['asset' => $mergeContentAsset]);
+}
+
 
     public function location(Request $request)
     {
