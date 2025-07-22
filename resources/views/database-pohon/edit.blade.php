@@ -74,15 +74,9 @@
                                             id="jenis" name="id_index_asset" autocomplete="jenis-asset"
                                             aria-placeholder="Pilih Jenis Asset">
                                             <option disabled selected>Pilih Jenis Asset</option>
-                                            {{-- @php
-                                                function toInt($values)
-                                                {
-                                                    return (int) $values;
-                                                }
-                                            @endphp --}}
                                             @foreach ($jenisAsset as $asset)
                                                 <option value="{{ $asset->id }}"
-                                                    {{ old('id_index_asset', $asset->id ?? '') == $asset->id ? 'selected' : '' }}>
+                                                    {{ old('id_index_asset', $assetData->id_index_asset ?? '') == $asset->id ? 'selected' : '' }}>
                                                     {{ $asset->nama }} - {{ $asset->nama_lokal }}
                                                 </option>
                                             @endforeach
@@ -97,23 +91,23 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col my-5">
-                                        <label for="age" class="capitalize">Usia asset</label>
+                                        <label for="age" class="capitalize">Jarak dari Pusat Desa</label>
                                         <div class="flex items-center">
-                                            <input type="number" name="age" value="{{ $assetData->age }}"
+                                            <input type="text" name="age" value="{{ $assetData->age }}"
                                                 class="mt-2 grow !bg-[#7780A1]/10 !border-s-2 !border-e-0 !border-y-2 !border-[#7780A1]/15 !rounded-s"
-                                                placeholder="Masukkan Usia">
+                                                placeholder="Masukkan Jarak KM">
                                             <span
-                                                class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e">Tahun</span>
+                                                class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e">KM</span>
                                         </div>
                                     </div>
                                     <div class="flex flex-col my-5">
-                                        <label for="large" class="capitalize">Luas asset</label>
+                                        <label for="large" class="capitalize">Moda Tranportasi ke Lokasi</label>
                                         <div class="flex items-center">
-                                            <input type="number" name="large" value="{{ $assetData->large }}"
+                                            <input type="text" name="large" value="{{ $assetData->large }}"
                                                 class="mt-2 grow !bg-[#7780A1]/10 !border-s-2 !border-e-0 !border-y-2 !border-[#7780A1]/15 !rounded-s"
-                                                placeholder="Masukkan luas">
-                                            <span
-                                                class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e">Meter2</span>
+                                                placeholder="Masukkan Transportasi">
+                                            {{-- <span
+                                                class="p-2 !bg-[#7780A1]/10 mt-2 border-e-2 border-y-2 border-[#7780A1]/15 rounded-e">Meter2</span> --}}
                                         </div>
                                     </div>
                                     <div class="flex flex-col my-5">
@@ -152,7 +146,7 @@
                                             <option disabled selected>Pilih Desa</option>
                                             @foreach ($desa as $item)
                                                 <option class="capitalize" value="{{ $item->id }}"
-                                                    {{ old('id_village', $item->id ?? '') == $item->id ? 'selected' : '' }}>
+                                                    {{ old('id_village', $assetData->id_village ?? '') == $item->id ? 'selected' : '' }}>
                                                     {{ $item->name }}
                                                     -
                                                     {{ $item->kecamatan }},
@@ -187,7 +181,7 @@
                                         <path fill="white"
                                             d="M17.59 3.59c-.38-.38-.89-.59-1.42-.59H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7.83c0-.53-.21-1.04-.59-1.41zM12 19c-1.66 0-3-1.34-3-3s1.34-3 3-3s3 1.34 3 3s-1.34 3-3 3m1-10H7c-1.1 0-2-.9-2-2s.9-2 2-2h6c1.1 0 2 .9 2 2s-.9 2-2 2" />
                                     </svg>
-                                    <span class="text-white font-Manrope-medium">Simpan Data</span>
+                                    <span class="text-white font-Manrope-medium">Ubah Data</span>
                                 </button>
                             </div>
                         </form>
