@@ -23,13 +23,13 @@
                 <div class="p-5 space-y-4">
                     @isset($asset)
                         <div class="w-full space-y-4">
-                            <h3 class="font-bold mt-5 text-dark capitalize">Sejarah Aset</h3>
-                            <p class="my-4">
-                                {{ $asset['asset']['history'] }}
-                            </p>
                             <h3 class="font-bold mt-5 text-dark capitalize">Deskripsi Aset</h3>
                             <p class="my-4">
                                 {{ $asset['asset']['description'] }}
+                            </p>
+                            <h3 class="font-bold mt-5 text-dark capitalize">Sejarah Aset</h3>
+                            <p class="my-4">
+                                {{ $asset['asset']['history'] }}
                             </p>
                             <h3 class="font-bold mt-5 text-dark capitalize">Manfaat Aset</h3>
                             <p class="my-4">
