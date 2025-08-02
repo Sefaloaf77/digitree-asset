@@ -28,7 +28,8 @@ class Assets extends Model
         'organizer',
         'address',
         'id_village',
-        'age'
+        'age',
+        'digimap', // Tambahkan field digimap
     ];
     public function IndexAsset()
     {

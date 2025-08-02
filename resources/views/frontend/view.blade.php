@@ -131,6 +131,7 @@
                 </div>
             </div>
             {{-- Toggle Bahasa di bawah gambar --}}
+
             <div class="flex justify-center mt-4 space-x-4">
                 <button type="button" onclick="changeLanguage('en')"
                     class="px-4 py-2 rounded transition-colors duration-200
@@ -142,9 +143,33 @@
                     {{ app()->getLocale() == 'id' ? 'bg-blue-600 text-white' : 'bg-slate-800 dark:bg-black text-white dark:text-white' }}">
                     {{ __('Bahasa Indonesia') }}
                 </button>
+                {{-- Mungkin disini tombolnya  --}}
+                @if ($asset['asset']['digimap'] == '1')
+                    <button type="button" class="bg-green-digitree text-white px-4 py-2 rounded font-semibold"
+                        onclick="window.location.href='https://digimap.digitree.or.id/'">
+                        Lihat di Peta Digital
+                    </button>
+                @endif
             </div>
+
         </section>
-        </section>
+        {{-- </section> --}}
+
+        <!-- Modal Pilihan Map -->
+        <div id="modalMapChoice" class="fixed inset-0 bg-black/60 z-[99999] flex items-center justify-center hidden">
+            <div class="bg-white rounded-lg shadow-xl max-w-sm w-full p-5 relative">
+                <h2 class="font-bold text-xl mb-4 text-center">Lihat di Peta Digital</h2>
+                <p id="textMapArea" class="mb-6 text-center"></p>
+                <div class="flex gap-4 justify-center">
+                    <a id="btnMapAll" href="https://digimap.digitree.or.id"
+                        class="bg-slate-500 text-white px-4 py-2 rounded flex-1 text-center font-semibold">Lihat Semua Area</a>
+                    <a id="btnMapFocus" href="#"
+                        class="bg-green-digitree text-white px-4 py-2 rounded flex-1 text-center font-semibold">Ke Area Ini</a>
+                </div>
+                <button onclick="closeMapChoice()"
+                    class="absolute top-2 right-3 text-slate-500 hover:text-red-600 text-2xl">&times;</button>
+            </div>
+        </div>
 
         {{-- Flash message --}}
         @if (session('success'))
@@ -204,7 +229,8 @@
                 <div class="my-4">
                     <h3 class="font-bold mt-5 text-dark">{{ __('Sejarah Aset') }}</h3>
                     <p class="my-4">{{ $asset['asset']['history'] }}</p>
-                    <a onclick="modalDeskripsi()" class="text-green-digitree flex items-center gap-3 text-base cursor-pointer">
+                    <a onclick="modalDeskripsi()"
+                        class="text-green-digitree flex items-center gap-3 text-base cursor-pointer">
                         <span class="font-semibold">{{ __('Lihat Selengkapnya') }}</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-green-digitree" viewBox="0 0 24 24">
                             <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -348,4 +374,23 @@
         }
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+        function showMapChoice(areaLabel) {
+            document.getElementById('textMapArea').innerText =
+                areaLabel ?
+                `Langsung ke lokasi: ${areaLabel}?` :
+                'Pilih area peta yang ingin dilihat.';
+
+            document.getElementById('btnMapFocus').href =
+                areaLabel ?
+                `https://digimap.digitree.or.id/maps?focus=${encodeURIComponent(areaLabel)}` :
+                `https://digimap.digitree.or.id/maps`;
+
+            document.getElementById('modalMapChoice').classList.remove('hidden');
+        }
+
+        function closeMapChoice() {
+            document.getElementById('modalMapChoice').classList.add('hidden');
+        }
+    </script>
 @endpush
