@@ -183,9 +183,9 @@
                         {{ __('Bahasa Indonesia') }}
                     </button>
                     {{-- Mungkin disini tombolnya  --}}
-                    @if (!empty($asset['asset']['digimap']))
+                    @if (($asset['asset']['digimap'] == '1'))
                         <button type="button" class="bg-green-digitree text-white px-4 py-2 rounded font-semibold"
-                            onclick="window.location.href='http://192.168.11.93:3039/maps'">
+                            onclick="window.location.href='http://https://digimap.digitree.or.id/maps'">
                             Lihat di Peta Digital
                         </button>
                     @endif
@@ -335,9 +335,9 @@
                 </div>
             </section>
         @endisset
-
+{{-- 
         <h1 class="text-2xl font-bold">Halo ini konten utama</h1>
-        <p class="mt-2">Konten website muncul setelah splash hilang ✨</p>
+        <p class="mt-2">Konten website muncul setelah splash hilang ✨</p> --}}
     </div>
 
 
