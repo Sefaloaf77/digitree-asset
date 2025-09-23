@@ -5,7 +5,7 @@
 <div class="min-h-[calc(100vh-192px)] p-7 flex justify-center items-center">
   <div class="text-center flex flex-col items-center">
     <p class="text-5xl leading-snug font-extrabold">
-      Sistem dalam proses maintenance update database
+      Sistem dalam proses maintenance migrasi database
     </p>
     <p class="mt-6 sm:text-2xl text-xl text-gray">
       Lapor/Butuh bantuan hubungi?

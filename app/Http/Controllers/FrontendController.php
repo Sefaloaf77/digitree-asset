@@ -195,6 +195,7 @@ class FrontendController extends Controller
         'image'       => $assetContent->image ?: '-',
         'benefit'     => $assetContent->benefit ?: '-',
         'fact'        => $assetContent->fact ?: '-',
+        'digimap'     => $assetData->digimap ?: '-',
     ];
 
     // 5) Format ulasan dengan waktu relatif
