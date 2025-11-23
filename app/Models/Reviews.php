@@ -26,7 +26,7 @@ class Reviews extends Model
 
     public function asset()
     {
-        return $this->belongsToMany(Assets::class);
+        return $this->belongsTo(Assets::class, 'code_asset', 'code_asset');
     }
 
 }

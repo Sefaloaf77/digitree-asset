@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ads;
 use App\Models\Assets;
+use App\Models\ContentAssets;
 use App\Models\IndexAssets;
 use App\Models\RecordScans;
 use App\Models\Reviews;
@@ -28,35 +29,149 @@ class DashboardController extends Controller
             'scannedQR' => $totalScannedQR ?: 0,
             'avgRating' => $avgRating ?: 0,
         ];
-        // dd($summaryData);
-        return view('dashboard.index', ['summary' => $summaryData]);
+
+        // Get plants data directly
+        $plants = $this->getPlantData();
+
+        return view('dashboard.index', ['summary' => $summaryData, 'plants' => $plants]);
     }
 
-    public function perlokasi($id)
+    /**
+     * Get plant data for dashboard
+     */
+    private function getPlantData()
+    {
+        $plants = Assets::with(['IndexAsset', 'ContentAsset'])->get();
+        $no = 1;
+
+        $result = $plants->map(function ($plant) use (&$no) {
+            $indexPlant = $plant->IndexAsset;
+            $contentPlant = $plant->ContentAsset;
+            $reviews = Reviews::where('code_asset', $plant->code_asset)->get();
+            $averageRating = $reviews->avg('rating');
+
+            return [
+                'no' => $no++,
+                'id' => $plant->id ?? '-',
+                'code_asset' => $plant->code_asset ?? '-',
+                'large' => $plant->large ?? '-',
+                'age' => $plant->age ?? '-',
+                'value' => $plant->value ?? '-',
+                'location' => $plant->location ?? '-',
+                'date_open' => $plant->date_open ?? '-',
+                'organizer' => $plant->organizer ?? '-',
+                'address' => $plant->address ?? '-',
+                'index_plant_data' => [
+                    'id' => $indexPlant->id ?? '-',
+                    'nama_lokal' => $indexPlant->nama_lokal ?? '-',
+                    'jenis_aset' => $indexPlant->jenis_aset ?? '-',
+                ],
+                'content_plant_data' => [
+                    'history' => $contentPlant->history ?? '-',
+                ],
+                'reviews' => $reviews->map(function ($review) {
+                    return [
+                        'name' => $review->name ?? '-',
+                        'rating' => $review->rating ?? '-',
+                        'comment' => $review->comment ?? '-',
+                    ];
+                }),
+                'avg_rating' => $averageRating ? $averageRating : '0',
+            ];
+        });
+
+        return $result->toArray();
+    }
+
+    public function perlokasi($id = null)
     {
         // Gate::authorize('superadmin');
-        // Ambil data plant berdasarkan code_plant
-        $asset = Assets::where('id_village', $id)->get();
-        // Ambil list code_plant dari plants
-        $codePlantsList = $asset->pluck('code_asset');
-        $indexPlantsList = $asset->pluck('id_index_asset');
-
-        // Hitung total plants berdasarkan id_villages
-        $totalPlantbyVillages = $asset->count();
-        // Hitung total index plant berdasarkan code_plant yang terkait
-        $totalIndexPlantByCode = IndexAssets::whereIn('id', $indexPlantsList)->count();
-        // Hitung total reviews berdasarkan code_plant yang terkait
-        $totalRecordByCode = RecordScans::whereIn('code_asset', $codePlantsList)->count();
-        // Hitung rata-rata rating berdasarkan code_plant yang terkait
-        $averageRatingByCode = round(Reviews::whereIn('code_asset', $codePlantsList)->avg('rating'), 1);
         $desa = Villages::all();
+
+        if ($id) {
+            // Filter by specific location
+            $asset = Assets::where('id_village', $id)->get();
+            $codePlantsList = $asset->pluck('code_asset');
+            $indexPlantsList = $asset->pluck('id_index_asset');
+
+            $totalPlantbyVillages = $asset->count();
+            $totalIndexPlantByCode = IndexAssets::whereIn('id', $indexPlantsList)->count();
+            $totalRecordByCode = RecordScans::whereIn('code_asset', $codePlantsList)->count();
+            $averageRatingByCode = round(Reviews::whereIn('code_asset', $codePlantsList)->avg('rating'), 1);
+
+            $plants = $this->getPlantDataByLocation($id);
+        } else {
+            // Show all locations
+            $totalPlantbyVillages = Assets::count();
+            $totalIndexPlantByCode = IndexAssets::count();
+            $totalRecordByCode = RecordScans::count();
+            $averageRatingByCode = round(Reviews::avg('rating'), 1);
+
+            $plants = $this->getPlantDataByLocation(null);
+        }
+
         $summaryData = [
             'totalPlant' => $totalPlantbyVillages ?: 0,
             'totalIndexPlant' => $totalIndexPlantByCode ?: 0,
             'scannedQR' => $totalRecordByCode ?: 0,
             'avgRating' => $averageRatingByCode ?: 0,
         ];
-        return view('dashboard.index-lokasi', ['summary' => $summaryData, 'desa' => $desa]);
+
+        return view('dashboard.index-lokasi', ['summary' => $summaryData, 'desa' => $desa, 'plants' => $plants, 'selectedVillage' => $id]);
+    }
+
+    /**
+     * Get plant data by location for dashboard perlokasi
+     * If villageId is null, returns all plants
+     */
+    private function getPlantDataByLocation($villageId = null)
+    {
+        $query = Assets::with(['IndexAsset', 'ContentAsset']);
+
+        if ($villageId) {
+            $query->where('id_village', $villageId);
+        }
+
+        $plants = $query->get();
+        $no = 1;
+
+        $result = $plants->map(function ($plant) use (&$no) {
+            $indexPlant = $plant->IndexAsset;
+            $contentPlant = $plant->ContentAsset;
+            $reviews = Reviews::where('code_asset', $plant->code_asset)->get();
+            $averageRating = $reviews->avg('rating');
+
+            return [
+                'no' => $no++,
+                'id' => $plant->id ?? '-',
+                'code_plant' => $plant->code_asset ?? '-',
+                'large' => $plant->large ?? '-',
+                'age' => $plant->age ?? '-',
+                'value' => $plant->value ?? '-',
+                'location' => $plant->location ?? '-',
+                'date_open' => $plant->date_open ?? '-',
+                'organizer' => $plant->organizer ?? '-',
+                'address' => $plant->address ?? '-',
+                'index_plant_data' => [
+                    'id' => $indexPlant->id ?? '-',
+                    'name' => $indexPlant->nama_lokal ?? '-',
+                    'jenis_aset' => $indexPlant->jenis_aset ?? '-',
+                ],
+                'content_plant_data' => [
+                    'history' => $contentPlant->history ?? '-',
+                ],
+                'reviews' => $reviews->map(function ($review) {
+                    return [
+                        'name' => $review->name ?? '-',
+                        'rating' => $review->rating ?? '-',
+                        'comment' => $review->comment ?? '-',
+                    ];
+                }),
+                'avg_rating' => $averageRating ? $averageRating : '0',
+            ];
+        });
+
+        return $result->toArray();
     }
 
     // /**

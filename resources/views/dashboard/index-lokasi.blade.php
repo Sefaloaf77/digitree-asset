@@ -169,9 +169,10 @@
                 class="select bg-white border-2 border-lightgray/10 focus:ring-2 focus:ring-inset focus:ring-slate-300 p-5 rounded-lg"
                 id="desa" name="id_villages" autocomplete="desa-pohon" aria-placeholder="Pilih desa Pohon"
                 @change="navigateToLocation">
-                <option class="text-center" selected>Semua Lokasi</option>
+                <option class="text-center" value="">Semua Lokasi</option>
                 @foreach ($desa as $item)
-                    <option class="capitalize" value="{{ $item->id }}">{{ $item->name }}
+                    <option class="capitalize" value="{{ $item->id }}"
+                        {{ isset($selectedVillage) && $selectedVillage == $item->id ? 'selected' : '' }}>{{ $item->name }}
                         - {{ $item->kecamatan }},
                         {{ $item->kab_kota }},{{ $item->province }}</option>
                 @endforeach
@@ -262,10 +263,7 @@
 
         <div class="grid grid-cols-1 gap-5">
             <div class="bg-white border-2 border-lightgray/10 p-5 rounded-lg">
-                <div class="overflow-auto space-y-4" x-data="dataTable()" x-init="initData()
-                $watch('searchInput', value => {
-                    search(value)
-                })">
+                <div class="overflow-auto space-y-4" x-data="dataTable()" x-init="initData()">
                     <div class="flex justify-between items-center gap-3">
                         <div class="flex space-x-2 items-center">
                             <p>Tampilkan</p>
@@ -569,15 +567,124 @@
 @endsection
 
 @section('script')
-    {{-- <!-- ApexCharts js -->
-    <script src="{{ asset('assets/js/apexcharts.js') }}"></script>
-    <script src="{{ asset('assets/js/apex-analytics.js') }}"></script> --}}
-
-    <!-- Datatables Js -->
-    <script src="{{ asset('assets/js/datatable-plant-location.js') }}"></script>
-    <script src="{{ asset('assets/js/data-search.js') }}"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+
+    {{-- Data from controller - no more API fetch --}}
+    <script>
+        const plantsData = @json($plants);
+    </script>
+
+    {{-- Inline DataTable function using server data --}}
+    <script>
+        window.dataTable = function() {
+            return {
+                items: [],
+                view: 5,
+                searchInput: "",
+                pages: [],
+                offset: 5,
+                pagination: {
+                    total: 0,
+                    lastPage: 1,
+                    perPage: 5,
+                    currentPage: 1,
+                    from: 1,
+                    to: 5,
+                },
+                currentPage: 1,
+                sorted: {
+                    field: "index_plant_data.name",
+                    rule: "asc",
+                },
+                initData() {
+                    // Use data from controller instead of fetch
+                    this.items = plantsData.sort(this.compareOnKey("index_plant_data.name", "asc"));
+                    this.pagination.total = plantsData.length;
+                    this.pagination.lastPage = Math.ceil(plantsData.length / this.view);
+                    this.showPages();
+                },
+                compareOnKey(key, rule) {
+                    return function(a, b) {
+                        let fieldA, fieldB;
+
+                        // Handle nested keys like 'index_plant_data.name'
+                        if (key.includes('.')) {
+                            const keys = key.split('.');
+                            fieldA = a[keys[0]] ? a[keys[0]][keys[1]] : '';
+                            fieldB = b[keys[0]] ? b[keys[0]][keys[1]] : '';
+                        } else {
+                            fieldA = a[key];
+                            fieldB = b[key];
+                        }
+
+                        // Handle string comparison
+                        if (typeof fieldA === 'string') {
+                            fieldA = fieldA.toUpperCase();
+                        }
+                        if (typeof fieldB === 'string') {
+                            fieldB = fieldB.toUpperCase();
+                        }
+
+                        let comparison = 0;
+                        if (rule === "asc") {
+                            if (fieldA > fieldB) comparison = 1;
+                            else if (fieldA < fieldB) comparison = -1;
+                        } else {
+                            if (fieldA < fieldB) comparison = 1;
+                            else if (fieldA > fieldB) comparison = -1;
+                        }
+                        return comparison;
+                    };
+                },
+                checkView(index) {
+                    return index > this.pagination.to || index < this.pagination.from ? false : true;
+                },
+                sort(field, rule) {
+                    this.items = this.items.sort(this.compareOnKey(field, rule));
+                    this.sorted.field = field;
+                    this.sorted.rule = rule;
+                },
+                changePage(page) {
+                    if (page >= 1 && page <= this.pagination.lastPage) {
+                        this.currentPage = page;
+                        const total = this.items.length;
+                        const lastPage = Math.ceil(total / this.view) || 1;
+                        const from = (page - 1) * this.view + 1;
+                        let to = page * this.view;
+                        if (page === lastPage) {
+                            to = total;
+                        }
+                        this.pagination.total = total;
+                        this.pagination.lastPage = lastPage;
+                        this.pagination.perPage = this.view;
+                        this.pagination.currentPage = page;
+                        this.pagination.from = from;
+                        this.pagination.to = to;
+                        this.showPages();
+                    }
+                },
+                showPages() {
+                    const pages = [];
+                    let from = this.pagination.currentPage - Math.ceil(this.offset / 2);
+                    if (from < 1) from = 1;
+                    let to = from + this.offset - 1;
+                    if (to > this.pagination.lastPage) to = this.pagination.lastPage;
+                    while (from <= to) {
+                        pages.push(from);
+                        from++;
+                    }
+                    this.pages = pages;
+                },
+                changeView() {
+                    this.changePage(1);
+                    this.showPages();
+                },
+                isEmpty() {
+                    return this.pagination.total ? false : true;
+                },
+            };
+        };
+    </script>
 
     <script>
         var toggleModalDelete = false
@@ -591,6 +698,47 @@
         const titleModalDelete = document.getElementById("titleModalDelete")
         const titleModalQR = document.getElementById("titleModalQR")
         const titleModalNote = document.getElementById("titleModalNote")
+
+        // Fallback copy function for HTTP (non-secure context)
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                // Modern API (HTTPS/localhost only)
+                navigator.clipboard.writeText(text)
+                    .then(() => alert('Link copied to clipboard: ' + text))
+                    .catch(err => {
+                        console.error('Clipboard API failed, using fallback: ', err);
+                        fallbackCopyToClipboard(text);
+                    });
+            } else {
+                // Fallback for HTTP
+                fallbackCopyToClipboard(text);
+            }
+        }
+
+        function fallbackCopyToClipboard(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-9999px';
+            textArea.style.top = '-9999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    alert('Link copied to clipboard: ' + text);
+                } else {
+                    alert('Gagal copy link. Silakan copy manual: ' + text);
+                }
+            } catch (err) {
+                console.error('Fallback copy failed: ', err);
+                alert('Gagal copy link. Silakan copy manual: ' + text);
+            }
+
+            document.body.removeChild(textArea);
+        }
 
         function toggleQR(params, id) {
             toggleModalQR = !toggleModalQR
@@ -609,11 +757,11 @@
             fetch("/generate-qrcode/" + id) // Replace with your actual data URL
                 .then((response) => response.json())
                 .then((data) => {
-                    // console.log(data);
-                    nama_pohon.textContent = data.name || '-';
-                    // code_pohon.textContent = data.code_plant || '-';
+                    console.log(data);
+                    nama_pohon.textContent = data.nama_lokal || '-';
+                    // code_pohon.textContent = data.code_asset || '-';
                     const baseURL_path = document.querySelector('meta[name="base-url"]').getAttribute('content');
-                    const dynamicLink = `${baseURL_path}/plant/${data.code_plant}`;
+                    const dynamicLink = `${baseURL_path}/aset/${data.code_asset}`;
                     copyLinkButton.setAttribute('data-link', dynamicLink);
 
                     // Generate QR Code
@@ -624,18 +772,25 @@
 
                     // Add event listeners for new buttons
                     copyLinkButton.onclick = function() {
-                        navigator.clipboard.writeText(dynamicLink)
-                            .then(() => alert('Link copied to clipboard: ' + dynamicLink))
-                            .catch(err => console.error('Error copying link: ', err));
+                        copyToClipboard(dynamicLink);
                     };
 
                     copyImageButton.onclick = function() {
                         qrCanvas.toBlob(function(blob) {
-                            navigator.clipboard.write([new ClipboardItem({
-                                    'image/png': blob
-                                })])
-                                .then(() => alert('Image copied to clipboard'))
-                                .catch(err => console.error('Error copying image: ', err));
+                            if (navigator.clipboard && navigator.clipboard.write) {
+                                navigator.clipboard.write([new ClipboardItem({
+                                        'image/png': blob
+                                    })])
+                                    .then(() => alert('Image copied to clipboard'))
+                                    .catch(err => {
+                                        console.error('Error copying image: ', err);
+                                        alert('Gagal copy gambar. Silakan gunakan tombol Download.');
+                                    });
+                            } else {
+                                alert(
+                                    'Copy gambar tidak didukung di browser ini. Silakan gunakan tombol Download.'
+                                );
+                            }
                         });
                     };
 
@@ -755,6 +910,8 @@
                 const selectedValue = this.value;
                 if (selectedValue) {
                     window.location.href = `/dashboard/perlokasi/${selectedValue}`;
+                } else {
+                    window.location.href = `/dashboard/perlokasi`;
                 }
             });
         });

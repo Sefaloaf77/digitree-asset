@@ -112,7 +112,36 @@
                                 </th>
                                 <th width="10%">
                                     <div class="flex items-center justify-between gap-2">
-                                        <p class="">Nama</p>
+                                        <p class="">Nama Asset</p>
+                                        <div class="flex flex-col">
+                                            <svg fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="4" viewBox="0 0 24 24" stroke="currentColor"
+                                                class="h-3 w-3 cursor-pointer text-muted fill-current"
+                                                x-bind:class="{
+                                                    '!text-black': '{{ $sortBy }}'
+                                                    === 'name' && '{{ $sortDirection }}'
+                                                    === 'asc'
+                                                }"
+                                                onclick="window.location.href='{{ route('dashboard.statistik.reviewer') }}?sort_by=name&sort_direction={{ $sortDirection == 'asc' ? 'desc' : 'asc' }}'">
+                                                <path d="M5 15l7-7 7 7"></path>
+                                            </svg>
+                                            <svg fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="4" viewBox="0 0 24 24" stroke="currentColor"
+                                                class="h-3 w-3 cursor-pointer text-muted fill-current"
+                                                x-bind:class="{
+                                                    '!text-black': '{{ $sortBy }}'
+                                                    === 'name' && '{{ $sortDirection }}'
+                                                    === 'desc'
+                                                }"
+                                                onclick="window.location.href='{{ route('dashboard.statistik.reviewer') }}?sort_by=name&sort_direction={{ $sortDirection == 'asc' ? 'desc' : 'asc' }}'">
+                                                <path d="M19 18l-7 7-7-7"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th width="10%">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <p class="">Nama Reviewer</p>
                                         <div class="flex flex-col">
                                             <svg fill="none" stroke-linecap="round" stroke-linejoin="round"
                                                 stroke-width="4" viewBox="0 0 24 24" stroke="currentColor"
@@ -216,6 +245,9 @@
                                         </td>
                                         <td>
                                             <span>{{ $item->created_at }}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{ $item->asset?->IndexAsset?->nama_lokal ?? '-' }}</span>
                                         </td>
                                         <td>
                                             <span>{{ $item->name }}</span>
@@ -332,13 +364,20 @@
                     if (data) {
                         // Mengisi modal dengan data reviewer
                         $('#deskripsiModal').html(`
-                        <div class="w-full space-y-4">
-                            <label class="text-base font-semibold mb-4">Rating</label>
-                            <div id="rating-container" class="flex mt-3"></div>
+                         <div class="grid grid-cols-2 gap-5 mt-4">
+                            <div class="w-full space-y-4">
+                                <label class="text-base font-semibold mb-4">Rating</label>
+                                <div id="rating-container" class="flex mt-3"></div>
+                            </div>
+                            <div class="w-full space-y-4">
+                                <label class="text-base font-semibold mb-4 capitalize">nama asset</label>
+                                <input id="nama" type="text" name="nama"
+                                    class="form-input mt-3 rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" value="${data.index_asset_nama}" readonly>
+                            </div>
                         </div>
                         <div class="grid grid-cols-2 gap-5 mt-4">
                             <div class="w-full space-y-4">
-                                <label class="text-base font-semibold mb-4 capitalize">nama</label>
+                                <label class="text-base font-semibold mb-4 capitalize">nama reviewe</label>
                                 <input id="nama" type="text" name="nama"
                                     class="form-input mt-3 rounded-lg p-2 text-gray-800 bg-[#F2F3F6]" value="${data.name}" readonly>
                             </div>
@@ -349,14 +388,14 @@
                             </div>
                             </div>
                             <div class="w-full space-y-4 mt-4">
-                                <label class="text-base font-semibold mb-4 capitalize">nama</label>
+                                <label class="text-base font-semibold mb-4 capitalize">komentar</label>
                                 <textarea name="comment" class="form-input mt-3 rounded-lg p-2 text-gray-800 bg-[#F2F3F6] w-full" readonly rows="6">${data.comment}</textarea>
                             </div>
                         <div class="flex justify-center items-center gap-4 mt-6">
-                            <a target="_blank" href="/plant/${data.code_plant}"
+                            <a target="_blank" href="/aset/${data.code_asset}"
                                 class="btn grow border border-transparent rounded-md text-white flex justify-center items-center gap-3 bg-green-digitree">
                                 <svg xmlns="http://www.w3.org/2000/svg"  class="w-6 h-6"  viewBox="0 0 24 24"><path fill="white" d="M8 16.5v.5c1.691-2.578 3.6-3.953 6-4v3c0 .551.511 1 1.143 1c.364 0 .675-.158.883-.391C17.959 14.58 22 10.5 22 10.5s-4.041-4.082-5.975-6.137A1.262 1.262 0 0 0 15.143 4C14.511 4 14 4.447 14 5v3c-4.66 0-6 4.871-6 8.5M5 21h14a1 1 0 0 0 1-1v-6.046c-.664.676-1.364 1.393-2 2.047V19H6V7h7V5H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1"/></svg>
-                                <span>Lihat Asset</span>
+                                <span>Lihat Aset</span>
                             </a>
                             <button type="button" class="btn grow border border-transparent rounded-md text-dark bg-[#F2F3F6]"
                                 onclick="toggle()">Tutup</button>

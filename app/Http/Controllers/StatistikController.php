@@ -44,7 +44,8 @@ class StatistikController extends Controller
         $sortDirection = $request->input('sort_direction', 'asc');
         $per_page = $request->input('per_page', 10);
 
-        $reviewer = Reviews::where('name', 'like', "%{$request->search}%")
+        $reviewer = Reviews::with(['asset.IndexAsset'])
+            ->where('name', 'like', "%{$request->search}%")
             ->orWhere('phone', 'like', "%{$request->search}%")
             ->orWhere('comment', 'like', "%{$request->search}%")
             ->orderBy($sortBy, $sortDirection)
@@ -59,9 +60,13 @@ class StatistikController extends Controller
 
     public function detailReviewer($id)
     {
-        $reviewer = Reviews::find($id);
+        $reviewer = Reviews::with(['asset.IndexAsset'])->find($id);
         if ($reviewer) {
-            return response()->json($reviewer);
+            $data = $reviewer->toArray();
+            // Add index asset name from relation
+            $data['index_asset_nama'] = $reviewer->asset?->IndexAsset?->nama ?? '-';
+            $data['index_asset_nama_lokal'] = $reviewer->asset?->IndexAsset?->nama_lokal ?? '-';
+            return response()->json($data);
         } else {
             return response()->json(['message' => 'Reviewer not found'], 404);
         }
