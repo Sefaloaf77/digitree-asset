@@ -25,6 +25,33 @@ Route::prefix('authentication/')->group(function () {
         Route::get('verificationcover', 'verificationCover')->name('verificationCover');
     });
 });
+Route::get('/get-embed-token', function (Request $request) {
+    // // Validasi domain yang boleh minta token (opsional tapi direkomendasikan)
+    // $allowedOrigins = ['http://localhost:3000', 'https://myeco.id'];
+    // $origin = $request->headers->get('origin');
+
+    // if (!in_array($origin, $allowedOrigins)) {
+    //     return response()->json(['error' => 'Unauthorized origin'], 403);
+    // }
+
+    // Buat URL signed (berlaku 10 menit)
+    $signedUrl = URL::temporarySignedRoute(
+        'embed.signed',
+        now()->addMinutes(10)
+    );
+
+    return response()->json(['embed_url' => $signedUrl]);
+});
+
+Route::get('/embed', function (Request $request) {
+    // Pastikan URL memiliki signature valid
+    if (!$request->hasValidSignature()) {
+        abort(403, 'Invalid or expired signature');
+    }
+
+    // Tampilkan halaman dashboard utama
+    return redirect('/dashboard/semua-lokasi');// ganti dengan nama blade-mu
+})->name('embed.signed');
 
 Route::resource('/aset', FrontendController::class)->only(['index', 'store', 'create', 'destroy', 'edit', 'update', 'show']);
 Route::post('/savelocation', [FrontendController::class, 'location'])->name('location');
@@ -42,9 +69,11 @@ Route::post('/update-content', [DataPohonController::class, 'updateContentIndexP
 Route::post('/delete-content', [DataPohonController::class, 'deleteContentIndexPohon'])->name('deleteAllDataIndexContent');
 Route::post('/delete-plant', [AssetController::class, 'deletePlant'])->name('deleteAllDataPlant');
 
+Route::get('/embed-maps', [PemetaanController::class, 'embed'])->name('embed');
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth', 'superadmin']], function () {
 
     Route::get('/semua-lokasi', [DashboardController::class, 'index'])->name('index');
+    Route::get('/perlokasi', [DashboardController::class, 'perlokasi'])->name('perlokasi.all');
     Route::get('/perlokasi/{id}', [DashboardController::class, 'perlokasi'])->name('perlokasi');
     Route::get('/update-plant/{id}', [AssetController::class, 'updatePlant'])->name('updateAllDataPlant');
 

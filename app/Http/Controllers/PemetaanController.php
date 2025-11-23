@@ -82,4 +82,19 @@ class PemetaanController extends Controller
 
         return view('pemetaan.index', compact('assets', 'ages', 'addresses', 'names', 'codeAssets'));
     }
+    public function embed(Request $request)
+    {
+        // Gate::authorize('superadmin');
+        // Fetch distinct values for dropdown filters
+        $ages = Assets::distinct()->pluck('age')->sort()->values();
+        $addresses = Assets::distinct()->pluck('address')->sort()->values();
+        $names = IndexAssets::distinct()->pluck('nama')->sort()->values();
+        // $species = IndexAssets::distinct()->pluck('species')->sort()->values();
+        $codeAssets = Assets::distinct()->pluck('code_asset')->sort()->values();  // Fetch distinct code_asset
+
+        $query = Assets::with('indexAsset', 'contentAsset', 'villages');
+        $assets = $query->get();
+
+        return view('pemetaan.embed', compact('assets', 'ages', 'addresses', 'names', 'codeAssets'));
+    }
 }

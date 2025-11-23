@@ -84,8 +84,8 @@
                             $id = end($segments); // Mengambil bagian terakhir dari URI sebagai ID
                         @endphp
                         <li>
-                            <a class="@if (Request::is('dashboard/perlokasi/' . $id)) !text-[#ffff] @else !text-[#c6c6c6] @endif"
-                                href="{{ route('dashboard.perlokasi', ['id' => $id]) }}">per lokasi</a>
+                            <a class="@if (Request::is('dashboard/perlokasi/' . $id) || Request::is('dashboard/perlokasi')) !text-[#ffff] @else !text-[#c6c6c6] @endif"
+                                href="{{ route('dashboard.perlokasi.all') }}">per lokasi</a>
                         </li>
                     </ul>
                 </li>
